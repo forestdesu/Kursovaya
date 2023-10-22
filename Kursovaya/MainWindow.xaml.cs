@@ -46,5 +46,10 @@ namespace Kursovaya
             authorization.Show();
             this.Close();
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new MyTickets());
+        }
     }
 }

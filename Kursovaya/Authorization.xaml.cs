@@ -22,7 +22,7 @@ namespace Kursovaya
         public Authorization()
         {
             InitializeComponent();
-            MainFrame.Navigate(new MovieDetail());
+            MainFrame.Navigate(new Login());
         }
     }
 }

@@ -150,8 +150,8 @@ namespace Kursovaya
             {
 
                 List<Sessions> sessions = context.Sessions.ToList();
-                Sessions session = sessions.Where(p => p.Script.FirstOrDefault().ID == idMovie).FirstOrDefault();
-                TitleMovie.Text = Convert.ToString(session.Script.FirstOrDefault().Name);
+                Sessions session = sessions.Where(p => p.Performance.ID == idMovie).FirstOrDefault();
+                TitleMovie.Text = Convert.ToString(session.Performance.Name);
 
                 var query = context.Place.Where(p => p.HallsID == session.HallsID);
                 var results = query.ToList();
@@ -184,6 +184,7 @@ namespace Kursovaya
                     
                     gridList[item.SectorID - 1].Children.Add(seatButton);
                     var CountRowColumn = context.Place.Where(p => p.SectorID == item.SectorID).Where(p => p.Row == item.Row).Count();
+                    Grid.SetColumn(seatButton, item.Column - 1);
 
                     switch (item.Sectors.Position)
                     {

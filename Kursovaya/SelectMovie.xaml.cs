@@ -43,14 +43,14 @@ namespace Kursovaya
             Window parentWindow = Window.GetWindow(this);
 
             Frame frame = LogicalTreeHelper.FindLogicalNode(parentWindow, "MainFrame") as Frame;
-            frame.Navigate(new MovieDetail());
+            frame.Navigate(new SelectTicket());
         }
 
         private async Task GenerateMovies()
         {
             using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {
-                var results = await context.Sessions.Select(p => p).ToListAsync();
+                var results = await context.Performance.Select(p => p).ToListAsync();
 
                 foreach (var item in results)
                 {

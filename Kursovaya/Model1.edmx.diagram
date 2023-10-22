@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8db1dcdc976c445f81f504ec5a640a6d" Name="Diagram1">
+        <EntityTypeShape EntityType="DramaTheaterModel.Genres" Width="1.5" PointX="1.5" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.Halls" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.Jobs" Width="1.5" PointX="1.5" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.Performance" Width="1.5" PointX="3.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.Personal" Width="1.5" PointX="3.75" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.Place" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.PriceCategory" Width="1.5" PointX="1.5" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.PriceTime" Width="1.5" PointX="3.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.Script" Width="1.5" PointX="3.75" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.Seasons" Width="1.5" PointX="1.5" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.Sectors" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.Sessions" Width="1.5" PointX="6" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.Stat" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.Tickets" Width="1.5" PointX="11.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.TypeOfUser" Width="1.5" PointX="6.75" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.Users" Width="1.5" PointX="9" PointY="9.125" IsExpanded="true" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Place__HallsID__6754599E" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Sessions__HallsI__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Personal__JobID__45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Sessions__Perfor__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Place__SectorID__68487DD7" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Tickets__PlaceID__6D0D32F4" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Sectors__PriceCa__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Sessions__PriceT__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Script__SeasonID__48CFD27E" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Stat__SessionsID__6FE99F9F" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Tickets__Session__6B24EA82" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Tickets__UserID__6C190EBB" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Users__TypeOfUse__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.PerformanceAndScript" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.ScriptAndGenres" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.SessionsAndPersonal" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.SessionsAndScript" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
