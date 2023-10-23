@@ -40,7 +40,7 @@
         </Grid.ColumnDefinitions>
         <ScrollViewer Grid.Column="0">
             <StackPanel>
-                <TextBlock Text="Дедпул" FontSize="45" Margin="25, 10"></TextBlock>
+                <TextBlock x:Name="Title" Text="Дедпул" FontSize="45" Margin="25, 10"></TextBlock>
                 <Image x:Name="imageControl" Stretch="UniformToFill" Height="500">
                     <Image.OpacityMask>
                         <VisualBrush Stretch="Uniform">
@@ -50,7 +50,7 @@
                         </VisualBrush>
                     </Image.OpacityMask>
                 </Image>
-                <TextBlock  Margin="25, 10, 25, 25" FontSize="22" TextWrapping="Wrap" Text="Уэйд Уилсон — наёмник. Будучи побочным продуктом программы вооружённых сил под названием «Оружие X», Уилсон приобрёл невероятную силу, проворство и способность к исцелению. Но страшной ценой: его клеточная структура постоянно меняется, а здравомыслие сомнительно. Всё, чего Уилсон хочет, — это держаться на плаву в социальной выгребной яме. Но течение в ней слишком быстрое."></TextBlock>
+                <TextBlock x:Name="Desc" Margin="25, 10, 25, 25" FontSize="22" TextWrapping="Wrap" Text="Уэйд Уилсон — наёмник. Будучи побочным продуктом программы вооружённых сил под названием «Оружие X», Уилсон приобрёл невероятную силу, проворство и способность к исцелению. Но страшной ценой: его клеточная структура постоянно меняется, а здравомыслие сомнительно. Всё, чего Уилсон хочет, — это держаться на плаву в социальной выгребной яме. Но течение в ней слишком быстрое."></TextBlock>
                 <TextBlock  Margin="25, 10, 25, 25" FontSize="26" Text="Актеры:" FontWeight="Bold"></TextBlock>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <WrapPanel x:Name="actorWrapPanel" Orientation="Horizontal" />
@@ -61,7 +61,7 @@
             <Viewbox Margin="25, 20">
                 <Calendar x:Name="calendar" SelectionMode="SingleDate" CalendarDayButtonStyle="{StaticResource CustomCalendarDayButtonStyle}" />
             </Viewbox>
-            <ListBox Name="sessionListBox" Margin="25, 20" SelectionChanged="sessionListBox_SelectionChanged">
+            <ListBox Name="sessionListBox" Margin="25, 20" SelectionChanged="sessionListBox_SelectionChanged" MinHeight="200">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding}" />

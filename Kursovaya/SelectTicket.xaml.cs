@@ -108,13 +108,13 @@ namespace Kursovaya
                     for (int row = 0; row < item.MaxRow; row++)
                     {
                         RowDefinition rowDef = new RowDefinition();
-                        rowDef.Height = new GridLength(20);
+                        rowDef.Height = new GridLength(25);
                         gridList[item.Subgroup - 1].RowDefinitions.Add(rowDef);
                     }
                     for (int col = 0; col < item.MaxColumn; col++)
                     {
                         ColumnDefinition colDef = new ColumnDefinition();
-                        colDef.Width = new GridLength(20);
+                        colDef.Width = new GridLength(25);
                         gridList[item.Subgroup - 1].ColumnDefinitions.Add(colDef);
                     }
                 }
@@ -128,12 +128,15 @@ namespace Kursovaya
                         for (int i = 0; i < CountList1[j].RowDefinitions.Count; i++)
                         {
                             RowDefinition rowDef = new RowDefinition();
-                            rowDef.Height = new GridLength(20);
+                            rowDef.Height = new GridLength(25);
                             item3.RowDefinitions.Add(rowDef);
                             TextBlock numblock = new TextBlock
                             {
                                 Text = Convert.ToString(i + 1),
-                                HorizontalAlignment = HorizontalAlignment.Center
+                                Width = 25,
+                                Height = 25,
+                                TextAlignment = TextAlignment.Center,
+                                FontSize = 18
                             };
                             item3.Children.Add(numblock);
                             Grid.SetRow(numblock, i);
@@ -154,15 +157,15 @@ namespace Kursovaya
 
                 var query = context.Place.Where(p => p.HallsID == session.HallsID);
                 var results = query.ToList();
-                var reservedSeats = context.Tickets.Select(p => p.Place.ID).ToList();
+                var reservedSeats = context.Tickets.Where(p => p.SessionsID == idSession).Select(p => p.Place.ID).ToList();
                 //var results = CreatePlace();
 
                 List<List<int>> colorPlac = new List<List<int>>
 {
-                    new List<int> {198, 65, 144},
-                    new List<int> {133, 68, 152},
-                    new List<int> {26, 110, 193},
-                    new List<int> {74, 178, 169 }
+                    new List<int> {93, 193, 227},
+                    new List<int> {165, 204, 67},
+                    new List<int> {255, 89, 89},
+                    new List<int> {255, 170, 0}
                 };
 
                 foreach (var item in results)
@@ -199,7 +202,7 @@ namespace Kursovaya
                             Grid.SetColumn(seatButton, coll2);                            
                             break;
                     }
-                    Grid.SetRow(seatButton, item.Row);
+                    Grid.SetRow(seatButton, item.Row - 1);
 
                 }
             }
@@ -306,7 +309,7 @@ namespace Kursovaya
 
                 if (btnPlace.Tag == ticketTag)
                 {
-                    btnPlace.Resources["ButtonBorderBrush"] = Brushes.Black;
+                    btnPlace.Resources["ButtonBorderBrush"] = Brushes.Transparent;
                     break;
                 }
             }
@@ -321,14 +324,16 @@ namespace Kursovaya
             {
                 foreach (var id_rp in idReservedPlaces)
                 {
-                    Console.WriteLine(id_rp);
-                    
+                    Sessions curSes = context.Sessions.Where(p => p.ID == idSession).FirstOrDefault();
+                    int totalPrice = Convert.ToInt32(curSes.PriceTime.Price + curSes.Performance.Price + context.Place.Where(p => p.ID == id_rp).FirstOrDefault().Sectors.PriceCategory.Price);
+
                     Tickets newTicket = new Tickets
                     {
                         SessionsID = idSession,
                         UserID = MainWindow.sessionUser.ID,
                         PlaceID = id_rp,
-                        Date = DateTime.Now
+                        Date = DateTime.Now,
+                        TotalPrice = totalPrice
                     };
                     context.Tickets.Add(newTicket);
                 

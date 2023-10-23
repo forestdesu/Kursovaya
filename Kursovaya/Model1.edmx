@@ -37,6 +37,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Duration" Type="time" Precision="7" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
           <Property Name="Img" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Price" Type="money" Nullable="false" />
         </EntityType>
@@ -588,6 +589,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Duration" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Img" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <NavigationProperty Name="Sessions" Relationship="Self.FK__Sessions__Perfor__534D60F1" FromRole="Performance" ToRole="Sessions" />
@@ -1036,6 +1038,7 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Img" ColumnName="Img" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
               </MappingFragment>

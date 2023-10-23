@@ -27,7 +27,7 @@ namespace Kursovaya
     /// </summary>
     public partial class MovieDetail : Page
     {
-
+        int idSelectMovie = MainWindow.idSelectMovie;
         private string[] imagePaths = { @"C:\Users\Work\source\repos\Kursovaya\Kursovaya\img\deadpool-11.jpg", @"C:\Users\Work\source\repos\Kursovaya\Kursovaya\img\16742908331746990.jpg", @"C:\Users\Work\source\repos\Kursovaya\Kursovaya\img\deadpool-11.jpg", };
         private int currentImageIndex = 0;
         private DispatcherTimer timer;
@@ -42,7 +42,9 @@ namespace Kursovaya
             timer.Interval = TimeSpan.FromSeconds(3); // Интервал между сменой изображений
             timer.Tick += Timer_Tick;
             timer.Start();
+            LoadData();
             CalendarLoad();
+            LoadSeans(DateTime.Now.Date);
             LoadImage();           
 
             AddActorCard("Actor 1", "Character A", @"C:\Users\Work\source\repos\Kursovaya\Kursovaya\img\Rayan.jpg");
@@ -60,12 +62,23 @@ namespace Kursovaya
             }
         }
 
+        private void LoadData()
+        {
+            using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
+            {
+                var curPer = context.Performance.Where(p => p.ID == idSelectMovie).FirstOrDefault();
+                Title.Text = curPer.Name;
+                Desc.Text = curPer.Description;
+            }
+        }
+
         private void CalendarLoad()
         {
             using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {
-                DateTime earliestDate = context.Sessions.Min(session => session.DateBegin);
-                DateTime latestDate = context.Sessions.Max(session => session.DateBegin);
+                var curSes = context.Sessions.Where(p => p.PerformanceID == idSelectMovie);
+                DateTime earliestDate = curSes.Min(session => session.DateBegin);
+                DateTime latestDate = curSes.Max(session => session.DateBegin);
                 CalendarDateRange allowedDates = new CalendarDateRange(
                     earliestDate,
                     latestDate
@@ -128,7 +141,7 @@ namespace Kursovaya
             using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {
                 List<ListBoxItem> seansItems = new List<ListBoxItem>();
-                var sessionsOnSelectedDate = context.Sessions.Where(session => EntityFunctions.TruncateTime(session.DateBegin) == selectedDateWithoutTime).ToList();
+                var sessionsOnSelectedDate = context.Sessions.Where(session => session.PerformanceID == idSelectMovie && EntityFunctions.TruncateTime(session.DateBegin) == selectedDateWithoutTime).ToList();
                 foreach (var item in sessionsOnSelectedDate)
                 {
                     ListBoxItem listBoxItem = new ListBoxItem();

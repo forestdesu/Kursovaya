@@ -92,7 +92,7 @@ namespace Kursovaya
                     {
                         Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xC4, 0x37, 0x87)),
                         FontSize = 15,
-                        Text = Convert.ToString(item.TotalPrice),
+                        Text = Convert.ToString(Convert.ToInt32(item.TotalPrice)) + " RUB",
                         Margin = new Thickness(0, 0, 10, 10),
                         FontWeight = FontWeights.Bold
                     };
@@ -102,7 +102,7 @@ namespace Kursovaya
                     {
                         Foreground = Brushes.White,
                         FontSize = 22,
-                        Text = Convert.ToString(item.Date),
+                        Text = item.Sessions.DateBegin.ToString("dd MMM HH:mm"),
                         FontWeight = FontWeights.Bold
                     };
                     textStackPanel.Children.Add(dateText);
@@ -136,7 +136,7 @@ namespace Kursovaya
                         TextBlock label1 = new TextBlock
                         {
                             TextAlignment = TextAlignment.Center,
-                            FontSize = i - 1 % 2 == 0 ? 12 : 11,
+                            FontSize = i - 1 % 2 == 0 ? 13 : 12,
                             Foreground = (i - 1) % 2 == 0 ? new SolidColorBrush(Color.FromArgb(0xFF, 0x7F, 0x26, 0xAE)) : Brushes.White,
                             Text = labels[i - 1],
                             FontWeight = FontWeights.Bold
@@ -144,7 +144,7 @@ namespace Kursovaya
                         TextBlock label2 = new TextBlock
                         {
                             TextAlignment = TextAlignment.Center,
-                            FontSize = i % 2 == 0 ? 12 : 11,
+                            FontSize = i % 2 == 0 ? 13 : 12,
                             Foreground = i % 2 == 0 ? new SolidColorBrush(Color.FromArgb(0xFF, 0x7F, 0x26, 0xAE)) : Brushes.White,
                             Text = labels[i],
                             FontWeight = FontWeights.Bold
@@ -247,7 +247,7 @@ namespace Kursovaya
 
                     mainGrid.Children.Add(BigEl1);
                     mainGrid.Children.Add(BigEl2);
-                    mainGrid.MouseLeftButtonUp += (sender, e) => ViewPlace(item.SessionsID);
+                    mainGrid.MouseLeftButtonUp += (sender, e) => ViewPlace(item.SessionsID, item.Place);
                     Tickets.Children.Add(mainGrid);
 
                 }
@@ -255,10 +255,7 @@ namespace Kursovaya
         }
 
         private void CreateRowsAndColumns()
-        {
-            
-            
-
+        {               
             using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {
                 List<Place> SubGroups = context.Place.ToList();
@@ -300,14 +297,15 @@ namespace Kursovaya
                         for (int i = 0; i < CountList1[j].RowDefinitions.Count; i++)
                         {
                             RowDefinition rowDef = new RowDefinition();
-                            rowDef.Height = new GridLength(20);
+                            rowDef.Height = new GridLength(25);
                             item3.RowDefinitions.Add(rowDef);
                             TextBlock numblock = new TextBlock
                             {
                                 Text = Convert.ToString(i + 1),
-                                Width = 20,
-                                Height = 20,
-                                HorizontalAlignment = HorizontalAlignment.Center,
+                                Width = 25,
+                                Height = 25,
+                                TextAlignment= TextAlignment.Center,
+                                FontSize = 18
                             };
                             item3.Children.Add(numblock);
                             Grid.SetRow(numblock, i);
@@ -316,43 +314,48 @@ namespace Kursovaya
                 }
             }
         }
-        private void ViewPlace(int SessionID)
+        private void ViewPlace(int SessionID, Place place)
         {
             idMovie = SessionID;         
-            LoadSeatLayout(idMovie);
+            LoadSeatLayout(idMovie, place);
             
         }
 
-        private void LoadSeatLayout(int idMovie)
+        private void LoadSeatLayout(int idMovie, Place place)
         {
+            foreach (var item in gridList)
+            {
+                item.Children.Clear();
+            }
             using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {
                 Sessions session = context.Sessions.Where(p => p.ID == idMovie).FirstOrDefault();
 
                 var query = context.Place;
                 var results = query.ToList();
-                var reservedSeats = context.Tickets.Select(p => p.Place.ID).ToList();
-                //var results = CreatePlace();
 
                 List<List<int>> colorPlac = new List<List<int>>
 {
-                    new List<int> {198, 65, 144},
-                    new List<int> {133, 68, 152},
-                    new List<int> {26, 110, 193},
-                    new List<int> {74, 178, 169 }
+                    new List<int> {93, 193, 227},
+                    new List<int> {165, 204, 67},
+                    new List<int> {255, 89, 89},
+                    new List<int> {255, 170, 0}
                 };
                 foreach (var item in results)
                 {
                     Button seatButton = new Button();
-                    seatButton.Style = (Style)FindResource("RoundedButtonStyle");
-                    seatButton.Content = $"{item.Column}";
-                    seatButton.Tag = $"{item.Row};{item.Column};{Convert.ToInt32(item.Sectors.PriceCategory.Price)};{item.SectorID};{item.ID}";
-                    if (reservedSeats.Contains(item.ID))
+                    seatButton.Style = (Style)FindResource("RoundedButtonStyle");              
+                    //seatButton.Tag = $"{item.Row};{item.Column};{Convert.ToInt32(item.Sectors.PriceCategory.Price)};{item.SectorID};{item.ID}";
+                    if (place.ID == item.ID)
                     {
-                        seatButton.Background = new SolidColorBrush(Color.FromRgb(112, 112, 112));
+                        seatButton.Foreground = new SolidColorBrush(Color.FromRgb((byte)colorPlac[item.Sectors.PriceCategoryID - 1][0], (byte)colorPlac[item.Sectors.PriceCategoryID - 1][1], (byte)colorPlac[item.Sectors.PriceCategoryID - 1][2])); ;
+                        seatButton.Content = "✔";
+                        seatButton.Background = Brushes.Transparent;
+                        seatButton.Resources["ButtonBorderBrush"] = new SolidColorBrush(Color.FromRgb((byte)colorPlac[item.Sectors.PriceCategoryID - 1][0], (byte)colorPlac[item.Sectors.PriceCategoryID - 1][1], (byte)colorPlac[item.Sectors.PriceCategoryID - 1][2]));
                     }
                     else
                     {
+                        seatButton.Content = $"{item.Column}";
                         seatButton.Background = new SolidColorBrush(Color.FromRgb((byte)colorPlac[item.Sectors.PriceCategoryID - 1][0], (byte)colorPlac[item.Sectors.PriceCategoryID - 1][1], (byte)colorPlac[item.Sectors.PriceCategoryID - 1][2]));
                     }
 
