@@ -22,6 +22,7 @@ namespace Kursovaya
     
         public int ID { get; set; }
         public string Fullname { get; set; }
+        public string Img { get; set; }
         public int JobID { get; set; }
     
         public virtual Jobs Jobs { get; set; }

@@ -19,7 +19,7 @@ namespace Kursovaya
         public int UserID { get; set; }
         public int PlaceID { get; set; }
         public System.DateTime Date { get; set; }
-        public Nullable<decimal> TotalPrice { get; set; }
+        public decimal TotalPrice { get; set; }
     
         public virtual Place Place { get; set; }
         public virtual Sessions Sessions { get; set; }

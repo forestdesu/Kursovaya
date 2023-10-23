@@ -25,6 +25,7 @@ namespace Kursovaya
     {
 
         public static int idSelectMovie { get; set; }
+        public static int idSelectSeans { get; set; }
         public static Users sessionUser { get; set; }
 
         public MainWindow()

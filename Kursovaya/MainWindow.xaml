@@ -34,8 +34,6 @@
                 <Image Source="C:\Users\Work\source\repos\Kursovaya\Kursovaya\bin\Debug\logout.png"/>
             </Button>
         </Grid>
-        <ScrollViewer Grid.Row="1">
-            <Frame Name="MainFrame" NavigationUIVisibility='Hidden'></Frame>
-        </ScrollViewer>
+        <Frame Name="MainFrame" NavigationUIVisibility='Hidden' Grid.Row="1"></Frame>
     </Grid>
 </Window>

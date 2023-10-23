@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Kursovaya"
       mc:Ignorable="d" 
-      d:DesignHeight="1200" d:DesignWidth="1000"
+      d:DesignHeight="800" d:DesignWidth="1000"
       Title="SelectTicket">
 
     <Page.Resources>
@@ -38,140 +38,152 @@
 
         <TextBlock x:Name="TitleMovie" VerticalAlignment="Top" Margin="10, 10" FontSize="28px" Text="Лоокуут уонна Ньургуhун"></TextBlock>
 
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10, 60">
-            <DatePicker Width="110">
+        <ScrollViewer Margin="0, 60, 0, 100">
+            <Grid Grid.Row="1" Grid.Column="1" Margin="0, 0, 0, 20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20*"/>
+                    <ColumnDefinition Width="60*"/>
+                    <ColumnDefinition Width="20*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" >
+                        <TextBlock Text="Ложи балкона" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <TextBlock.LayoutTransform>
+                                <RotateTransform Angle="-90" />
+                            </TextBlock.LayoutTransform>
+                        </TextBlock>
+                        <Grid x:Name="Balcony1"></Grid>
 
-            </DatePicker>
-            <ComboBox x:Name="filmComboBox" HorizontalAlignment="Left" VerticalAlignment="Center" Width="125" Margin="15,0">
-                <ComboBoxItem IsSelected="True">Выбор времени</ComboBoxItem>
-            </ComboBox>
+                    </StackPanel>
 
-        </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="50, 0, 0, 200">
+                        <TextBlock Text="Ложи бельэтажа" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <TextBlock.LayoutTransform>
+                                <RotateTransform Angle="-90" />
+                            </TextBlock.LayoutTransform>
+                        </TextBlock>
+                        <Grid x:Name="Mezzaine1"></Grid>
+                    </StackPanel>
+                </StackPanel>
 
-        <TextBlock Text="Партер" FontSize="20" Margin="225,100,225,620" HorizontalAlignment="Center"></TextBlock>
-        <Grid Margin="200,140,200,360" VerticalAlignment="Top">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Grid x:Name="Parter1" Grid.Column="0">
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="Партер" FontSize="20" HorizontalAlignment="Center"></TextBlock>
+                    <Grid VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid x:Name="Parter1" Grid.Column="0">
+                        </Grid>
+
+                        <Grid x:Name="Parter2" Grid.Column="1">
+                        </Grid>
+
+                        <Grid x:Name="Parter3" Grid.Column="2">
+                        </Grid>
+                    </Grid>
+
+                    <TextBlock Text="Амфитеатр" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top"></TextBlock>
+                    <Grid VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid x:Name="Amfitheater1" Grid.Column="0">
+                        </Grid>
+
+                        <Grid x:Name="Amfitheater2" Grid.Column="1">
+                        </Grid>
+
+                        <Grid x:Name="Amfitheater3" Grid.Column="2">
+                        </Grid>
+
+                        <Grid x:Name="Amfitheater4" Grid.Column="3">
+                        </Grid>
+
+                        <Grid x:Name="Amfitheater5" Grid.Column="4">
+                        </Grid>
+                    </Grid>
+
+                    <TextBlock Text="Бельэтаж" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top"></TextBlock>
+                    <Grid VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid x:Name="Mezzaine2" Grid.Column="0">
+                        </Grid>
+
+                        <Grid x:Name="Mezzaine3" Grid.Column="1">
+                        </Grid>
+
+                        <Grid x:Name="Mezzaine4" Grid.Column="2">
+                        </Grid>
+
+                        <Grid x:Name="Mezzaine5" Grid.Column="3">
+                        </Grid>
+
+                        <Grid x:Name="Mezzaine6" Grid.Column="4">
+                        </Grid>
+                    </Grid>
+
+
+                    <TextBlock FontSize="20" Text="Балкон" HorizontalAlignment="Center" VerticalAlignment="Top"></TextBlock>
+                    <Grid VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid x:Name="Balcony2" Grid.Column="0">
+                        </Grid>
+
+                        <Grid x:Name="Balcony3" Grid.Column="1">
+                        </Grid>
+
+                        <Grid x:Name="Balcony4" Grid.Column="2">
+                        </Grid>
+
+                        <Grid x:Name="Balcony5" Grid.Column="3">
+                        </Grid>
+
+                        <Grid x:Name="Balcony6" Grid.Column="4">
+                        </Grid>
+                    </Grid>
+
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                    <StackPanel Orientation="Horizontal"  Margin="0, 0, 50, 200">
+                        <TextBlock Text="Ложи бельэтажа" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <TextBlock.LayoutTransform>
+                                <RotateTransform Angle="-90" />
+                            </TextBlock.LayoutTransform>
+                        </TextBlock>
+                        <Grid x:Name="Mezzaine7"></Grid>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal"  VerticalAlignment="Bottom">
+                        <TextBlock Text="Ложи балкона" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <TextBlock.LayoutTransform>
+                                <RotateTransform Angle="-90" />
+                            </TextBlock.LayoutTransform>
+                        </TextBlock>
+                        <Grid x:Name="Balcony7"></Grid>
+                    </StackPanel>
+                </StackPanel>
+
             </Grid>
-
-            <Grid x:Name="Parter2" Grid.Column="1">
-            </Grid>
-
-            <Grid x:Name="Parter3" Grid.Column="2">
-            </Grid>
-        </Grid>
-        
-        <TextBlock Text="Амфитеатр" FontSize="20" Margin="225,435,225,0" HorizontalAlignment="Center" VerticalAlignment="Top"></TextBlock>
-        <Grid Margin="225,475,225,160" VerticalAlignment="Top">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Grid x:Name="Amfitheater1" Grid.Column="0">
-            </Grid>
-
-            <Grid x:Name="Amfitheater2" Grid.Column="1">
-            </Grid>
-
-            <Grid x:Name="Amfitheater3" Grid.Column="2">
-            </Grid>
-
-            <Grid x:Name="Amfitheater4" Grid.Column="3">
-            </Grid>
-
-            <Grid x:Name="Amfitheater5" Grid.Column="4">
-            </Grid>
-        </Grid>
-
-        <TextBlock Text="Бельэтаж" FontSize="20" Margin="225,635,225,0" HorizontalAlignment="Center" VerticalAlignment="Top"></TextBlock>
-        <Grid Margin="225,675,225,160" VerticalAlignment="Top">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Grid x:Name="Mezzaine2" Grid.Column="0">
-            </Grid>
-
-            <Grid x:Name="Mezzaine3" Grid.Column="1">
-            </Grid>
-
-            <Grid x:Name="Mezzaine4" Grid.Column="2">
-            </Grid>
-
-            <Grid x:Name="Mezzaine5" Grid.Column="3">
-            </Grid>
-
-            <Grid x:Name="Mezzaine6" Grid.Column="4">
-            </Grid>
-        </Grid>
-        
-
-        <TextBlock Text="Балкон" FontSize="20" Margin="225,835,225,0" HorizontalAlignment="Center" VerticalAlignment="Top"></TextBlock>
-        <Grid Margin="225,875,225,160" VerticalAlignment="Top">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Grid x:Name="Balcony2" Grid.Column="0">
-            </Grid>
-
-            <Grid x:Name="Balcony3" Grid.Column="1">
-            </Grid>
-
-            <Grid x:Name="Balcony4" Grid.Column="2">
-            </Grid>
-
-            <Grid x:Name="Balcony5" Grid.Column="3">
-            </Grid>
-
-            <Grid x:Name="Balcony6" Grid.Column="4">
-            </Grid>
-        </Grid>
-
-        <TextBlock Text="Ложи бельэтажа" FontSize="20" Margin="120,900,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock.RenderTransform>
-                <RotateTransform Angle="-90" />
-            </TextBlock.RenderTransform>
-        </TextBlock>
-        <Grid x:Name="Mezzaine1" Margin="150,750,215,160" HorizontalAlignment="Left" VerticalAlignment="Top">
-        </Grid>
-
-        <TextBlock Text="Ложи бельэтажа" FontSize="20" Margin="150,900,20,0" HorizontalAlignment="Right" VerticalAlignment="Top">
-            <TextBlock.RenderTransform>
-                <RotateTransform Angle="-90" />
-            </TextBlock.RenderTransform>
-        </TextBlock>
-        <Grid x:Name="Mezzaine7" Margin="150,750,120,160" HorizontalAlignment="Right" VerticalAlignment="Top">
-        </Grid>
-
-        <TextBlock Text="Ложи балкона" FontSize="20" Margin="20,930,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock.RenderTransform>
-                <RotateTransform Angle="-90" />
-            </TextBlock.RenderTransform>
-        </TextBlock>
-        <Grid x:Name="Balcony1" Margin="50,800,215,160" HorizontalAlignment="Left" VerticalAlignment="Top">
-        </Grid>
-
-        <TextBlock Text="Ложи балкона" FontSize="20" Margin="0,930,-60,0" HorizontalAlignment="Right" VerticalAlignment="Top">
-            <TextBlock.RenderTransform>
-                <RotateTransform Angle="-90" />
-            </TextBlock.RenderTransform>
-        </TextBlock>
-        <Grid x:Name="Balcony7" Margin="20,800,20,160" HorizontalAlignment="Right" VerticalAlignment="Top">
-        </Grid>
+        </ScrollViewer>
 
         <StackPanel Margin="25,0,0,25" x:Name="TicketsGrid" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left">
 
@@ -181,7 +193,7 @@
 
         <Button x:Name="PriceBtn" VerticalAlignment="Bottom" Margin="0,0,35,25" HorizontalAlignment="Right" Background="Transparent" BorderBrush="Transparent" Click="BuyTickets">
             <Border Width="150" Height="50" Background="Red" CornerRadius="15">
-                <TextBlock FontSize="16px" x:Name="PriceBtnText" Foreground="white" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Далее: "></TextBlock>
+                <TextBlock FontSize="16px" x:Name="PriceBtnText"  VerticalAlignment="Center" HorizontalAlignment="Center" Text="Далее: "></TextBlock>
             </Border>
         </Button>
 

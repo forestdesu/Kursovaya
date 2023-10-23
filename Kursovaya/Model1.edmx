@@ -54,6 +54,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Fullname" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Img" Type="nvarchar" MaxLength="150" />
           <Property Name="JobID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Place">
@@ -123,9 +124,9 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="HallsID" Type="int" Nullable="false" />
           <Property Name="PerformanceID" Type="int" Nullable="false" />
           <Property Name="PriceTimeID" Type="int" Nullable="false" />
+          <Property Name="HallsID" Type="int" Nullable="false" />
           <Property Name="DateBegin" Type="datetime" Nullable="false" />
           <Property Name="DateEnd" Type="datetime" Nullable="false" />
         </EntityType>
@@ -166,7 +167,7 @@
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="PlaceID" Type="int" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
-          <Property Name="TotalPrice" Type="money" />
+          <Property Name="TotalPrice" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="TypeOfUser">
           <Key>
@@ -296,7 +297,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sessions__HallsI__5441852A">
+        <Association Name="FK__Sessions__HallsI__5535A963">
           <End Role="Halls" Type="Self.Halls" Multiplicity="1" />
           <End Role="Sessions" Type="Self.Sessions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -320,7 +321,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sessions__PriceT__5535A963">
+        <Association Name="FK__Sessions__PriceT__5441852A">
           <End Role="PriceTime" Type="Self.PriceTime" Multiplicity="1" />
           <End Role="Sessions" Type="Self.Sessions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -497,7 +498,7 @@
             <End Role="PriceCategory" EntitySet="PriceCategory" />
             <End Role="Sectors" EntitySet="Sectors" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sessions__HallsI__5441852A" Association="Self.FK__Sessions__HallsI__5441852A">
+          <AssociationSet Name="FK__Sessions__HallsI__5535A963" Association="Self.FK__Sessions__HallsI__5535A963">
             <End Role="Halls" EntitySet="Halls" />
             <End Role="Sessions" EntitySet="Sessions" />
           </AssociationSet>
@@ -505,7 +506,7 @@
             <End Role="Performance" EntitySet="Performance" />
             <End Role="Sessions" EntitySet="Sessions" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sessions__PriceT__5535A963" Association="Self.FK__Sessions__PriceT__5535A963">
+          <AssociationSet Name="FK__Sessions__PriceT__5441852A" Association="Self.FK__Sessions__PriceT__5441852A">
             <End Role="PriceTime" EntitySet="PriceTime" />
             <End Role="Sessions" EntitySet="Sessions" />
           </AssociationSet>
@@ -569,7 +570,7 @@
           <Property Name="Rows" Type="Int32" Nullable="false" />
           <Property Name="Columns" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Place" Relationship="Self.FK__Place__HallsID__6754599E" FromRole="Halls" ToRole="Place" />
-          <NavigationProperty Name="Sessions" Relationship="Self.FK__Sessions__HallsI__5441852A" FromRole="Halls" ToRole="Sessions" />
+          <NavigationProperty Name="Sessions" Relationship="Self.FK__Sessions__HallsI__5535A963" FromRole="Halls" ToRole="Sessions" />
         </EntityType>
         <EntityType Name="Jobs">
           <Key>
@@ -598,6 +599,7 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Fullname" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Img" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="JobID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Jobs" Relationship="Self.FK__Personal__JobID__45F365D3" FromRole="Personal" ToRole="Jobs" />
           <NavigationProperty Name="Sessions" Relationship="Self.SessionsAndPersonal" FromRole="Personal" ToRole="Sessions" />
@@ -631,7 +633,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <NavigationProperty Name="Sessions" Relationship="Self.FK__Sessions__PriceT__5535A963" FromRole="PriceTime" ToRole="Sessions" />
+          <NavigationProperty Name="Sessions" Relationship="Self.FK__Sessions__PriceT__5441852A" FromRole="PriceTime" ToRole="Sessions" />
         </EntityType>
         <EntityType Name="Script">
           <Key>
@@ -673,14 +675,14 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="HallsID" Type="Int32" Nullable="false" />
           <Property Name="PerformanceID" Type="Int32" Nullable="false" />
           <Property Name="PriceTimeID" Type="Int32" Nullable="false" />
+          <Property Name="HallsID" Type="Int32" Nullable="false" />
           <Property Name="DateBegin" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateEnd" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Halls" Relationship="Self.FK__Sessions__HallsI__5441852A" FromRole="Sessions" ToRole="Halls" />
+          <NavigationProperty Name="Halls" Relationship="Self.FK__Sessions__HallsI__5535A963" FromRole="Sessions" ToRole="Halls" />
           <NavigationProperty Name="Performance" Relationship="Self.FK__Sessions__Perfor__534D60F1" FromRole="Sessions" ToRole="Performance" />
-          <NavigationProperty Name="PriceTime" Relationship="Self.FK__Sessions__PriceT__5535A963" FromRole="Sessions" ToRole="PriceTime" />
+          <NavigationProperty Name="PriceTime" Relationship="Self.FK__Sessions__PriceT__5441852A" FromRole="Sessions" ToRole="PriceTime" />
           <NavigationProperty Name="Stat" Relationship="Self.FK__Stat__SessionsID__6FE99F9F" FromRole="Sessions" ToRole="Stat" />
           <NavigationProperty Name="Tickets" Relationship="Self.FK__Tickets__Session__6B24EA82" FromRole="Sessions" ToRole="Tickets" />
           <NavigationProperty Name="Personal" Relationship="Self.SessionsAndPersonal" FromRole="Sessions" ToRole="Personal" />
@@ -708,7 +710,7 @@
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="PlaceID" Type="Int32" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <NavigationProperty Name="Place" Relationship="Self.FK__Tickets__PlaceID__6D0D32F4" FromRole="Tickets" ToRole="Place" />
           <NavigationProperty Name="Sessions" Relationship="Self.FK__Tickets__Session__6B24EA82" FromRole="Tickets" ToRole="Sessions" />
           <NavigationProperty Name="Users" Relationship="Self.FK__Tickets__UserID__6C190EBB" FromRole="Tickets" ToRole="Users" />
@@ -748,7 +750,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sessions__HallsI__5441852A">
+        <Association Name="FK__Sessions__HallsI__5535A963">
           <End Role="Halls" Type="Self.Halls" Multiplicity="1" />
           <End Role="Sessions" Type="Self.Sessions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -820,7 +822,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sessions__PriceT__5535A963">
+        <Association Name="FK__Sessions__PriceT__5441852A">
           <End Role="PriceTime" Type="Self.PriceTime" Multiplicity="1" />
           <End Role="Sessions" Type="Self.Sessions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -929,7 +931,7 @@
             <End Role="Halls" EntitySet="Halls" />
             <End Role="Place" EntitySet="Place" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sessions__HallsI__5441852A" Association="Self.FK__Sessions__HallsI__5441852A">
+          <AssociationSet Name="FK__Sessions__HallsI__5535A963" Association="Self.FK__Sessions__HallsI__5535A963">
             <End Role="Halls" EntitySet="Halls" />
             <End Role="Sessions" EntitySet="Sessions" />
           </AssociationSet>
@@ -953,7 +955,7 @@
             <End Role="PriceCategory" EntitySet="PriceCategory" />
             <End Role="Sectors" EntitySet="Sectors" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sessions__PriceT__5535A963" Association="Self.FK__Sessions__PriceT__5535A963">
+          <AssociationSet Name="FK__Sessions__PriceT__5441852A" Association="Self.FK__Sessions__PriceT__5441852A">
             <End Role="PriceTime" EntitySet="PriceTime" />
             <End Role="Sessions" EntitySet="Sessions" />
           </AssociationSet>
@@ -1044,6 +1046,7 @@
               <MappingFragment StoreEntitySet="Personal">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="Img" ColumnName="Img" />
                 <ScalarProperty Name="JobID" ColumnName="JobID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1112,9 +1115,9 @@
             <EntityTypeMapping TypeName="DramaTheaterModel.Sessions">
               <MappingFragment StoreEntitySet="Sessions">
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="HallsID" ColumnName="HallsID" />
                 <ScalarProperty Name="PerformanceID" ColumnName="PerformanceID" />
                 <ScalarProperty Name="PriceTimeID" ColumnName="PriceTimeID" />
+                <ScalarProperty Name="HallsID" ColumnName="HallsID" />
                 <ScalarProperty Name="DateBegin" ColumnName="DateBegin" />
                 <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
               </MappingFragment>

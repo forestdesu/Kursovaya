@@ -341,7 +341,6 @@ namespace Kursovaya
                     new List<int> {26, 110, 193},
                     new List<int> {74, 178, 169 }
                 };
-                int i = 0;
                 foreach (var item in results)
                 {
                     Button seatButton = new Button();

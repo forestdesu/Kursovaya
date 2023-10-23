@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
+using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -29,6 +32,7 @@ namespace Kursovaya
         private int currentImageIndex = 0;
         private DispatcherTimer timer;
         private bool isAnimating = false;
+        ListBoxItem selectedListBoxItem;
 
         public MovieDetail()
         {
@@ -38,16 +42,8 @@ namespace Kursovaya
             timer.Interval = TimeSpan.FromSeconds(3); // Интервал между сменой изображений
             timer.Tick += Timer_Tick;
             timer.Start();
-
-            LoadImage();
-
-            sessionListBox.ItemsSource = sessions;
-            CalendarDateRange allowedDates = new CalendarDateRange(
-                new DateTime(2023, 10, 1), // начальная дата
-                new DateTime(2023, 12, 31) // конечная дата
-            ); 
-            calendar.BlackoutDates.Add(allowedDates);
-            calendar.SelectedDatesChanged += Calendar_SelectedDatesChanged;
+            CalendarLoad();
+            LoadImage();           
 
             AddActorCard("Actor 1", "Character A", @"C:\Users\Work\source\repos\Kursovaya\Kursovaya\img\Rayan.jpg");
             AddActorCard("Actor 1", "Character A", @"C:\Users\Work\source\repos\Kursovaya\Kursovaya\img\Rayan.jpg");
@@ -62,6 +58,23 @@ namespace Kursovaya
                 BitmapImage image = new BitmapImage(new Uri(imagePaths[currentImageIndex]));
                 imageControl.Source = image;
             }
+        }
+
+        private void CalendarLoad()
+        {
+            using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
+            {
+                DateTime earliestDate = context.Sessions.Min(session => session.DateBegin);
+                DateTime latestDate = context.Sessions.Max(session => session.DateBegin);
+                CalendarDateRange allowedDates = new CalendarDateRange(
+                    earliestDate,
+                    latestDate
+                );
+                calendar.DisplayDateStart = earliestDate;
+                calendar.DisplayDateEnd = latestDate;
+                calendar.SelectedDatesChanged += Calendar_SelectedDatesChanged;
+            }
+                
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -95,50 +108,52 @@ namespace Kursovaya
                     To = 1.0,
                     Duration = TimeSpan.FromSeconds(1)
                 };
-                imageControl.BeginAnimation(Image.OpacityProperty, fadeInAnimation);
+                imageControl.BeginAnimation(System.Windows.Controls.Image.OpacityProperty, fadeInAnimation);
                 isAnimating = false;
             };
-
-            imageControl.BeginAnimation(Image.OpacityProperty, animation);
+            imageControl.BeginAnimation(System.Windows.Controls.Image.OpacityProperty, animation);
         }
 
         private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
-            foreach (var selectedDate in e.RemovedItems)
+            if (calendar.SelectedDate.Value.Date >= calendar.DisplayDateStart.Value.Date && calendar.SelectedDate.Value <= calendar.DisplayDateEnd.Value.Date)
             {
-                if (selectedDate is DateTime date)
-                {
-                    if (date < calendar.DisplayDateStart || date > calendar.DisplayDateEnd)
-                    {
-                        // Если выбрана запрещенная дата, снимите выделение
-                        calendar.SelectedDates.Remove(date);
-                    }
-                }
+                LoadSeans(calendar.SelectedDate.Value.Date);
             }
+            
         }
 
-        private List<string> sessions = new List<string>
+        private void LoadSeans(DateTime selectedDateWithoutTime)
         {
-            "Сеанс 1 - 10:00",
-            "Сеанс 2 - 13:00",
-            "Сеанс 3 - 16:00",
-            "Сеанс 4 - 19:00",
-            "Сеанс 5 - 22:00"
-        };
+            using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
+            {
+                List<ListBoxItem> seansItems = new List<ListBoxItem>();
+                var sessionsOnSelectedDate = context.Sessions.Where(session => EntityFunctions.TruncateTime(session.DateBegin) == selectedDateWithoutTime).ToList();
+                foreach (var item in sessionsOnSelectedDate)
+                {
+                    ListBoxItem listBoxItem = new ListBoxItem();
+                    listBoxItem.Content = $"Сеанс на {item.DateBegin}";
+                    listBoxItem.Tag = item.ID; // Здесь устанавливаем Tag на объект Session или на его идентификатор, в зависимости от ваших потребностей.
+                    seansItems.Add(listBoxItem);
+                }
+                sessionListBox.ItemsSource = seansItems;
+            }            
+        }
+
 
         private void BuyTicketButton_Click(object sender, RoutedEventArgs e)
         {
-            // Получите выбранный сеанс
-            string selectedSession = sessionListBox.SelectedItem as string;
 
-            if (string.IsNullOrEmpty(selectedSession))
+            if (selectedListBoxItem is null)
             {
                 MessageBox.Show("Выберите сеанс перед покупкой билета.");
             }
             else
             {
-                // Выполните действия для покупки билета на выбранный сеанс
-                MessageBox.Show("Куплен билет на " + selectedSession);
+                MainWindow.idSelectSeans = (int)selectedListBoxItem.Tag;
+                Window parentWindow = Window.GetWindow(this);
+                Frame frame = LogicalTreeHelper.FindLogicalNode(parentWindow, "MainFrame") as Frame;
+                frame.Navigate(new SelectTicket());
             }
         }
 
@@ -154,7 +169,7 @@ namespace Kursovaya
             };
 
             // Создайте изображение актера
-            Image actorImage = new Image
+            System.Windows.Controls.Image actorImage = new System.Windows.Controls.Image
             {
                 Source = new BitmapImage(new System.Uri(imagePath, System.UriKind.RelativeOrAbsolute)),
                 Width = 150,
@@ -183,6 +198,11 @@ namespace Kursovaya
 
             // Добавьте карточку актера в WrapPanel
             actorWrapPanel.Children.Add(actorCard);
+        }
+
+        private void sessionListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectedListBoxItem = (ListBoxItem)sessionListBox.SelectedItem;
         }
     }
 }

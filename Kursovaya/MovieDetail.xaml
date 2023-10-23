@@ -20,34 +20,48 @@
                 <EasingInt32KeyFrame KeyTime="0:0:1" Value="0"/>
             </Int32AnimationUsingKeyFrames>
         </Storyboard>
+
+        <Style x:Key="CustomCalendarDayButtonStyle" TargetType="CalendarDayButton">
+            <Style.Triggers>
+                <!-- Триггер для выделения цветом разрешенных дат -->
+                <DataTrigger Binding="{Binding IsEnabled}" Value="True">
+                    <Setter Property="Background" Value="Green" />
+                    <!-- Цвет для разрешенных дат -->
+                    <Setter Property="Foreground" Value="White" />
+                    <!-- Цвет текста для разрешенных дат -->
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </Page.Resources>
     <Grid Background="white">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="65*"/>
             <ColumnDefinition Width="35*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel>
-            <TextBlock Text="Дедпул" FontSize="45" Margin="25, 10"></TextBlock>
-            <Image x:Name="imageControl" Stretch="UniformToFill" Height="500">
-                <Image.OpacityMask>
-                    <VisualBrush Stretch="Uniform">
-                        <VisualBrush.Visual>
-                            <Image Source="{Binding ElementName=imageControl, Path=Source}"/>
-                        </VisualBrush.Visual>
-                    </VisualBrush>
-                </Image.OpacityMask>
-            </Image>
-            <TextBlock  Margin="25, 10, 25, 25" FontSize="22" TextWrapping="Wrap" Text="Уэйд Уилсон — наёмник. Будучи побочным продуктом программы вооружённых сил под названием «Оружие X», Уилсон приобрёл невероятную силу, проворство и способность к исцелению. Но страшной ценой: его клеточная структура постоянно меняется, а здравомыслие сомнительно. Всё, чего Уилсон хочет, — это держаться на плаву в социальной выгребной яме. Но течение в ней слишком быстрое."></TextBlock>
-            <TextBlock  Margin="25, 10, 25, 25" FontSize="26" Text="Актеры:" FontWeight="Bold"></TextBlock>
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <WrapPanel x:Name="actorWrapPanel" Orientation="Horizontal" />
-            </ScrollViewer>
-        </StackPanel>
+        <ScrollViewer Grid.Column="0">
+            <StackPanel>
+                <TextBlock Text="Дедпул" FontSize="45" Margin="25, 10"></TextBlock>
+                <Image x:Name="imageControl" Stretch="UniformToFill" Height="500">
+                    <Image.OpacityMask>
+                        <VisualBrush Stretch="Uniform">
+                            <VisualBrush.Visual>
+                                <Image Source="{Binding ElementName=imageControl, Path=Source}"/>
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Image.OpacityMask>
+                </Image>
+                <TextBlock  Margin="25, 10, 25, 25" FontSize="22" TextWrapping="Wrap" Text="Уэйд Уилсон — наёмник. Будучи побочным продуктом программы вооружённых сил под названием «Оружие X», Уилсон приобрёл невероятную силу, проворство и способность к исцелению. Но страшной ценой: его клеточная структура постоянно меняется, а здравомыслие сомнительно. Всё, чего Уилсон хочет, — это держаться на плаву в социальной выгребной яме. Но течение в ней слишком быстрое."></TextBlock>
+                <TextBlock  Margin="25, 10, 25, 25" FontSize="26" Text="Актеры:" FontWeight="Bold"></TextBlock>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <WrapPanel x:Name="actorWrapPanel" Orientation="Horizontal" />
+                </ScrollViewer>
+            </StackPanel>
+        </ScrollViewer>
         <StackPanel Grid.Column="1">
             <Viewbox Margin="25, 20">
-                <Calendar Name="calendar" SelectionMode="SingleDate"/>
+                <Calendar x:Name="calendar" SelectionMode="SingleDate" CalendarDayButtonStyle="{StaticResource CustomCalendarDayButtonStyle}" />
             </Viewbox>
-            <ListBox Name="sessionListBox" Margin="25, 20">
+            <ListBox Name="sessionListBox" Margin="25, 20" SelectionChanged="sessionListBox_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding}" />

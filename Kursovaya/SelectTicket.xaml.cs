@@ -26,7 +26,7 @@ namespace Kursovaya
     {
         int countTickets = 0;
         int allPrice = 0;
-        int idMovie;
+        int idSession = MainWindow.idSelectSeans;
         List<int> idReservedPlaces = new List<int>(); 
         private List<Grid> gridList = new List<Grid>();
         private List<Grid> CountList1 = new List<Grid>();
@@ -39,7 +39,6 @@ namespace Kursovaya
             CountList2.AddRange(new List<List<Grid>> { new List<Grid> { Parter2 }, new List<Grid> { Amfitheater2, Amfitheater4 }, new List<Grid> { Mezzaine3, Mezzaine5 }, new List<Grid> { Balcony3, Balcony5 } });
             //CreatePlace();
             //MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-            idMovie = MainWindow.idSelectMovie;
             CreateRowsAndColumns();
             LoadSeatLayout();
             
@@ -150,7 +149,7 @@ namespace Kursovaya
             {
 
                 List<Sessions> sessions = context.Sessions.ToList();
-                Sessions session = sessions.Where(p => p.Performance.ID == idMovie).FirstOrDefault();
+                Sessions session = sessions.Where(p => p.ID == idSession).FirstOrDefault();
                 TitleMovie.Text = Convert.ToString(session.Performance.Name);
 
                 var query = context.Place.Where(p => p.HallsID == session.HallsID);
@@ -326,7 +325,7 @@ namespace Kursovaya
                     
                     Tickets newTicket = new Tickets
                     {
-                        SessionsID = idMovie,
+                        SessionsID = idSession,
                         UserID = MainWindow.sessionUser.ID,
                         PlaceID = id_rp,
                         Date = DateTime.Now

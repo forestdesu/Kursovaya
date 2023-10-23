@@ -24,9 +24,9 @@ namespace Kursovaya
         }
     
         public int ID { get; set; }
-        public int HallsID { get; set; }
         public int PerformanceID { get; set; }
         public int PriceTimeID { get; set; }
+        public int HallsID { get; set; }
         public System.DateTime DateBegin { get; set; }
         public System.DateTime DateEnd { get; set; }
     
