@@ -85,7 +85,7 @@ namespace Kursovaya
                         TextAlignment = TextAlignment.Center
                     };
 
-                    var genres3 = context.Genres.Where(p => p.Script.Any(b => b.Sessions.Any(s => s.ID == item.ID))).Select(a => a.Name).ToList();
+                    var genres3 = await context.Genres.Where(p => p.Script.Any(b => b.Sessions.Any(s => s.ID == item.ID))).Select(a => a.Name).ToListAsync();
 
                     // Создаем TextBlock для описания
                     TextBlock descriptionTextBlock = new TextBlock
