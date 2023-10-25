@@ -5,31 +5,62 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Kursovaya"
       mc:Ignorable="d" 
-      d:DesignHeight="700" d:DesignWidth="800"
+      d:DesignHeight="500" d:DesignWidth="800"
       Title="SelectMovie">
 
     <Page.Resources>
-        
+
     </Page.Resources>
 
-    <Grid Background="White">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="70*"/>
-            <ColumnDefinition Width="30*"/>
-        </Grid.ColumnDefinitions>
-        <TextBlock Grid.Column="0" HorizontalAlignment="Left" Margin="25,25,0,0" TextWrapping="Wrap" Text="Выбор фильма" VerticalAlignment="Top" FontSize="24"/>
-        <WrapPanel Grid.Column="0" Margin="25, 75, 25, 0" x:Name="Movies">
+    <Grid>
+        <Grid HorizontalAlignment="Center" MaxWidth="1000">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="30*"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Margin="10" CornerRadius="5" Background="white">
+                <Grid Margin="15, 10">
+                    <TextBlock HorizontalAlignment="Left" Text="Выбор фильма" VerticalAlignment="Top" FontSize="20"/>
+                    <Border BorderBrush="#dcdcdc" BorderThickness="1" CornerRadius="2" Margin="0, 35, 0, 10" Height="30" VerticalAlignment="Top">
+                        <TextBox x:Name="userLogin" Style="{StaticResource PlaceholderTextBox}" Background="Transparent" local:TextBoxHelper.Placeholder="Поиск по названию..." VerticalAlignment="Center"></TextBox>
+                    </Border>
+                    <WrapPanel Margin="0, 80, 0, 0" x:Name="Movies">
 
-        </WrapPanel>
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="25,30,0,0" TextWrapping="Wrap" Text="Фильтры" VerticalAlignment="Top" FontSize="20"/>
-        <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="25,75,25,0">
-            <ComboBox Name="comboBox" Width="200">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="asd" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-        </StackPanel>
+                    </WrapPanel>
+                </Grid>
+            </Border>
+            <Border Grid.Column="1" Margin="10" CornerRadius="5" Background="white">
+                <Grid Margin="15, 10, 15, 10">
+                    <TextBlock HorizontalAlignment="Left" Text="Фильтры" VerticalAlignment="Top" FontSize="20"/>
+                    <StackPanel Name="SP1">
+                        <Grid MouseLeftButtonUp="SelectGenreButton_Click" VerticalAlignment="Top" Margin="0, 35">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Жанры" FontSize="13" Grid.Column="0"></TextBlock>
+                            <TextBlock Text="Любые" Margin="5, 0" x:Name="SelectedGenres" Grid.Column="1" VerticalAlignment="Center" TextAlignment="Right" Foreground="Gray"></TextBlock>
+                            <TextBlock Text="→"  Foreground="Gray" VerticalAlignment="Center" Grid.Column="2"></TextBlock>
+                        </Grid>
+                    </StackPanel>
+                    <Grid VerticalAlignment="Bottom" Margin="0, 0, 0, 5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50*"/>
+                            <ColumnDefinition Width="50*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Margin="5, 0" CornerRadius="2" Grid.Column="0" Background="#e0e1e2">
+                            <Button BorderBrush="Transparent" Background="Transparent" Foreground="#5a5d5f" Content="Сбросить" FontWeight="SemiBold"></Button>
+                        </Border>
+                        <Border Margin="5, 0" CornerRadius="2" Grid.Column="1" Background="#3cce7b">
+                            <Button BorderBrush="Transparent" Background="Transparent" Foreground="White" Content="Показать" FontWeight="SemiBold"></Button>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </Border>
+            <StackPanel Name="SP2" Visibility="Collapsed" Grid.Column="1" VerticalAlignment="Top" Margin="25,75,25,0">
+                <local:SelectGenres x:Name="genresSelect" Visibility="Collapsed"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

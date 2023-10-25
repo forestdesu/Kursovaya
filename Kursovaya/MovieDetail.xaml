@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Kursovaya"
       mc:Ignorable="d" 
-      d:DesignHeight="1030" d:DesignWidth="1980"
+      d:DesignHeight="700" d:DesignWidth="1600"
       Title="MovieDetail">
 
     <Page.Resources>
@@ -33,44 +33,59 @@
             </Style.Triggers>
         </Style>
     </Page.Resources>
-    <Grid Background="white">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="65*"/>
-            <ColumnDefinition Width="35*"/>
-        </Grid.ColumnDefinitions>
-        <ScrollViewer Grid.Column="0">
-            <StackPanel>
-                <TextBlock x:Name="Title" Text="Дедпул" FontSize="45" Margin="25, 10"></TextBlock>
-                <Image x:Name="imageControl" Stretch="UniformToFill" Height="500">
-                    <Image.OpacityMask>
-                        <VisualBrush Stretch="Uniform">
-                            <VisualBrush.Visual>
-                                <Image Source="{Binding ElementName=imageControl, Path=Source}"/>
-                            </VisualBrush.Visual>
-                        </VisualBrush>
-                    </Image.OpacityMask>
-                </Image>
-                <TextBlock x:Name="Desc" Margin="25, 10, 25, 25" FontSize="22" TextWrapping="Wrap" Text="Уэйд Уилсон — наёмник. Будучи побочным продуктом программы вооружённых сил под названием «Оружие X», Уилсон приобрёл невероятную силу, проворство и способность к исцелению. Но страшной ценой: его клеточная структура постоянно меняется, а здравомыслие сомнительно. Всё, чего Уилсон хочет, — это держаться на плаву в социальной выгребной яме. Но течение в ней слишком быстрое."></TextBlock>
-                <TextBlock  Margin="25, 10, 25, 25" FontSize="26" Text="Актеры:" FontWeight="Bold"></TextBlock>
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <WrapPanel x:Name="actorWrapPanel" Orientation="Horizontal" />
-                </ScrollViewer>
+    <Grid Name="Container">
+        <Grid Width="{Binding ElementName=Container,Path=ActualWidth}" HorizontalAlignment="Center" MaxWidth="1000">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="30*"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Margin="10" CornerRadius="5" Background="#1c1c1e">
+                <Grid Margin="15, 10">
+                    <ScrollViewer Grid.Column="0">
+                        <StackPanel>
+                            <TextBlock x:Name="Title" Text="Дедпул" FontSize="45" Margin="25, 10"></TextBlock>
+                            <Image x:Name="imageControl" Stretch="UniformToFill" Height="500">
+                                <Image.OpacityMask>
+                                    <VisualBrush Stretch="Uniform">
+                                        <VisualBrush.Visual>
+                                            <Image Source="{Binding ElementName=imageControl, Path=Source}"/>
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </Image.OpacityMask>
+                            </Image>
+                            <TextBlock x:Name="Desc" Margin="25, 10, 25, 25" FontSize="22" TextWrapping="Wrap" Text="Уэйд Уилсон — наёмник. Будучи побочным продуктом программы вооружённых сил под названием «Оружие X», Уилсон приобрёл невероятную силу, проворство и способность к исцелению. Но страшной ценой: его клеточная структура постоянно меняется, а здравомыслие сомнительно. Всё, чего Уилсон хочет, — это держаться на плаву в социальной выгребной яме. Но течение в ней слишком быстрое."></TextBlock>
+                            <TextBlock  Margin="25, 10, 25, 25" FontSize="26" Text="Актеры:" FontWeight="Bold"></TextBlock>
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <WrapPanel x:Name="actorWrapPanel" Orientation="Horizontal" />
+                            </ScrollViewer>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+            <Border Grid.Column="1" Margin="10" CornerRadius="5" Background="#1c1c1e">
+                <Grid Margin="15, 10, 15, 10">
+                    <StackPanel Grid.Column="1">
+                        <Viewbox>
+                            <Calendar x:Name="calendar" SelectionMode="SingleDate" CalendarDayButtonStyle="{StaticResource CustomCalendarDayButtonStyle}" />
+                        </Viewbox>
+                        <ListBox Background="#141414" BorderBrush="Transparent" Name="sessionListBox" SelectionChanged="sessionListBox_SelectionChanged" MinHeight="150" Margin="0, 10">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <Border Margin="5, 0" CornerRadius="2" Grid.Column="1" Background="#3cce7b">
+                            <Button BorderBrush="Transparent" Background="Transparent" Foreground="White" Content="Купить билет" Click="BuyTicketButton_Click" FontWeight="SemiBold"></Button>
+                        </Border>
+
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <StackPanel Name="SP2" Visibility="Collapsed" Grid.Column="1" VerticalAlignment="Top" Margin="25,75,25,0">
+                <local:SelectGenres x:Name="genresSelect" Visibility="Collapsed"/>
             </StackPanel>
-        </ScrollViewer>
-        <StackPanel Grid.Column="1">
-            <Viewbox Margin="25, 20">
-                <Calendar x:Name="calendar" SelectionMode="SingleDate" CalendarDayButtonStyle="{StaticResource CustomCalendarDayButtonStyle}" />
-            </Viewbox>
-            <ListBox Name="sessionListBox" Margin="25, 20" SelectionChanged="sessionListBox_SelectionChanged" MinHeight="200">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding}" />
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-
-            <Button Content="Купить билет" Width="100" Height="30" Click="BuyTicketButton_Click" />
-
-        </StackPanel>
+        </Grid>
     </Grid>
 </Page>

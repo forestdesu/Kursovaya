@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace Kursovaya
         {
             InitializeComponent();
             GenerateMovies();
-            Console.WriteLine(MainWindow.sessionUser.Fullname);
+            genresSelect.btnSelectGenres.Click += ShowSP1;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -44,6 +45,31 @@ namespace Kursovaya
 
             Frame frame = LogicalTreeHelper.FindLogicalNode(parentWindow, "MainFrame") as Frame;
             frame.Navigate(new MovieDetail());
+        }
+
+        private void SelectGenreButton_Click(object sender, RoutedEventArgs e)
+        {
+            SP1.Visibility = Visibility.Collapsed;
+            SP2.Visibility = Visibility.Visible;
+            genresSelect.Visibility = Visibility.Visible;           
+        }
+
+        private void ShowSP1(object sender, RoutedEventArgs e)
+        {
+            SP1.Visibility = Visibility.Visible;
+            SP2.Visibility = Visibility.Collapsed;
+            genresSelect.Visibility = Visibility.Collapsed;
+            genresSelect.SelectGenresButton_Click();
+            List<string> selectedGenres = genresSelect.SelectedGenres;
+            if (string.Join(", ", selectedGenres) == "")
+            {
+                SelectedGenres.Text = "Любые";
+            }
+            else
+            {
+                SelectedGenres.Text = string.Join(", ", selectedGenres);
+            }
+            
         }
 
         private async Task GenerateMovies()

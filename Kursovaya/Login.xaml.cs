@@ -49,7 +49,7 @@ namespace Kursovaya
                                 // Вернуться на главный поток для обновления интерфейса
                                 System.Windows.Application.Current.Dispatcher.Invoke(() =>
                                 {
-                                    //LoginSuccess(DataUser);
+                                    LoginSuccess(DataUser);
                                 });
                             }
                             else

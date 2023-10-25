@@ -107,6 +107,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -205,6 +206,9 @@
     <Compile Include="Sectors.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="SelectGenres.xaml.cs">
+      <DependentUpon>SelectGenres.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SelectMovie.xaml.cs">
       <DependentUpon>SelectMovie.xaml</DependentUpon>
     </Compile>
@@ -267,6 +271,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SelectGenres.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SelectMovie.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -325,6 +333,9 @@
     <Resource Include="deadpool-11.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="tickets.png" />
+    <Resource Include="list.png" />
+    <Resource Include="logout.png" />
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -335,6 +346,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Resource Include="profile.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.AspNetCore.Components.Analyzers.3.1.32\build\netstandard2.0\Microsoft.AspNetCore.Components.Analyzers.targets" Condition="Exists('..\packages\Microsoft.AspNetCore.Components.Analyzers.3.1.32\build\netstandard2.0\Microsoft.AspNetCore.Components.Analyzers.targets')" />

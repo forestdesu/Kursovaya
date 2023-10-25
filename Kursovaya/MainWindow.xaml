@@ -13,7 +13,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Background="#bae3e8" Grid.Row="0" Panel.ZIndex="-2">
+        <Grid Background="#E48F13" Grid.Row="0" Panel.ZIndex="-2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="10"/>
@@ -24,18 +24,18 @@
                 <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Background="Transparent" BorderBrush="Transparent">
-                <Image Source="C:\Users\Work\source\repos\Kursovaya\Kursovaya\bin\Debug\profile.png"/>
+                <Image Source="/profile.png"/>
             </Button>
             <Button Grid.Column="2" Background="Transparent" BorderBrush="Transparent" Click="Button_Click">
-                <Image Source="C:\Users\Work\source\repos\Kursovaya\Kursovaya\bin\Debug\list.png"/>
+                <Image Source="/list.png"/>
             </Button>
             <Button Grid.Column="4" Background="Transparent" BorderBrush="Transparent" Click="Button_Click_1">
-                <Image Source="C:\Users\Work\source\repos\Kursovaya\Kursovaya\bin\Debug\tickets.png"/>
+                <Image Source="/tickets.png"/>
             </Button>
             <Button Grid.Column="7" Background="Transparent" BorderBrush="Transparent" Click="Logout">
-                <Image Source="C:\Users\Work\source\repos\Kursovaya\Kursovaya\bin\Debug\logout.png"/>
+                <Image Source="/logout.png"/>
             </Button>
         </Grid>
-        <Frame Name="MainFrame" NavigationUIVisibility='Hidden' Grid.Row="1"></Frame>
+        <Frame Background="#f2f2f3" Name="MainFrame" NavigationUIVisibility='Hidden' Grid.Row="1"></Frame>
     </Grid>
 </Window>
