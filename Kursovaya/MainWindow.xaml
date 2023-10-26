@@ -13,7 +13,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Background="#E48F13" Grid.Row="0" Panel.ZIndex="-2">
+        <Grid Background="#1c1c1e" Grid.Row="0" Panel.ZIndex="-2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="10"/>
@@ -36,6 +36,6 @@
                 <Image Source="/logout.png"/>
             </Button>
         </Grid>
-        <Frame Background="#f2f2f3" Name="MainFrame" NavigationUIVisibility='Hidden' Grid.Row="1"></Frame>
+        <Frame Background="#141414" Name="MainFrame" NavigationUIVisibility='Hidden' Grid.Row="1"></Frame>
     </Grid>
 </Window>

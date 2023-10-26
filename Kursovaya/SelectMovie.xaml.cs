@@ -25,7 +25,7 @@ namespace Kursovaya
         public SelectMovie()
         {
             InitializeComponent();
-            GenerateMovies();
+            //GenerateMovies();
             genresSelect.btnSelectGenres.Click += ShowSP1;
         }
 

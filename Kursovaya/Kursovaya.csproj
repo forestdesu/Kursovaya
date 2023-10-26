@@ -336,6 +336,7 @@
     <Resource Include="tickets.png" />
     <Resource Include="list.png" />
     <Resource Include="logout.png" />
+    <Resource Include="1.jpg" />
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
