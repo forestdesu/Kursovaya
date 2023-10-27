@@ -20,17 +20,17 @@
             </Grid.ColumnDefinitions>
             <Border Grid.Column="0" Margin="10" CornerRadius="5" Background="#1c1c1e">
                 <Grid Margin="15, 10">
-                    <TextBlock HorizontalAlignment="Left" Text="Выбор фильма" VerticalAlignment="Top" FontSize="20"/>
-                    <Border BorderBrush="#dcdcdc" BorderThickness="1" CornerRadius="2" Margin="0, 35, 0, 10" Height="30" VerticalAlignment="Top">
+                    <TextBlock HorizontalAlignment="Left" Text="Выбор фильма" VerticalAlignment="Top" FontSize="26"/>
+                    <Border BorderBrush="#dcdcdc" BorderThickness="1" CornerRadius="2" Margin="0, 50, 0, 10" Height="30" VerticalAlignment="Top">
                         <TextBox x:Name="userLogin" Style="{StaticResource PlaceholderTextBox}" Background="Transparent" local:TextBoxHelper.Placeholder="Поиск по названию..." VerticalAlignment="Center"></TextBox>
                     </Border>
-                    <Grid Margin="0, 80, 0, 0" x:Name="Movies">
+                    <Grid Margin="0, 100, 0, 0" x:Name="Movies">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="49*"/>
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="49*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Background="#141414" Height="250" VerticalAlignment="Top" CornerRadius="5">
+                        <Border Background="#141414" Height="200" VerticalAlignment="Top" CornerRadius="5">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="40*"/>
@@ -38,7 +38,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Border CornerRadius="5,0,0,5" Grid.Column="0">
                                     <Border.Background>
-                                        <ImageBrush Stretch="Fill" ImageSource="C:\Users\Work\source\repos\Kursovaya\Kursovaya\1.jpg"/>
+                                        <ImageBrush Stretch="Fill" ImageSource="/1.jpg"/>
                                     </Border.Background>
                                 </Border>
                                 <Grid Grid.Column="1" Margin="20, 5, 20, 10">
@@ -46,7 +46,7 @@
                                     <StackPanel VerticalAlignment="Center">
                                         <TextBlock Text="Идиот" FontSize="24" FontWeight="Bold"></TextBlock>
                                         <TextBlock Text="Психология, философия, роман, религия, духовенство" TextWrapping="Wrap" FontSize="14" Foreground="#9da2a6"></TextBlock>
-                                        <TextBlock Margin="0, 15, 0, 0" VerticalAlignment="Bottom" TextWrapping="Wrap" FontSize="18" Foreground="#9da2a6" Text='Главный герой возвращается в Россию после лечения за границей и носит репутацию "идиота" из-за своей невероятной доброты и чистосердечности.'></TextBlock>
+                                        <TextBlock Margin="0, 15, 0, 0" VerticalAlignment="Bottom" TextWrapping="Wrap" FontSize="16" Foreground="#9da2a6" Text='Главный герой возвращается в Россию после лечения за границей и носит репутацию "идиота" из-за своей невероятной доброты и чистосердечности.'></TextBlock>
                                     </StackPanel>
                                     
                                 </Grid>
@@ -57,17 +57,17 @@
             </Border>
             <Border Grid.Column="1" Margin="10" CornerRadius="5" Background="#1c1c1e">
                 <Grid Margin="15, 10, 15, 10">
-                    <TextBlock HorizontalAlignment="Left" Text="Фильтры" VerticalAlignment="Top" FontSize="20"/>
+                    <TextBlock HorizontalAlignment="Left" Text="Фильтры" VerticalAlignment="Top" FontSize="26"/>
                     <StackPanel Name="SP1">
-                        <Grid MouseLeftButtonUp="SelectGenreButton_Click" VerticalAlignment="Top" Margin="0, 35">
+                        <Grid MouseLeftButtonUp="SelectGenreButton_Click" VerticalAlignment="Top" Margin="0, 50">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Жанры" FontSize="13" Grid.Column="0"></TextBlock>
-                            <TextBlock Text="Любые" Margin="5, 0" x:Name="SelectedGenres" Grid.Column="1" VerticalAlignment="Center" TextAlignment="Right" Foreground="Gray"></TextBlock>
-                            <TextBlock Text="→"  Foreground="Gray" VerticalAlignment="Center" Grid.Column="2"></TextBlock>
+                            <TextBlock Text="Жанры" FontSize="16" Grid.Column="0"></TextBlock>
+                            <TextBlock Text="Любые" FontSize="16" Margin="5, 0" x:Name="SelectedGenres" Grid.Column="1" VerticalAlignment="Center" TextAlignment="Right" Foreground="Gray"></TextBlock>
+                            <TextBlock Text="→" FontSize="16" Foreground="Gray" VerticalAlignment="Center" Grid.Column="2"></TextBlock>
                         </Grid>
                     </StackPanel>
                     <Grid VerticalAlignment="Bottom" Margin="0, 0, 0, 5">
@@ -75,11 +75,11 @@
                             <ColumnDefinition Width="50*"/>
                             <ColumnDefinition Width="50*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Margin="5, 0" CornerRadius="2" Grid.Column="0" Background="#e0e1e2">
-                            <Button BorderBrush="Transparent" Background="Transparent" Foreground="#5a5d5f" Content="Сбросить" FontWeight="SemiBold"></Button>
+                        <Border Margin="5, 5" CornerRadius="2" Grid.Column="0" Background="#2d2d2d">
+                            <Button BorderBrush="Transparent" Background="Transparent" Foreground="#babbbd" Content="Сбросить" FontSize="16" FontWeight="SemiBold"></Button>
                         </Border>
-                        <Border Margin="5, 0" CornerRadius="2" Grid.Column="1" Background="#3cce7b">
-                            <Button BorderBrush="Transparent" Background="Transparent" Foreground="White" Content="Показать" FontWeight="SemiBold"></Button>
+                        <Border Margin="5, 5" CornerRadius="2" Grid.Column="1" Background="#3cce7b">
+                            <Button BorderBrush="Transparent" Background="Transparent" Foreground="White" Content="Показать" FontSize="16" FontWeight="SemiBold"></Button>
                         </Border>
                     </Grid>
                 </Grid>
