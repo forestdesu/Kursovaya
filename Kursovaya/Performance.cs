@@ -18,6 +18,7 @@ namespace Kursovaya
         public Performance()
         {
             this.Sessions = new HashSet<Sessions>();
+            this.Genres = new HashSet<Genres>();
             this.Script = new HashSet<Script>();
         }
     
@@ -27,9 +28,13 @@ namespace Kursovaya
         public string Description { get; set; }
         public string Img { get; set; }
         public decimal Price { get; set; }
+        public int SeasonID { get; set; }
     
+        public virtual Seasons Seasons { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sessions> Sessions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Genres> Genres { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Script> Script { get; set; }
     }

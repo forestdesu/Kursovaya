@@ -20,7 +20,6 @@ namespace Kursovaya
             this.Stat = new HashSet<Stat>();
             this.Tickets = new HashSet<Tickets>();
             this.Personal = new HashSet<Personal>();
-            this.Script = new HashSet<Script>();
         }
     
         public int ID { get; set; }
@@ -39,7 +38,5 @@ namespace Kursovaya
         public virtual ICollection<Tickets> Tickets { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Personal> Personal { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Script> Script { get; set; }
     }
 }

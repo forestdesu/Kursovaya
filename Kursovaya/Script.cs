@@ -18,23 +18,14 @@ namespace Kursovaya
         public Script()
         {
             this.Performance = new HashSet<Performance>();
-            this.Genres = new HashSet<Genres>();
-            this.Sessions = new HashSet<Sessions>();
         }
     
         public int ID { get; set; }
         public string Name { get; set; }
         public string Img { get; set; }
         public string Description { get; set; }
-        public int SeasonID { get; set; }
-        public System.TimeSpan Duration { get; set; }
     
-        public virtual Seasons Seasons { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Performance> Performance { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Genres> Genres { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Sessions> Sessions { get; set; }
     }
 }

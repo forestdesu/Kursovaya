@@ -40,6 +40,15 @@
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
           <Property Name="Img" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Price" Type="money" Nullable="false" />
+          <Property Name="SeasonID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PerformanceAndGenres">
+          <Key>
+            <PropertyRef Name="PerformanceID" />
+            <PropertyRef Name="GenresID" />
+          </Key>
+          <Property Name="PerformanceID" Type="int" Nullable="false" />
+          <Property Name="GenresID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PerformanceAndScript">
           <Key>
@@ -92,16 +101,6 @@
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Img" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="300" />
-          <Property Name="SeasonID" Type="int" Nullable="false" />
-          <Property Name="Duration" Type="time" Precision="7" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ScriptAndGenres">
-          <Key>
-            <PropertyRef Name="ScriptID" />
-            <PropertyRef Name="GenresID" />
-          </Key>
-          <Property Name="ScriptID" Type="int" Nullable="false" />
-          <Property Name="GenresID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Seasons">
           <Key>
@@ -138,14 +137,6 @@
           </Key>
           <Property Name="SessionsID" Type="int" Nullable="false" />
           <Property Name="PersonalID" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="SessionsAndScript">
-          <Key>
-            <PropertyRef Name="SessionsID" />
-            <PropertyRef Name="ScriptID" />
-          </Key>
-          <Property Name="SessionsID" Type="int" Nullable="false" />
-          <Property Name="ScriptID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Stat">
           <Key>
@@ -190,7 +181,31 @@
           <Property Name="Password" Type="nvarchar" MaxLength="25" Nullable="false" />
           <Property Name="TypeOfUserID" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Performan__Perfo__5FB337D6">
+        <Association Name="FK__Performan__Genre__59063A47">
+          <End Role="Genres" Type="Self.Genres" Multiplicity="1" />
+          <End Role="PerformanceAndGenres" Type="Self.PerformanceAndGenres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PerformanceAndGenres">
+              <PropertyRef Name="GenresID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Performan__Perfo__5812160E">
+          <End Role="Performance" Type="Self.Performance" Multiplicity="1" />
+          <End Role="PerformanceAndGenres" Type="Self.PerformanceAndGenres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Performance">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PerformanceAndGenres">
+              <PropertyRef Name="PerformanceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Performan__Perfo__5BE2A6F2">
           <End Role="Performance" Type="Self.Performance" Multiplicity="1" />
           <End Role="PerformanceAndScript" Type="Self.PerformanceAndScript" Multiplicity="*" />
           <ReferentialConstraint>
@@ -202,7 +217,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Performan__Scrip__60A75C0F">
+        <Association Name="FK__Performan__Scrip__5CD6CB2B">
           <End Role="Script" Type="Self.Script" Multiplicity="1" />
           <End Role="PerformanceAndScript" Type="Self.PerformanceAndScript" Multiplicity="*" />
           <ReferentialConstraint>
@@ -211,6 +226,18 @@
             </Principal>
             <Dependent Role="PerformanceAndScript">
               <PropertyRef Name="ScriptID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Performan__Seaso__5070F446">
+          <End Role="Seasons" Type="Self.Seasons" Multiplicity="1" />
+          <End Role="Performance" Type="Self.Performance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seasons">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Performance">
+              <PropertyRef Name="SeasonID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -226,7 +253,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Place__HallsID__6754599E">
+        <Association Name="FK__Place__HallsID__6383C8BA">
           <End Role="Halls" Type="Self.Halls" Multiplicity="1" />
           <End Role="Place" Type="Self.Place" Multiplicity="*" />
           <ReferentialConstraint>
@@ -238,7 +265,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Place__SectorID__68487DD7">
+        <Association Name="FK__Place__SectorID__6477ECF3">
           <End Role="Sectors" Type="Self.Sectors" Multiplicity="1" />
           <End Role="Place" Type="Self.Place" Multiplicity="*" />
           <ReferentialConstraint>
@@ -247,42 +274,6 @@
             </Principal>
             <Dependent Role="Place">
               <PropertyRef Name="SectorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Script__SeasonID__48CFD27E">
-          <End Role="Seasons" Type="Self.Seasons" Multiplicity="1" />
-          <End Role="Script" Type="Self.Script" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Seasons">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Script">
-              <PropertyRef Name="SeasonID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__ScriptAnd__Genre__59063A47">
-          <End Role="Genres" Type="Self.Genres" Multiplicity="1" />
-          <End Role="ScriptAndGenres" Type="Self.ScriptAndGenres" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Genres">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ScriptAndGenres">
-              <PropertyRef Name="GenresID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__ScriptAnd__Scrip__5812160E">
-          <End Role="Script" Type="Self.Script" Multiplicity="1" />
-          <End Role="ScriptAndGenres" Type="Self.ScriptAndGenres" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Script">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ScriptAndGenres">
-              <PropertyRef Name="ScriptID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -334,7 +325,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SessionsA__Perso__6477ECF3">
+        <Association Name="FK__SessionsA__Perso__60A75C0F">
           <End Role="Personal" Type="Self.Personal" Multiplicity="1" />
           <End Role="SessionsAndPersonal" Type="Self.SessionsAndPersonal" Multiplicity="*" />
           <ReferentialConstraint>
@@ -346,31 +337,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SessionsA__Scrip__5CD6CB2B">
-          <End Role="Script" Type="Self.Script" Multiplicity="1" />
-          <End Role="SessionsAndScript" Type="Self.SessionsAndScript" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Script">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="SessionsAndScript">
-              <PropertyRef Name="ScriptID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__SessionsA__Sessi__5BE2A6F2">
-          <End Role="Sessions" Type="Self.Sessions" Multiplicity="1" />
-          <End Role="SessionsAndScript" Type="Self.SessionsAndScript" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sessions">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="SessionsAndScript">
-              <PropertyRef Name="SessionsID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__SessionsA__Sessi__6383C8BA">
+        <Association Name="FK__SessionsA__Sessi__5FB337D6">
           <End Role="Sessions" Type="Self.Sessions" Multiplicity="1" />
           <End Role="SessionsAndPersonal" Type="Self.SessionsAndPersonal" Multiplicity="*" />
           <ReferentialConstraint>
@@ -382,7 +349,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Stat__SessionsID__6FE99F9F">
+        <Association Name="FK__Stat__SessionsID__6C190EBB">
           <End Role="Sessions" Type="Self.Sessions" Multiplicity="1" />
           <End Role="Stat" Type="Self.Stat" Multiplicity="*" />
           <ReferentialConstraint>
@@ -394,7 +361,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tickets__PlaceID__6D0D32F4">
+        <Association Name="FK__Tickets__PlaceID__693CA210">
           <End Role="Place" Type="Self.Place" Multiplicity="1" />
           <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
           <ReferentialConstraint>
@@ -406,7 +373,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tickets__Session__6B24EA82">
+        <Association Name="FK__Tickets__Session__6754599E">
           <End Role="Sessions" Type="Self.Sessions" Multiplicity="1" />
           <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
           <ReferentialConstraint>
@@ -418,7 +385,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tickets__UserID__6C190EBB">
+        <Association Name="FK__Tickets__UserID__68487DD7">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
           <ReferentialConstraint>
@@ -430,7 +397,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__TypeOfUse__4E88ABD4">
+        <Association Name="FK__Users__TypeOfUse__4D94879B">
           <End Role="TypeOfUser" Type="Self.TypeOfUser" Multiplicity="1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -447,53 +414,52 @@
           <EntitySet Name="Halls" EntityType="Self.Halls" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Jobs" EntityType="Self.Jobs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Performance" EntityType="Self.Performance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PerformanceAndGenres" EntityType="Self.PerformanceAndGenres" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PerformanceAndScript" EntityType="Self.PerformanceAndScript" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Personal" EntityType="Self.Personal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Place" EntityType="Self.Place" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PriceCategory" EntityType="Self.PriceCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PriceTime" EntityType="Self.PriceTime" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Script" EntityType="Self.Script" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ScriptAndGenres" EntityType="Self.ScriptAndGenres" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seasons" EntityType="Self.Seasons" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sectors" EntityType="Self.Sectors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sessions" EntityType="Self.Sessions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SessionsAndPersonal" EntityType="Self.SessionsAndPersonal" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SessionsAndScript" EntityType="Self.SessionsAndScript" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stat" EntityType="Self.Stat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tickets" EntityType="Self.Tickets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeOfUser" EntityType="Self.TypeOfUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Performan__Perfo__5FB337D6" Association="Self.FK__Performan__Perfo__5FB337D6">
+          <AssociationSet Name="FK__Performan__Genre__59063A47" Association="Self.FK__Performan__Genre__59063A47">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="PerformanceAndGenres" EntitySet="PerformanceAndGenres" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Performan__Perfo__5812160E" Association="Self.FK__Performan__Perfo__5812160E">
+            <End Role="Performance" EntitySet="Performance" />
+            <End Role="PerformanceAndGenres" EntitySet="PerformanceAndGenres" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Performan__Perfo__5BE2A6F2" Association="Self.FK__Performan__Perfo__5BE2A6F2">
             <End Role="Performance" EntitySet="Performance" />
             <End Role="PerformanceAndScript" EntitySet="PerformanceAndScript" />
           </AssociationSet>
-          <AssociationSet Name="FK__Performan__Scrip__60A75C0F" Association="Self.FK__Performan__Scrip__60A75C0F">
+          <AssociationSet Name="FK__Performan__Scrip__5CD6CB2B" Association="Self.FK__Performan__Scrip__5CD6CB2B">
             <End Role="Script" EntitySet="Script" />
             <End Role="PerformanceAndScript" EntitySet="PerformanceAndScript" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Performan__Seaso__5070F446" Association="Self.FK__Performan__Seaso__5070F446">
+            <End Role="Seasons" EntitySet="Seasons" />
+            <End Role="Performance" EntitySet="Performance" />
           </AssociationSet>
           <AssociationSet Name="FK__Personal__JobID__45F365D3" Association="Self.FK__Personal__JobID__45F365D3">
             <End Role="Jobs" EntitySet="Jobs" />
             <End Role="Personal" EntitySet="Personal" />
           </AssociationSet>
-          <AssociationSet Name="FK__Place__HallsID__6754599E" Association="Self.FK__Place__HallsID__6754599E">
+          <AssociationSet Name="FK__Place__HallsID__6383C8BA" Association="Self.FK__Place__HallsID__6383C8BA">
             <End Role="Halls" EntitySet="Halls" />
             <End Role="Place" EntitySet="Place" />
           </AssociationSet>
-          <AssociationSet Name="FK__Place__SectorID__68487DD7" Association="Self.FK__Place__SectorID__68487DD7">
+          <AssociationSet Name="FK__Place__SectorID__6477ECF3" Association="Self.FK__Place__SectorID__6477ECF3">
             <End Role="Sectors" EntitySet="Sectors" />
             <End Role="Place" EntitySet="Place" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Script__SeasonID__48CFD27E" Association="Self.FK__Script__SeasonID__48CFD27E">
-            <End Role="Seasons" EntitySet="Seasons" />
-            <End Role="Script" EntitySet="Script" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ScriptAnd__Genre__59063A47" Association="Self.FK__ScriptAnd__Genre__59063A47">
-            <End Role="Genres" EntitySet="Genres" />
-            <End Role="ScriptAndGenres" EntitySet="ScriptAndGenres" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ScriptAnd__Scrip__5812160E" Association="Self.FK__ScriptAnd__Scrip__5812160E">
-            <End Role="Script" EntitySet="Script" />
-            <End Role="ScriptAndGenres" EntitySet="ScriptAndGenres" />
           </AssociationSet>
           <AssociationSet Name="FK__Sectors__PriceCa__412EB0B6" Association="Self.FK__Sectors__PriceCa__412EB0B6">
             <End Role="PriceCategory" EntitySet="PriceCategory" />
@@ -511,39 +477,31 @@
             <End Role="PriceTime" EntitySet="PriceTime" />
             <End Role="Sessions" EntitySet="Sessions" />
           </AssociationSet>
-          <AssociationSet Name="FK__SessionsA__Perso__6477ECF3" Association="Self.FK__SessionsA__Perso__6477ECF3">
+          <AssociationSet Name="FK__SessionsA__Perso__60A75C0F" Association="Self.FK__SessionsA__Perso__60A75C0F">
             <End Role="Personal" EntitySet="Personal" />
             <End Role="SessionsAndPersonal" EntitySet="SessionsAndPersonal" />
           </AssociationSet>
-          <AssociationSet Name="FK__SessionsA__Scrip__5CD6CB2B" Association="Self.FK__SessionsA__Scrip__5CD6CB2B">
-            <End Role="Script" EntitySet="Script" />
-            <End Role="SessionsAndScript" EntitySet="SessionsAndScript" />
-          </AssociationSet>
-          <AssociationSet Name="FK__SessionsA__Sessi__5BE2A6F2" Association="Self.FK__SessionsA__Sessi__5BE2A6F2">
-            <End Role="Sessions" EntitySet="Sessions" />
-            <End Role="SessionsAndScript" EntitySet="SessionsAndScript" />
-          </AssociationSet>
-          <AssociationSet Name="FK__SessionsA__Sessi__6383C8BA" Association="Self.FK__SessionsA__Sessi__6383C8BA">
+          <AssociationSet Name="FK__SessionsA__Sessi__5FB337D6" Association="Self.FK__SessionsA__Sessi__5FB337D6">
             <End Role="Sessions" EntitySet="Sessions" />
             <End Role="SessionsAndPersonal" EntitySet="SessionsAndPersonal" />
           </AssociationSet>
-          <AssociationSet Name="FK__Stat__SessionsID__6FE99F9F" Association="Self.FK__Stat__SessionsID__6FE99F9F">
+          <AssociationSet Name="FK__Stat__SessionsID__6C190EBB" Association="Self.FK__Stat__SessionsID__6C190EBB">
             <End Role="Sessions" EntitySet="Sessions" />
             <End Role="Stat" EntitySet="Stat" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tickets__PlaceID__6D0D32F4" Association="Self.FK__Tickets__PlaceID__6D0D32F4">
+          <AssociationSet Name="FK__Tickets__PlaceID__693CA210" Association="Self.FK__Tickets__PlaceID__693CA210">
             <End Role="Place" EntitySet="Place" />
             <End Role="Tickets" EntitySet="Tickets" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tickets__Session__6B24EA82" Association="Self.FK__Tickets__Session__6B24EA82">
+          <AssociationSet Name="FK__Tickets__Session__6754599E" Association="Self.FK__Tickets__Session__6754599E">
             <End Role="Sessions" EntitySet="Sessions" />
             <End Role="Tickets" EntitySet="Tickets" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tickets__UserID__6C190EBB" Association="Self.FK__Tickets__UserID__6C190EBB">
+          <AssociationSet Name="FK__Tickets__UserID__68487DD7" Association="Self.FK__Tickets__UserID__68487DD7">
             <End Role="Users" EntitySet="Users" />
             <End Role="Tickets" EntitySet="Tickets" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__TypeOfUse__4E88ABD4" Association="Self.FK__Users__TypeOfUse__4E88ABD4">
+          <AssociationSet Name="FK__Users__TypeOfUse__4D94879B" Association="Self.FK__Users__TypeOfUse__4D94879B">
             <End Role="TypeOfUser" EntitySet="TypeOfUser" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
@@ -560,7 +518,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Script" Relationship="Self.ScriptAndGenres" FromRole="Genres" ToRole="Script" />
+          <NavigationProperty Name="Performance" Relationship="Self.PerformanceAndGenres" FromRole="Genres" ToRole="Performance" />
         </EntityType>
         <EntityType Name="Halls">
           <Key>
@@ -570,7 +528,7 @@
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Rows" Type="Int32" Nullable="false" />
           <Property Name="Columns" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Place" Relationship="Self.FK__Place__HallsID__6754599E" FromRole="Halls" ToRole="Place" />
+          <NavigationProperty Name="Place" Relationship="Self.FK__Place__HallsID__6383C8BA" FromRole="Halls" ToRole="Place" />
           <NavigationProperty Name="Sessions" Relationship="Self.FK__Sessions__HallsI__5535A963" FromRole="Halls" ToRole="Sessions" />
         </EntityType>
         <EntityType Name="Jobs">
@@ -592,7 +550,10 @@
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Img" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="SeasonID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Seasons" Relationship="Self.FK__Performan__Seaso__5070F446" FromRole="Performance" ToRole="Seasons" />
           <NavigationProperty Name="Sessions" Relationship="Self.FK__Sessions__Perfor__534D60F1" FromRole="Performance" ToRole="Sessions" />
+          <NavigationProperty Name="Genres" Relationship="Self.PerformanceAndGenres" FromRole="Performance" ToRole="Genres" />
           <NavigationProperty Name="Script" Relationship="Self.PerformanceAndScript" FromRole="Performance" ToRole="Script" />
         </EntityType>
         <EntityType Name="Personal">
@@ -615,9 +576,9 @@
           <Property Name="SectorID" Type="Int32" Nullable="false" />
           <Property Name="Row" Type="Int32" Nullable="false" />
           <Property Name="Column" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Halls" Relationship="Self.FK__Place__HallsID__6754599E" FromRole="Place" ToRole="Halls" />
-          <NavigationProperty Name="Sectors" Relationship="Self.FK__Place__SectorID__68487DD7" FromRole="Place" ToRole="Sectors" />
-          <NavigationProperty Name="Tickets" Relationship="Self.FK__Tickets__PlaceID__6D0D32F4" FromRole="Place" ToRole="Tickets" />
+          <NavigationProperty Name="Halls" Relationship="Self.FK__Place__HallsID__6383C8BA" FromRole="Place" ToRole="Halls" />
+          <NavigationProperty Name="Sectors" Relationship="Self.FK__Place__SectorID__6477ECF3" FromRole="Place" ToRole="Sectors" />
+          <NavigationProperty Name="Tickets" Relationship="Self.FK__Tickets__PlaceID__693CA210" FromRole="Place" ToRole="Tickets" />
         </EntityType>
         <EntityType Name="PriceCategory">
           <Key>
@@ -645,12 +606,7 @@
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Img" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="SeasonID" Type="Int32" Nullable="false" />
-          <Property Name="Duration" Type="Time" Nullable="false" Precision="7" />
-          <NavigationProperty Name="Seasons" Relationship="Self.FK__Script__SeasonID__48CFD27E" FromRole="Script" ToRole="Seasons" />
           <NavigationProperty Name="Performance" Relationship="Self.PerformanceAndScript" FromRole="Script" ToRole="Performance" />
-          <NavigationProperty Name="Genres" Relationship="Self.ScriptAndGenres" FromRole="Script" ToRole="Genres" />
-          <NavigationProperty Name="Sessions" Relationship="Self.SessionsAndScript" FromRole="Script" ToRole="Sessions" />
         </EntityType>
         <EntityType Name="Seasons">
           <Key>
@@ -659,7 +615,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Script" Relationship="Self.FK__Script__SeasonID__48CFD27E" FromRole="Seasons" ToRole="Script" />
+          <NavigationProperty Name="Performance" Relationship="Self.FK__Performan__Seaso__5070F446" FromRole="Seasons" ToRole="Performance" />
         </EntityType>
         <EntityType Name="Sectors">
           <Key>
@@ -669,7 +625,7 @@
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="PriceCategoryID" Type="Int32" Nullable="false" />
           <Property Name="Position" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Place" Relationship="Self.FK__Place__SectorID__68487DD7" FromRole="Sectors" ToRole="Place" />
+          <NavigationProperty Name="Place" Relationship="Self.FK__Place__SectorID__6477ECF3" FromRole="Sectors" ToRole="Place" />
           <NavigationProperty Name="PriceCategory" Relationship="Self.FK__Sectors__PriceCa__412EB0B6" FromRole="Sectors" ToRole="PriceCategory" />
         </EntityType>
         <EntityType Name="Sessions">
@@ -685,10 +641,9 @@
           <NavigationProperty Name="Halls" Relationship="Self.FK__Sessions__HallsI__5535A963" FromRole="Sessions" ToRole="Halls" />
           <NavigationProperty Name="Performance" Relationship="Self.FK__Sessions__Perfor__534D60F1" FromRole="Sessions" ToRole="Performance" />
           <NavigationProperty Name="PriceTime" Relationship="Self.FK__Sessions__PriceT__5441852A" FromRole="Sessions" ToRole="PriceTime" />
-          <NavigationProperty Name="Stat" Relationship="Self.FK__Stat__SessionsID__6FE99F9F" FromRole="Sessions" ToRole="Stat" />
-          <NavigationProperty Name="Tickets" Relationship="Self.FK__Tickets__Session__6B24EA82" FromRole="Sessions" ToRole="Tickets" />
+          <NavigationProperty Name="Stat" Relationship="Self.FK__Stat__SessionsID__6C190EBB" FromRole="Sessions" ToRole="Stat" />
+          <NavigationProperty Name="Tickets" Relationship="Self.FK__Tickets__Session__6754599E" FromRole="Sessions" ToRole="Tickets" />
           <NavigationProperty Name="Personal" Relationship="Self.SessionsAndPersonal" FromRole="Sessions" ToRole="Personal" />
-          <NavigationProperty Name="Script" Relationship="Self.SessionsAndScript" FromRole="Sessions" ToRole="Script" />
         </EntityType>
         <EntityType Name="Stat">
           <Key>
@@ -701,7 +656,7 @@
           <Property Name="PricePersonal" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="ClearProfit" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="TicketsSold" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Sessions" Relationship="Self.FK__Stat__SessionsID__6FE99F9F" FromRole="Stat" ToRole="Sessions" />
+          <NavigationProperty Name="Sessions" Relationship="Self.FK__Stat__SessionsID__6C190EBB" FromRole="Stat" ToRole="Sessions" />
         </EntityType>
         <EntityType Name="Tickets">
           <Key>
@@ -713,9 +668,9 @@
           <Property Name="PlaceID" Type="Int32" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <NavigationProperty Name="Place" Relationship="Self.FK__Tickets__PlaceID__6D0D32F4" FromRole="Tickets" ToRole="Place" />
-          <NavigationProperty Name="Sessions" Relationship="Self.FK__Tickets__Session__6B24EA82" FromRole="Tickets" ToRole="Sessions" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Tickets__UserID__6C190EBB" FromRole="Tickets" ToRole="Users" />
+          <NavigationProperty Name="Place" Relationship="Self.FK__Tickets__PlaceID__693CA210" FromRole="Tickets" ToRole="Place" />
+          <NavigationProperty Name="Sessions" Relationship="Self.FK__Tickets__Session__6754599E" FromRole="Tickets" ToRole="Sessions" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Tickets__UserID__68487DD7" FromRole="Tickets" ToRole="Users" />
         </EntityType>
         <EntityType Name="TypeOfUser">
           <Key>
@@ -724,7 +679,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Users__TypeOfUse__4E88ABD4" FromRole="TypeOfUser" ToRole="Users" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Users__TypeOfUse__4D94879B" FromRole="TypeOfUser" ToRole="Users" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -737,10 +692,10 @@
           <Property Name="Login" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="TypeOfUserID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Tickets" Relationship="Self.FK__Tickets__UserID__6C190EBB" FromRole="Users" ToRole="Tickets" />
-          <NavigationProperty Name="TypeOfUser" Relationship="Self.FK__Users__TypeOfUse__4E88ABD4" FromRole="Users" ToRole="TypeOfUser" />
+          <NavigationProperty Name="Tickets" Relationship="Self.FK__Tickets__UserID__68487DD7" FromRole="Users" ToRole="Tickets" />
+          <NavigationProperty Name="TypeOfUser" Relationship="Self.FK__Users__TypeOfUse__4D94879B" FromRole="Users" ToRole="TypeOfUser" />
         </EntityType>
-        <Association Name="FK__Place__HallsID__6754599E">
+        <Association Name="FK__Place__HallsID__6383C8BA">
           <End Role="Halls" Type="Self.Halls" Multiplicity="1" />
           <End Role="Place" Type="Self.Place" Multiplicity="*" />
           <ReferentialConstraint>
@@ -776,6 +731,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Performan__Seaso__5070F446">
+          <End Role="Seasons" Type="Self.Seasons" Multiplicity="1" />
+          <End Role="Performance" Type="Self.Performance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seasons">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Performance">
+              <PropertyRef Name="SeasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Sessions__Perfor__534D60F1">
           <End Role="Performance" Type="Self.Performance" Multiplicity="1" />
           <End Role="Sessions" Type="Self.Sessions" Multiplicity="*" />
@@ -788,7 +755,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Place__SectorID__68487DD7">
+        <Association Name="FK__Place__SectorID__6477ECF3">
           <End Role="Sectors" Type="Self.Sectors" Multiplicity="1" />
           <End Role="Place" Type="Self.Place" Multiplicity="*" />
           <ReferentialConstraint>
@@ -800,7 +767,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tickets__PlaceID__6D0D32F4">
+        <Association Name="FK__Tickets__PlaceID__693CA210">
           <End Role="Place" Type="Self.Place" Multiplicity="1" />
           <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
           <ReferentialConstraint>
@@ -836,19 +803,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Script__SeasonID__48CFD27E">
-          <End Role="Seasons" Type="Self.Seasons" Multiplicity="1" />
-          <End Role="Script" Type="Self.Script" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Seasons">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Script">
-              <PropertyRef Name="SeasonID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Stat__SessionsID__6FE99F9F">
+        <Association Name="FK__Stat__SessionsID__6C190EBB">
           <End Role="Sessions" Type="Self.Sessions" Multiplicity="1" />
           <End Role="Stat" Type="Self.Stat" Multiplicity="*" />
           <ReferentialConstraint>
@@ -860,7 +815,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tickets__Session__6B24EA82">
+        <Association Name="FK__Tickets__Session__6754599E">
           <End Role="Sessions" Type="Self.Sessions" Multiplicity="1" />
           <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
           <ReferentialConstraint>
@@ -872,7 +827,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tickets__UserID__6C190EBB">
+        <Association Name="FK__Tickets__UserID__68487DD7">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
           <ReferentialConstraint>
@@ -884,7 +839,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__TypeOfUse__4E88ABD4">
+        <Association Name="FK__Users__TypeOfUse__4D94879B">
           <End Role="TypeOfUser" Type="Self.TypeOfUser" Multiplicity="1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -896,20 +851,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="PerformanceAndGenres">
+          <End Role="Genres" Type="Self.Genres" Multiplicity="*" />
+          <End Role="Performance" Type="Self.Performance" Multiplicity="*" />
+        </Association>
         <Association Name="PerformanceAndScript">
           <End Role="Performance" Type="Self.Performance" Multiplicity="*" />
           <End Role="Script" Type="Self.Script" Multiplicity="*" />
         </Association>
-        <Association Name="ScriptAndGenres">
-          <End Role="Genres" Type="Self.Genres" Multiplicity="*" />
-          <End Role="Script" Type="Self.Script" Multiplicity="*" />
-        </Association>
         <Association Name="SessionsAndPersonal">
           <End Role="Personal" Type="Self.Personal" Multiplicity="*" />
-          <End Role="Sessions" Type="Self.Sessions" Multiplicity="*" />
-        </Association>
-        <Association Name="SessionsAndScript">
-          <End Role="Script" Type="Self.Script" Multiplicity="*" />
           <End Role="Sessions" Type="Self.Sessions" Multiplicity="*" />
         </Association>
         <EntityContainer Name="DramaTheaterTestEntities" annotation:LazyLoadingEnabled="true">
@@ -929,7 +880,7 @@
           <EntitySet Name="Tickets" EntityType="Self.Tickets" />
           <EntitySet Name="TypeOfUser" EntityType="Self.TypeOfUser" />
           <EntitySet Name="Users" EntityType="Self.Users" />
-          <AssociationSet Name="FK__Place__HallsID__6754599E" Association="Self.FK__Place__HallsID__6754599E">
+          <AssociationSet Name="FK__Place__HallsID__6383C8BA" Association="Self.FK__Place__HallsID__6383C8BA">
             <End Role="Halls" EntitySet="Halls" />
             <End Role="Place" EntitySet="Place" />
           </AssociationSet>
@@ -941,15 +892,19 @@
             <End Role="Jobs" EntitySet="Jobs" />
             <End Role="Personal" EntitySet="Personal" />
           </AssociationSet>
+          <AssociationSet Name="FK__Performan__Seaso__5070F446" Association="Self.FK__Performan__Seaso__5070F446">
+            <End Role="Seasons" EntitySet="Seasons" />
+            <End Role="Performance" EntitySet="Performance" />
+          </AssociationSet>
           <AssociationSet Name="FK__Sessions__Perfor__534D60F1" Association="Self.FK__Sessions__Perfor__534D60F1">
             <End Role="Performance" EntitySet="Performance" />
             <End Role="Sessions" EntitySet="Sessions" />
           </AssociationSet>
-          <AssociationSet Name="FK__Place__SectorID__68487DD7" Association="Self.FK__Place__SectorID__68487DD7">
+          <AssociationSet Name="FK__Place__SectorID__6477ECF3" Association="Self.FK__Place__SectorID__6477ECF3">
             <End Role="Sectors" EntitySet="Sectors" />
             <End Role="Place" EntitySet="Place" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tickets__PlaceID__6D0D32F4" Association="Self.FK__Tickets__PlaceID__6D0D32F4">
+          <AssociationSet Name="FK__Tickets__PlaceID__693CA210" Association="Self.FK__Tickets__PlaceID__693CA210">
             <End Role="Place" EntitySet="Place" />
             <End Role="Tickets" EntitySet="Tickets" />
           </AssociationSet>
@@ -961,40 +916,32 @@
             <End Role="PriceTime" EntitySet="PriceTime" />
             <End Role="Sessions" EntitySet="Sessions" />
           </AssociationSet>
-          <AssociationSet Name="FK__Script__SeasonID__48CFD27E" Association="Self.FK__Script__SeasonID__48CFD27E">
-            <End Role="Seasons" EntitySet="Seasons" />
-            <End Role="Script" EntitySet="Script" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Stat__SessionsID__6FE99F9F" Association="Self.FK__Stat__SessionsID__6FE99F9F">
+          <AssociationSet Name="FK__Stat__SessionsID__6C190EBB" Association="Self.FK__Stat__SessionsID__6C190EBB">
             <End Role="Sessions" EntitySet="Sessions" />
             <End Role="Stat" EntitySet="Stat" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tickets__Session__6B24EA82" Association="Self.FK__Tickets__Session__6B24EA82">
+          <AssociationSet Name="FK__Tickets__Session__6754599E" Association="Self.FK__Tickets__Session__6754599E">
             <End Role="Sessions" EntitySet="Sessions" />
             <End Role="Tickets" EntitySet="Tickets" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tickets__UserID__6C190EBB" Association="Self.FK__Tickets__UserID__6C190EBB">
+          <AssociationSet Name="FK__Tickets__UserID__68487DD7" Association="Self.FK__Tickets__UserID__68487DD7">
             <End Role="Users" EntitySet="Users" />
             <End Role="Tickets" EntitySet="Tickets" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__TypeOfUse__4E88ABD4" Association="Self.FK__Users__TypeOfUse__4E88ABD4">
+          <AssociationSet Name="FK__Users__TypeOfUse__4D94879B" Association="Self.FK__Users__TypeOfUse__4D94879B">
             <End Role="TypeOfUser" EntitySet="TypeOfUser" />
             <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="PerformanceAndGenres" Association="Self.PerformanceAndGenres">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="Performance" EntitySet="Performance" />
           </AssociationSet>
           <AssociationSet Name="PerformanceAndScript" Association="Self.PerformanceAndScript">
             <End Role="Performance" EntitySet="Performance" />
             <End Role="Script" EntitySet="Script" />
           </AssociationSet>
-          <AssociationSet Name="ScriptAndGenres" Association="Self.ScriptAndGenres">
-            <End Role="Genres" EntitySet="Genres" />
-            <End Role="Script" EntitySet="Script" />
-          </AssociationSet>
           <AssociationSet Name="SessionsAndPersonal" Association="Self.SessionsAndPersonal">
             <End Role="Personal" EntitySet="Personal" />
-            <End Role="Sessions" EntitySet="Sessions" />
-          </AssociationSet>
-          <AssociationSet Name="SessionsAndScript" Association="Self.SessionsAndScript">
-            <End Role="Script" EntitySet="Script" />
             <End Role="Sessions" EntitySet="Sessions" />
           </AssociationSet>
         </EntityContainer>
@@ -1041,6 +988,7 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Img" ColumnName="Img" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="SeasonID" ColumnName="SeasonID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1090,8 +1038,6 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Img" ColumnName="Img" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="SeasonID" ColumnName="SeasonID" />
-                <ScalarProperty Name="Duration" ColumnName="Duration" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1173,6 +1119,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="PerformanceAndGenres" TypeName="DramaTheaterModel.PerformanceAndGenres" StoreEntitySet="PerformanceAndGenres">
+            <EndProperty Name="Genres">
+              <ScalarProperty Name="ID" ColumnName="GenresID" />
+            </EndProperty>
+            <EndProperty Name="Performance">
+              <ScalarProperty Name="ID" ColumnName="PerformanceID" />
+            </EndProperty>
+          </AssociationSetMapping>
           <AssociationSetMapping Name="PerformanceAndScript" TypeName="DramaTheaterModel.PerformanceAndScript" StoreEntitySet="PerformanceAndScript">
             <EndProperty Name="Performance">
               <ScalarProperty Name="ID" ColumnName="PerformanceID" />
@@ -1181,25 +1135,9 @@
               <ScalarProperty Name="ID" ColumnName="ScriptID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="ScriptAndGenres" TypeName="DramaTheaterModel.ScriptAndGenres" StoreEntitySet="ScriptAndGenres">
-            <EndProperty Name="Genres">
-              <ScalarProperty Name="ID" ColumnName="GenresID" />
-            </EndProperty>
-            <EndProperty Name="Script">
-              <ScalarProperty Name="ID" ColumnName="ScriptID" />
-            </EndProperty>
-          </AssociationSetMapping>
           <AssociationSetMapping Name="SessionsAndPersonal" TypeName="DramaTheaterModel.SessionsAndPersonal" StoreEntitySet="SessionsAndPersonal">
             <EndProperty Name="Personal">
               <ScalarProperty Name="ID" ColumnName="PersonalID" />
-            </EndProperty>
-            <EndProperty Name="Sessions">
-              <ScalarProperty Name="ID" ColumnName="SessionsID" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="SessionsAndScript" TypeName="DramaTheaterModel.SessionsAndScript" StoreEntitySet="SessionsAndScript">
-            <EndProperty Name="Script">
-              <ScalarProperty Name="ID" ColumnName="ScriptID" />
             </EndProperty>
             <EndProperty Name="Sessions">
               <ScalarProperty Name="ID" ColumnName="SessionsID" />

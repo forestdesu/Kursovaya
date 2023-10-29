@@ -17,7 +17,7 @@ namespace Kursovaya
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Seasons()
         {
-            this.Script = new HashSet<Script>();
+            this.Performance = new HashSet<Performance>();
         }
     
         public int ID { get; set; }
@@ -25,6 +25,6 @@ namespace Kursovaya
         public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Script> Script { get; set; }
+        public virtual ICollection<Performance> Performance { get; set; }
     }
 }

@@ -13,14 +13,14 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <TextBlock Margin="10, 0" Text="Жанры: " FontSize="20" VerticalAlignment="Center"></TextBlock>
-        <WrapPanel x:Name="GenresListBox" Grid.Row="1" Margin="0, 10, 0, 0">
+        <StackPanel x:Name="GenresListBox" Grid.Row="1" Margin="0, 10, 0, 0">
             <CheckBox Content="Романтика" Margin="10, 5" MinWidth="130"/>
             <CheckBox Content="Комедия" Margin="10, 5" MinWidth="130"/>
             <CheckBox Content="Драма" Margin="10, 5" MinWidth="130"/>
             <CheckBox Content="Триллер" Margin="10, 5" MinWidth="130"/>
             <CheckBox Content="Хоррор" Margin="10, 5" MinWidth="130"/>
             <CheckBox Content="Фэнтези" Margin="10, 5" MinWidth="130"/>
-        </WrapPanel>
+        </StackPanel>
         <Button x:Name="btnSelectGenres" Content="Выбрать" Grid.Row="2"/>
     </Grid>
 </UserControl>

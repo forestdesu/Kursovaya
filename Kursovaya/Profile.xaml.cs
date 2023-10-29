@@ -78,25 +78,25 @@ namespace Kursovaya
                         TextAlignment = TextAlignment.Center
                     };
 
-                    var genres3 = context.Genres.Where(p => p.Script.Any(b => b.Sessions.Any(s => s.ID == item.ID))).Select(a => a.Name).ToList();
-                    foreach (var b in genres3)
-                    {
-                        Console.WriteLine(b);
-                    };
+                    //var genres3 = context.Genres.Where(p => p.Script.Any(b => b.Sessions.Any(s => s.ID == item.ID))).Select(a => a.Name).ToList();
+                    //foreach (var b in genres3)
+                   // {
+                    //    Console.WriteLine(b);
+                    //};
 
                     // Создаем TextBlock для описания
-                    TextBlock descriptionTextBlock = new TextBlock
-                    {
-                        Text = string.Join(", ", genres3),
-                        //Text = "123",
-                        Margin = new Thickness(10, 5, 0, 0),
-                        TextWrapping = TextWrapping.Wrap
-                    };
+                   // TextBlock descriptionTextBlock = new TextBlock
+                   // {
+                   //     Text = string.Join(", ", genres3),
+                   //     //Text = "123",
+                   //     Margin = new Thickness(10, 5, 0, 0),
+                   //     TextWrapping = TextWrapping.Wrap
+                   // };
 
                     // Добавляем элементы в StackPanel
                     stackPanel.Children.Add(image);
                     stackPanel.Children.Add(titleTextBlock);
-                    stackPanel.Children.Add(descriptionTextBlock);
+                   // stackPanel.Children.Add(descriptionTextBlock);
 
                     // Добавляем StackPanel в кнопку
                     button.Content = stackPanel;
