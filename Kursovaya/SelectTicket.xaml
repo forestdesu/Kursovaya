@@ -34,7 +34,7 @@
             </Setter>
         </Style>
     </Page.Resources>
-    <Grid Background="White">
+    <Grid>
 
         <TextBlock x:Name="TitleMovie" VerticalAlignment="Top" Margin="10, 10" FontSize="28px" Text="Лоокуут уонна Ньургуhун"></TextBlock>
 

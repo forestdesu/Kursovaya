@@ -6,9 +6,11 @@
       xmlns:local="clr-namespace:Kursovaya"
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="1600"
-      Title="MovieDetail">
+      Title="MovieDetail"
+      >
 
     <Page.Resources>
+
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <Storyboard x:Key="SlideUpAnimation">
             <Int32AnimationUsingKeyFrames Storyboard.TargetProperty="SliderIntValue" Storyboard.TargetName="userControl">
@@ -34,7 +36,7 @@
         </Style>
     </Page.Resources>
     <Grid Name="Container">
-        <Grid Width="{Binding ElementName=Container,Path=ActualWidth}" HorizontalAlignment="Center" MaxWidth="1000">
+        <Grid Width="{Binding ElementName=Container,Path=ActualWidth}" HorizontalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="70*"/>
                 <ColumnDefinition Width="30*"/>
@@ -44,7 +46,7 @@
                     <ScrollViewer Grid.Column="0">
                         <StackPanel>
                             <TextBlock x:Name="Title" Text="Дедпул" FontSize="45" Margin="25, 10"></TextBlock>
-                            <Image x:Name="imageControl" Stretch="UniformToFill" Height="500">
+                            <Image x:Name="imageControl" Stretch="None">
                                 <Image.OpacityMask>
                                     <VisualBrush Stretch="Uniform">
                                         <VisualBrush.Visual>
@@ -66,15 +68,19 @@
                 <Grid Margin="15, 10, 15, 10">
                     <StackPanel Grid.Column="1">
                         <Viewbox>
-                            <Calendar x:Name="calendar" SelectionMode="SingleDate" CalendarDayButtonStyle="{StaticResource CustomCalendarDayButtonStyle}" />
+                            <Grid>
+                                <Calendar x:Name="calendar" SelectionMode="SingleDate" CalendarDayButtonStyle="{StaticResource CustomCalendarDayButtonStyle}" />
+                                <TextBlock x:Name="textBlockNoSessions" Text="Сеансов нет" Foreground="Red" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"></TextBlock>
+                            </Grid>
                         </Viewbox>
-                        <ListBox Background="#141414" BorderBrush="Transparent" Name="sessionListBox" SelectionChanged="sessionListBox_SelectionChanged" MinHeight="150" Margin="0, 10">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding}" />
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
+                        <DataGrid x:Name="SeansGrid" AutoGenerateColumns="False" MinHeight="150" IsReadOnly="True" SelectedCellsChanged="SeansGrid_SelectedCellsChanged" Margin="0, 15">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Время показа" Binding="{Binding Path=Time}" Width="*" />
+                                <DataGridTextColumn Header="Осталось мест" Binding="{Binding Path=Place}" Width="*" />
+                                <DataGridTextColumn Header="Зал" Binding="{Binding Path=Hall}" Width="*" />
+                                <DataGridTextColumn Header="Мин.стоимость" Binding="{Binding Path=Price}" Width="*" />
+                            </DataGrid.Columns>
+                        </DataGrid>
 
                         <Border Margin="5, 0" CornerRadius="2" Grid.Column="1" Background="#3cce7b">
                             <Button BorderBrush="Transparent" Background="Transparent" Foreground="White" Content="Купить билет" Click="BuyTicketButton_Click" FontWeight="SemiBold"></Button>

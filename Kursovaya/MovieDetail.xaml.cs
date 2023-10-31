@@ -28,11 +28,11 @@ namespace Kursovaya
     public partial class MovieDetail : Page
     {
         int idSelectMovie = MainWindow.idSelectMovie;
-        private string[] imagePaths = { @"C:\Users\Work\source\repos\Kursovaya\Kursovaya\img\deadpool-11.jpg", @"C:\Users\Work\source\repos\Kursovaya\Kursovaya\img\16742908331746990.jpg", @"C:\Users\Work\source\repos\Kursovaya\Kursovaya\img\deadpool-11.jpg", };
+        List<string> imagePaths = new List<string>();
         private int currentImageIndex = 0;
         private DispatcherTimer timer;
         private bool isAnimating = false;
-        ListBoxItem selectedListBoxItem;
+        int? selectedSeansId;
 
         public MovieDetail()
         {
@@ -47,17 +47,28 @@ namespace Kursovaya
             LoadSeans(DateTime.Now.Date);
             LoadImage();           
 
-            AddActorCard("Actor 1", "Character A", @"C:\Users\Work\source\repos\Kursovaya\Kursovaya\img\Rayan.jpg");
-            AddActorCard("Actor 1", "Character A", @"C:\Users\Work\source\repos\Kursovaya\Kursovaya\img\Rayan.jpg");
-            AddActorCard("Actor 1", "Character A", @"C:\Users\Work\source\repos\Kursovaya\Kursovaya\img\Rayan.jpg");
-            AddActorCard("Actor 1", "Character A", @"C:\Users\Work\source\repos\Kursovaya\Kursovaya\img\Rayan.jpg");
+            AddActorCard("Actor 1", "Character A", @"C:\Users\Work\source\repos\Kursovaya\Kursovaya\img2\Rayan.jpg");
+            AddActorCard("Actor 1", "Character A", @"C:\Users\Work\source\repos\Kursovaya\Kursovaya\img2\Rayan.jpg");
+            AddActorCard("Actor 1", "Character A", @"C:\Users\Work\source\repos\Kursovaya\Kursovaya\img2\Rayan.jpg");
+            AddActorCard("Actor 1", "Character A", @"C:\Users\Work\source\repos\Kursovaya\Kursovaya\img2\Rayan.jpg");
+        }
+
+        public class Seans
+        {
+            public int Id { get; set; }
+            public string Time { get; set; }
+            public string Place { get; set; }
+            public string Hall { get; set; }
+            public string Price { get; set; }
         }
 
         private void LoadImage()
         {
-            if (currentImageIndex < imagePaths.Length)
+            if (currentImageIndex < imagePaths.Count)
             {
-                BitmapImage image = new BitmapImage(new Uri(imagePaths[currentImageIndex]));
+                string FullPath = AppDomain.CurrentDomain.BaseDirectory;
+                FullPath = FullPath.Substring(0, FullPath.Length - 10);
+                BitmapImage image = new BitmapImage(new Uri(FullPath + imagePaths[currentImageIndex]));
                 imageControl.Source = image;
             }
         }
@@ -69,6 +80,9 @@ namespace Kursovaya
                 var curPer = context.Performance.Where(p => p.ID == idSelectMovie).FirstOrDefault();
                 Title.Text = curPer.Name;
                 Desc.Text = curPer.Description;
+                imagePaths.Add(curPer.Img);
+                imagePaths.AddRange(curPer.Script.Select(p => p.Img));
+                Console.WriteLine(String.Join(", ", imagePaths));
             }
         }
 
@@ -77,15 +91,25 @@ namespace Kursovaya
             using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {
                 var curSes = context.Sessions.Where(p => p.PerformanceID == idSelectMovie);
-                DateTime earliestDate = curSes.Min(session => session.DateBegin);
-                DateTime latestDate = curSes.Max(session => session.DateBegin);
-                CalendarDateRange allowedDates = new CalendarDateRange(
-                    earliestDate,
-                    latestDate
-                );
-                calendar.DisplayDateStart = earliestDate;
-                calendar.DisplayDateEnd = latestDate;
-                calendar.SelectedDatesChanged += Calendar_SelectedDatesChanged;
+                if (curSes.Any())
+                {
+                    textBlockNoSessions.Visibility = Visibility.Collapsed;
+                    DateTime earliestDate = curSes.Min(session => session.DateBegin);
+                    DateTime latestDate = curSes.Max(session => session.DateBegin);
+                    CalendarDateRange allowedDates = new CalendarDateRange(
+                        earliestDate,
+                        latestDate
+                    );
+                    calendar.DisplayDateStart = earliestDate;
+                    calendar.DisplayDateEnd = latestDate;
+                    calendar.SelectedDatesChanged += Calendar_SelectedDatesChanged;
+                }
+                else
+                {
+                    calendar.IsEnabled = false;
+                    textBlockNoSessions.Visibility = Visibility.Visible;
+                }
+
             }
                 
         }
@@ -94,7 +118,7 @@ namespace Kursovaya
         {
             if (!isAnimating)
             {
-                currentImageIndex = (currentImageIndex + 1) % imagePaths.Length;
+                currentImageIndex = (currentImageIndex + 1) % imagePaths.Count;
                 AnimateImageTransition();
             }
         }
@@ -112,7 +136,9 @@ namespace Kursovaya
 
             animation.Completed += (s, e) =>
             {
-                currentImageIndex = (currentImageIndex + 1) % imagePaths.Length;
+                currentImageIndex = currentImageIndex % imagePaths.Count;
+                Console.WriteLine(currentImageIndex);
+                Console.WriteLine(imagePaths.Count);
                 LoadImage();
 
                 DoubleAnimation fadeInAnimation = new DoubleAnimation
@@ -140,16 +166,26 @@ namespace Kursovaya
         {
             using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {
-                List<ListBoxItem> seansItems = new List<ListBoxItem>();
                 var sessionsOnSelectedDate = context.Sessions.Where(session => session.PerformanceID == idSelectMovie && EntityFunctions.TruncateTime(session.DateBegin) == selectedDateWithoutTime).ToList();
+                List<Seans> dataForGrid = new List<Seans>();
                 foreach (var item in sessionsOnSelectedDate)
                 {
-                    ListBoxItem listBoxItem = new ListBoxItem();
-                    listBoxItem.Content = $"Сеанс на {item.DateBegin}";
-                    listBoxItem.Tag = item.ID; // Здесь устанавливаем Tag на объект Session или на его идентификатор, в зависимости от ваших потребностей.
-                    seansItems.Add(listBoxItem);
+
+                    int price = (int)context.Place
+                            .Where(place => !context.Tickets.Any(ticket => ticket.PlaceID == place.ID))
+                            .OrderBy(place => place.Sectors.PriceCategory.Price)
+                            .Select(place => place.Sectors.PriceCategory.Price)
+                            .FirstOrDefault();
+                    dataForGrid.Add(new Seans
+                    {
+                        Id = item.ID,
+                        Time = item.DateBegin.ToString("t"),
+                        Place = $"{item.Halls.Place.Count() - item.Tickets.Count()}/{item.Halls.Place.Count()}",
+                        Hall = item.Halls.Name,
+                        Price = price != null ? Convert.ToString(price) : "-",
+                    });              
                 }
-                sessionListBox.ItemsSource = seansItems;
+                SeansGrid.ItemsSource= dataForGrid;    
             }            
         }
 
@@ -157,13 +193,13 @@ namespace Kursovaya
         private void BuyTicketButton_Click(object sender, RoutedEventArgs e)
         {
 
-            if (selectedListBoxItem is null)
+            if (selectedSeansId is null)
             {
                 MessageBox.Show("Выберите сеанс перед покупкой билета.");
             }
             else
             {
-                MainWindow.idSelectSeans = (int)selectedListBoxItem.Tag;
+                MainWindow.idSelectSeans = (int)selectedSeansId;
                 Window parentWindow = Window.GetWindow(this);
                 Frame frame = LogicalTreeHelper.FindLogicalNode(parentWindow, "MainFrame") as Frame;
                 frame.Navigate(new SelectTicket());
@@ -213,9 +249,17 @@ namespace Kursovaya
             actorWrapPanel.Children.Add(actorCard);
         }
 
-        private void sessionListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void SeansGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            selectedListBoxItem = (ListBoxItem)sessionListBox.SelectedItem;
+            if (SeansGrid.SelectedItem != null)
+            {
+                Seans selectedSeans = SeansGrid.SelectedItem as Seans;
+
+                if (selectedSeans != null)
+                {
+                    selectedSeansId = selectedSeans.Id;
+                }
+            }
         }
     }
 }

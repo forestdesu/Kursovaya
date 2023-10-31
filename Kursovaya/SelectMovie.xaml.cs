@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
@@ -78,7 +79,7 @@ namespace Kursovaya
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = (Button)sender;
+            Border btn = (Border)sender;
             MainWindow.idSelectMovie = Convert.ToInt32(btn.Tag);
 
             Window parentWindow = Window.GetWindow(this);
@@ -128,6 +129,8 @@ namespace Kursovaya
                     Movies.RowDefinitions.Add(colDef);
                 }
                 int j = 0;
+                string FullPath = AppDomain.CurrentDomain.BaseDirectory;
+                FullPath = FullPath.Substring(0, FullPath.Length - 10);
                 foreach (var item in results)
                 {
                     Border mainBorder = new Border
@@ -136,17 +139,23 @@ namespace Kursovaya
                         Height = 300,
                         VerticalAlignment = VerticalAlignment.Top,
                         CornerRadius = new CornerRadius(5),
-                        Margin = new Thickness(0, 0, 0, 25),
+                        Margin = new Thickness(0, 0, 0, 25), 
+                        Tag = item.ID,
                     };
-
+                    mainBorder.MouseLeftButtonUp += Button_Click;
                     Grid mainGrid = new Grid();
                     mainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(40, GridUnitType.Star) });
                     mainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(80, GridUnitType.Star) });
-
+                    string test = (FullPath + "1.jpg");
                     Border imageBorder = new Border
                     {
                         CornerRadius = new CornerRadius(5, 0, 0, 5),
-                        Background = new ImageBrush(new BitmapImage(new Uri("C:\\Users\\Work\\source\\repos\\Kursovaya\\Kursovaya\\1.jpg")))
+                        Background = new ImageBrush
+                        {
+                            ImageSource = new BitmapImage(new Uri((FullPath + item.Img))),
+                            Stretch = Stretch.UniformToFill,
+                            Viewbox = new Rect(0.25, 0, 0.5, 1) // Обрезка по середине
+                        }
                     };
                     Grid.SetColumn(imageBorder, 0);
 
@@ -228,7 +237,7 @@ namespace Kursovaya
         private void SeasonFilter()
         {
             ListSelectedSeason = null;
-            foreach (RadioButton checkBox in SeasonListBox.Children)
+            foreach (CheckBox checkBox in SeasonListBox.Children)
             {
                 if (checkBox.IsChecked == true)
                 {
@@ -262,7 +271,7 @@ namespace Kursovaya
                 var ListOfSeason = await context.Seasons.ToListAsync();
                 foreach (var item in ListOfSeason)
                 {
-                    RadioButton seasonBox = new RadioButton();
+                    CheckBox seasonBox = new CheckBox();
                     seasonBox.Content = item.Name;
                     seasonBox.Tag = item.ID;
                     seasonBox.FontSize = 16;

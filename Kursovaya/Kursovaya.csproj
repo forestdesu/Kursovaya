@@ -73,6 +73,7 @@
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -145,6 +146,7 @@
     <Compile Include="Halls.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="IsNullConverter.cs" />
     <Compile Include="Jobs.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -222,6 +224,16 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="TextBoxHelper.cs" />
+    <Compile Include="Themes\Attached\CornerRadiusHelper.cs" />
+    <Compile Include="Themes\Attached\MenuHelper.cs" />
+    <Compile Include="Themes\Attached\PasswordBoxHelper.cs" />
+    <Compile Include="Themes\Attached\TextBoxAutoSelect.cs" />
+    <Compile Include="Themes\Attached\TextHinting.cs" />
+    <Compile Include="Themes\Controls.xaml.cs">
+      <DependentUpon>Controls.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Themes\ThemesController.cs" />
+    <Compile Include="Themes\ThemeType.cs" />
     <Compile Include="Tickets.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -231,6 +243,10 @@
     <Compile Include="Users.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\BaseViewModel.cs" />
+    <Compile Include="Utilities\Command.cs" />
+    <Compile Include="Utilities\CommandParam.cs" />
+    <Compile Include="Utilities\ScrollViewerHelper.cs" />
     <Page Include="Authorization.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -283,6 +299,38 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\ColourDictionaries\DarkGreyTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ColourDictionaries\DeepDark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ColourDictionaries\GreyTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ColourDictionaries\LightTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ColourDictionaries\RedBlackTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ColourDictionaries\SoftDark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ControlColours.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Controls.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -318,6 +366,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Themes\readme.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -326,20 +375,48 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="e686e8e1-2452-4948-b08f-3f985ea86dd4.jpg" />
     <Resource Include="loading.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="deadpool-11.jpg" />
+    <Resource Include="Img\Icons\tickets.png" />
+    <Resource Include="Img\Icons\list.png" />
+    <Resource Include="Img\Icons\logout.png" />
+    <Resource Include="Img\Icons\profile.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="tickets.png" />
-    <Resource Include="list.png" />
-    <Resource Include="logout.png" />
-    <Resource Include="1.jpg" />
-    <Resource Include="profile.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Img\Script\1.jpg" />
+    <Resource Include="Img\Script\10.jpg" />
+    <Resource Include="Img\Script\11.jpg" />
+    <Resource Include="Img\Script\12.jpg" />
+    <Resource Include="Img\Script\13.jpg" />
+    <Resource Include="Img\Script\14.jpg" />
+    <Resource Include="Img\Script\15.jpg" />
+    <Resource Include="Img\Script\16.jpg" />
+    <Resource Include="Img\Script\17.jpg" />
+    <Resource Include="Img\Script\18.jpg" />
+    <Resource Include="Img\Script\19.jpg" />
+    <Resource Include="Img\Script\2.jpg" />
+    <Resource Include="Img\Script\20.jpg" />
+    <Resource Include="Img\Script\21.jpg" />
+    <Resource Include="Img\Script\22.jpg" />
+    <Resource Include="Img\Script\23.jpg" />
+    <Resource Include="Img\Script\24.jpg" />
+    <Resource Include="Img\Script\3.jpg" />
+    <Resource Include="Img\Script\4.jpg" />
+    <Resource Include="Img\Script\5.jpg" />
+    <Resource Include="Img\Script\6.jpg" />
+    <Resource Include="Img\Script\7.jpg" />
+    <Resource Include="Img\Script\8.jpg" />
+    <Resource Include="Img\Script\9.jpg" />
+    <Resource Include="Img\Performance\1.jpg" />
+    <Resource Include="Img\Performance\2.jpg" />
+    <Resource Include="Img\Performance\3.jpg" />
+    <Resource Include="Img\Performance\4.jpg" />
+    <Resource Include="Img\Performance\5.jpg" />
+    <Resource Include="Img\Performance\6.jpg" />
+    <Resource Include="Img\Performance\7.jpg" />
+    <Resource Include="Img\Performance\8.jpg" />
+    <Resource Include="Img\Icons\logo.png" />
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -351,6 +428,7 @@
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.AspNetCore.Components.Analyzers.3.1.32\build\netstandard2.0\Microsoft.AspNetCore.Components.Analyzers.targets" Condition="Exists('..\packages\Microsoft.AspNetCore.Components.Analyzers.3.1.32\build\netstandard2.0\Microsoft.AspNetCore.Components.Analyzers.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

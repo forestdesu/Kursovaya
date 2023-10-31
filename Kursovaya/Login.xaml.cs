@@ -31,7 +31,7 @@ namespace Kursovaya
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             // Показать анимацию загрузки
-            loadingControl.Visibility = Visibility.Visible;
+            //loadingControl.Visibility = Visibility.Visible;
 
             try
             {
@@ -42,7 +42,7 @@ namespace Kursovaya
                         System.Windows.Application.Current.Dispatcher.Invoke(() =>
                         {
 
-                            var DataUser = context.Users.Where(p => p.Login == userLogin.Text && p.Password == userPassword.Text).FirstOrDefault();
+                            var DataUser = context.Users.Where(p => p.Login == userLogin.Text && p.Password == userPassword.Password).FirstOrDefault();
 
                             if (DataUser != null)
                             {
@@ -66,7 +66,7 @@ namespace Kursovaya
             }
             finally
             {
-                loadingControl.Visibility = Visibility.Collapsed;
+                //loadingControl.Visibility = Visibility.Collapsed;
             }
         }
 

@@ -183,13 +183,14 @@ namespace Kursovaya
                     contentGrid.Children.Add(imageBorder);
                     mainGrid.Children.Add(contentGrid);
                     // Создаем круги и прямоугольники
+                    SolidColorBrush mainColor = (SolidColorBrush)FindResource("BackgroundColour");
                     for (int i = 0; i < 6; i++)
                     {
                         Ellipse ellipseLeft = new Ellipse
                         {
                             Width = 20,
                             Height = 20,
-                            Fill = Brushes.White,
+                            Fill = mainColor,
                             Margin = new Thickness(0, i * 35, 0, 0),
                             HorizontalAlignment = HorizontalAlignment.Left,
                             VerticalAlignment = VerticalAlignment.Top
@@ -199,7 +200,7 @@ namespace Kursovaya
                         {
                             Width = 20,
                             Height = 20,
-                            Fill = Brushes.White,
+                            Fill = mainColor,
                             Margin = new Thickness(0, i * 35, 0, 0),
                             HorizontalAlignment = HorizontalAlignment.Right,
                             VerticalAlignment = VerticalAlignment.Top
@@ -215,7 +216,7 @@ namespace Kursovaya
                         {
                             Width = 3,
                             Height = 8,
-                            Fill = Brushes.White,
+                            Fill = mainColor,
                             Margin = new Thickness(0, 0, 134, 33 + i * 10),
                             HorizontalAlignment = HorizontalAlignment.Right,
                             VerticalAlignment = VerticalAlignment.Bottom
@@ -229,7 +230,7 @@ namespace Kursovaya
                     {
                         Width = 50,
                         Height = 50,
-                        Fill = Brushes.White,
+                        Fill = mainColor,
                         Margin = new Thickness(0, -15, 110, 0),
                         HorizontalAlignment = HorizontalAlignment.Right,
                         VerticalAlignment = VerticalAlignment.Top
@@ -239,7 +240,7 @@ namespace Kursovaya
                     {
                         Width = 50,
                         Height = 50,
-                        Fill = Brushes.White,
+                        Fill = mainColor,
                         Margin = new Thickness(0, 0, 110, -15),
                         HorizontalAlignment = HorizontalAlignment.Right,
                         VerticalAlignment = VerticalAlignment.Bottom
