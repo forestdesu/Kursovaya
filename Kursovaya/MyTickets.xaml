@@ -81,7 +81,7 @@
 
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" Margin="50, 0, 0, 200">
+                <StackPanel Orientation="Horizontal" Margin="15, 0, 0, 200">
                     <TextBlock Text="Ложи бельэтажа" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center">
                         <TextBlock.LayoutTransform>
                             <RotateTransform Angle="-90" />
@@ -188,7 +188,7 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                <StackPanel Orientation="Horizontal"  Margin="0, 0, 50, 200">
+                <StackPanel Orientation="Horizontal"  Margin="0, 0, 15, 200">
                     <TextBlock Text="Ложи бельэтажа" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center">
                         <TextBlock.LayoutTransform>
                             <RotateTransform Angle="-90" />

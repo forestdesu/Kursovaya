@@ -4,17 +4,17 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="043b598151ab41169a404d2d9c597b20" Name="Diagram1">
-        <EntityTypeShape EntityType="DramaTheaterModel.Genres" Width="1.5" PointX="1.5" PointY="10.75" IsExpanded="true" />
+      <Diagram DiagramId="bc32ddff29d047d5abe57792b9df20a7" Name="Diagram1">
+        <EntityTypeShape EntityType="DramaTheaterModel.Genres" Width="1.5" PointX="1.5" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DramaTheaterModel.Halls" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DramaTheaterModel.Jobs" Width="1.5" PointX="1.5" PointY="16" IsExpanded="true" />
-        <EntityTypeShape EntityType="DramaTheaterModel.Performance" Width="1.5" PointX="3.75" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DramaTheaterModel.Personal" Width="1.5" PointX="3.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.Jobs" Width="1.5" PointX="1.5" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.Performance" Width="1.5" PointX="3.75" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.Personal" Width="1.5" PointX="3.75" PointY="15" IsExpanded="true" />
         <EntityTypeShape EntityType="DramaTheaterModel.Place" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DramaTheaterModel.PriceCategory" Width="1.5" PointX="1.5" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DramaTheaterModel.PriceTime" Width="1.5" PointX="3.75" PointY="18.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DramaTheaterModel.Script" Width="1.5" PointX="6" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DramaTheaterModel.Seasons" Width="1.5" PointX="1.5" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.PriceTime" Width="1.5" PointX="3.75" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.Script" Width="1.5" PointX="6" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.Seasons" Width="1.5" PointX="1.5" PointY="12.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DramaTheaterModel.Sectors" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DramaTheaterModel.Sessions" Width="1.5" PointX="6" PointY="3.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DramaTheaterModel.Stat" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />

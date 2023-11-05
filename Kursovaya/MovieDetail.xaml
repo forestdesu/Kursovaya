@@ -42,30 +42,50 @@
                 <ColumnDefinition Width="30*"/>
             </Grid.ColumnDefinitions>
             <Border Grid.Column="0" Margin="10" CornerRadius="5" Background="#1c1c1e">
-                <Grid Margin="15, 10">
+                <Grid Margin="25, 10, 0, 0">
                     <ScrollViewer Grid.Column="0">
-                        <StackPanel>
-                            <TextBlock x:Name="Title" Text="Дедпул" FontSize="45" Margin="25, 10"></TextBlock>
-                            <Image x:Name="imageControl" Stretch="None">
-                                <Image.OpacityMask>
-                                    <VisualBrush Stretch="Uniform">
-                                        <VisualBrush.Visual>
-                                            <Image Source="{Binding ElementName=imageControl, Path=Source}"/>
-                                        </VisualBrush.Visual>
-                                    </VisualBrush>
-                                </Image.OpacityMask>
-                            </Image>
-                            <TextBlock x:Name="Desc" Margin="25, 10, 25, 25" FontSize="22" TextWrapping="Wrap" Text="Уэйд Уилсон — наёмник. Будучи побочным продуктом программы вооружённых сил под названием «Оружие X», Уилсон приобрёл невероятную силу, проворство и способность к исцелению. Но страшной ценой: его клеточная структура постоянно меняется, а здравомыслие сомнительно. Всё, чего Уилсон хочет, — это держаться на плаву в социальной выгребной яме. Но течение в ней слишком быстрое."></TextBlock>
-                            <TextBlock  Margin="25, 10, 25, 25" FontSize="26" Text="Актеры:" FontWeight="Bold"></TextBlock>
+                        <StackPanel Margin="0, 0, 0, 10">
+                            <TextBlock x:Name="MovieTitle" Text="Название" FontSize="45"></TextBlock>
+                            <Border CornerRadius="15" Margin="0, 10">
+                                <Image x:Name="imageControl" Stretch="None">
+                                    <Image.OpacityMask>
+                                        <VisualBrush Stretch="Uniform">
+                                            <VisualBrush.Visual>
+                                                <Image Source="{Binding ElementName=imageControl, Path=Source}"/>
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </Image.OpacityMask>
+                                </Image>
+                            </Border>
+                            <TextBlock x:Name="Desc" Margin="0, 5, 0, 20" FontSize="22" TextWrapping="Wrap" Text="Описание..."></TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Margin="0, 0, 50, 0">
+                                    <TextBlock FontSize="20" FontWeight="Bold" Text="Продолжительность"></TextBlock>
+                                    <TextBlock FontSize="18" x:Name="TBDuration" Text="1 час 50 минут"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Margin="0, 0, 50, 0">
+                                    <TextBlock FontSize="20" FontWeight="Bold" Text="Сезон"></TextBlock>
+                                    <TextBlock FontSize="18" x:Name="TBSeason" Text="Весенний"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Margin="0, 0, 50, 0">
+                                    <TextBlock FontSize="20" FontWeight="Bold" Text="Возраст"></TextBlock>
+                                    <TextBlock FontSize="18" x:Name="TBAge" Text="18+"></TextBlock>
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock FontSize="20" FontWeight="Bold" Text="Жанры"></TextBlock>
+                                    <TextBlock FontSize="18" x:Name="TBGenres" Text="Комедия, фентези"></TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                            <TextBlock  Margin="0, 20, 0, 25" FontSize="26" Text="Актеры:" FontWeight="Bold"></TextBlock>
                             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                <WrapPanel x:Name="actorWrapPanel" Orientation="Horizontal" />
+                                <WrapPanel x:Name="actorWrapPanel" Orientation="Horizontal"/>
                             </ScrollViewer>
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>
             </Border>
             <Border Grid.Column="1" Margin="10" CornerRadius="5" Background="#1c1c1e">
-                <Grid Margin="15, 10, 15, 10">
+                <Grid Margin="15">
                     <StackPanel Grid.Column="1">
                         <Viewbox>
                             <Grid>

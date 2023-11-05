@@ -25,7 +25,50 @@ namespace Kursovaya
         public Login()
         {
             InitializeComponent();
-            
+            //CreatePlace();
+        }
+
+        private List<int> RM(List<int> list)
+        {
+            List<int> myArray = new List<int> { };
+            myArray = new List<int>(list);
+            myArray.Reverse();
+
+            return myArray;
+        }
+
+        private void CreatePlace()
+        {
+            List<int> parter = new List<int> { 12, 12, 12, 12, 12, 12, 11, 11, 11, 11, 11, 11, 11, 11 };
+            List<int> amfitheatre = new List<int> { 5, 5, 5, 5, 5, 5, 5 };
+            List<int> LMezzaine = new List<int> { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+            List<int> Mezzaine = new List<int> { 3, 4, 5, 5, 5, 5 };
+            List<List<int>> ListOfCols = new List<List<int>> { parter, parter, amfitheatre, new List<int> { 14, 14, 14, 12, 12, 12, 14 }, amfitheatre, LMezzaine, Mezzaine, new List<int> { 18, 16, 14, 14, 14, 14 }, Mezzaine, LMezzaine, RM(LMezzaine), RM(Mezzaine), new List<int> { 14, 14, 14, 14, 16, 18 }, RM(Mezzaine), RM(LMezzaine) };
+
+            using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
+            {
+                for (int sector = 0; sector < ListOfCols.Count; sector++)
+                {
+                    // Получаем сектор = [3, 4, 5, 5, 5, 5]
+                    for (int row = 0; row < ListOfCols[sector].Count; row++)
+                    {
+                        // Количество колонок cols_count = 12
+                        for (int seat = 0; seat < ListOfCols[sector][row]; seat++)
+                        {
+                            // Количество колонок 0 ... cols_count
+                            var newPlace = new Place
+                            {
+                                HallsID = 1,
+                                Row = row + 1,
+                                Column = seat + 1,
+                                SectorID = sector + 1,
+                            };
+                            context.Place.Add(newPlace);
+                        }
+                    }
+                }
+                context.SaveChanges();
+            }
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)

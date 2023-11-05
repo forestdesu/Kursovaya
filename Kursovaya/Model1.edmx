@@ -41,6 +41,7 @@
           <Property Name="Img" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Price" Type="money" Nullable="false" />
           <Property Name="SeasonID" Type="int" Nullable="false" />
+          <Property Name="Age" Type="nvarchar" MaxLength="5" Nullable="false" />
         </EntityType>
         <EntityType Name="PerformanceAndGenres">
           <Key>
@@ -551,6 +552,7 @@
           <Property Name="Img" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="SeasonID" Type="Int32" Nullable="false" />
+          <Property Name="Age" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Seasons" Relationship="Self.FK__Performan__Seaso__5070F446" FromRole="Performance" ToRole="Seasons" />
           <NavigationProperty Name="Sessions" Relationship="Self.FK__Sessions__Perfor__534D60F1" FromRole="Performance" ToRole="Sessions" />
           <NavigationProperty Name="Genres" Relationship="Self.PerformanceAndGenres" FromRole="Performance" ToRole="Genres" />
@@ -989,6 +991,7 @@
                 <ScalarProperty Name="Img" ColumnName="Img" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="SeasonID" ColumnName="SeasonID" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
-using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,12 +45,8 @@ namespace Kursovaya
             LoadData();
             CalendarLoad();
             LoadSeans(DateTime.Now.Date);
-            LoadImage();           
-
-            AddActorCard("Actor 1", "Character A", @"C:\Users\Work\source\repos\Kursovaya\Kursovaya\img2\Rayan.jpg");
-            AddActorCard("Actor 1", "Character A", @"C:\Users\Work\source\repos\Kursovaya\Kursovaya\img2\Rayan.jpg");
-            AddActorCard("Actor 1", "Character A", @"C:\Users\Work\source\repos\Kursovaya\Kursovaya\img2\Rayan.jpg");
-            AddActorCard("Actor 1", "Character A", @"C:\Users\Work\source\repos\Kursovaya\Kursovaya\img2\Rayan.jpg");
+            LoadImage();
+            LoadActorCard();
         }
 
         public class Seans
@@ -69,8 +65,18 @@ namespace Kursovaya
                 string FullPath = AppDomain.CurrentDomain.BaseDirectory;
                 FullPath = FullPath.Substring(0, FullPath.Length - 10);
                 BitmapImage image = new BitmapImage(new Uri(FullPath + imagePaths[currentImageIndex]));
-                imageControl.Source = image;
+                imageControl.Source = image;               
             }
+        }
+
+        private string FormatTime(TimeSpan Time)
+        {
+            string formattedHours = Time.Hours == 1 ? "час" : "часов";
+            string formattedMinutes = Time.Minutes == 1 ? "минута" : "минут";
+
+            string formattedTime = $"{Time.Hours} {formattedHours} {Time.Minutes} {formattedMinutes}";
+
+            return formattedTime;
         }
 
         private void LoadData()
@@ -78,11 +84,14 @@ namespace Kursovaya
             using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {
                 var curPer = context.Performance.Where(p => p.ID == idSelectMovie).FirstOrDefault();
-                Title.Text = curPer.Name;
+                MovieTitle.Text = curPer.Name;
                 Desc.Text = curPer.Description;
                 imagePaths.Add(curPer.Img);
                 imagePaths.AddRange(curPer.Script.Select(p => p.Img));
-                Console.WriteLine(String.Join(", ", imagePaths));
+                TBDuration.Text = FormatTime(curPer.Duration);
+                TBSeason.Text = curPer.Seasons.Name;
+                TBAge.Text = curPer.Age;
+                TBGenres.Text = string.Join(", ", curPer.Genres.ToList().Select(p => p.Name));
             }
         }
 
@@ -206,47 +215,61 @@ namespace Kursovaya
             }
         }
 
-        private void AddActorCard(string actorName, string characterName, string imagePath)
+        private void LoadActorCard()
         {
-            // Создайте контейнер для карточки актера
-            StackPanel actorCard = new StackPanel
+            using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {
-                Width = 200,
-                Height = 300,
-                Margin = new Thickness(10),
-                Background = System.Windows.Media.Brushes.LightGray,
-            };
+                var curPer = context.Performance.Where(p => p.ID == idSelectMovie).FirstOrDefault().Sessions.FirstOrDefault().Personal.Where(p => p.JobID == 1 || p.JobID == 2).OrderBy(p => p.JobID).ToList();
+                string FullPath = AppDomain.CurrentDomain.BaseDirectory;
+                FullPath = FullPath.Substring(0, FullPath.Length - 10);
+                foreach (var actor in curPer)
+                {
 
-            // Создайте изображение актера
-            System.Windows.Controls.Image actorImage = new System.Windows.Controls.Image
-            {
-                Source = new BitmapImage(new System.Uri(imagePath, System.UriKind.RelativeOrAbsolute)),
-                Width = 150,
-                Height = 200,
-                Margin = new Thickness(10),
-            };
+                    Border borderActor = new Border();
+                    if (actor.JobID == 1)
+                    {
+                        borderActor.BorderBrush = Brushes.Gray;
+                        borderActor.BorderThickness = new Thickness(0, 0, 2, 0);
+                    }
 
-            // Создайте текстовые блоки для имени актера и роли
-            TextBlock actorNameText = new TextBlock
-            {
-                Text = actorName,
-                TextAlignment = TextAlignment.Center,
-                FontWeight = FontWeights.Bold
-            };
+                    // Создайте контейнер для карточки актера
+                    StackPanel actorCard = new StackPanel {
+                        Width = 150,
+                        Margin = new Thickness(20, 5, 20, 5),
+                    };
 
-            TextBlock characterNameText = new TextBlock
-            {
-                Text = characterName,
-                TextAlignment = TextAlignment.Center
-            };
+                    // Создайте изображение актера
+                    Border actorImage = new Border
+                    {
+                        Background = new ImageBrush
+                        {
+                            ImageSource = new BitmapImage(new Uri((FullPath + actor.Img))),
+                            Stretch = Stretch.UniformToFill
+                        },
+                        Width = 150,
+                        Height = 150,
+                    };
+                    actorImage.CornerRadius = new CornerRadius(actorImage.Width / 2);
 
-            // Добавьте элементы в карточку актера
-            actorCard.Children.Add(actorImage);
-            actorCard.Children.Add(actorNameText);
-            actorCard.Children.Add(characterNameText);
+                    // Создайте текстовые блоки для имени актера и роли
+                    TextBlock actorNameText = new TextBlock
+                    {
+                        Margin = new Thickness(0, 10, 0, 0),
+                        Text = (actor.Fullname).Replace(" ", "\n"),
+                        TextAlignment = TextAlignment.Center,
+                        FontWeight = FontWeights.Bold,
+                        TextWrapping = TextWrapping.Wrap,
+                        FontSize = 16
+                    };
 
-            // Добавьте карточку актера в WrapPanel
-            actorWrapPanel.Children.Add(actorCard);
+                    // Добавьте элементы в карточку актера
+                    actorCard.Children.Add(actorImage);
+                    actorCard.Children.Add(actorNameText);
+                    borderActor.Child = actorCard;
+                    // Добавьте карточку актера в WrapPanel
+                    actorWrapPanel.Children.Add(borderActor);
+                }            
+            }               
         }
 
         private void SeansGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)

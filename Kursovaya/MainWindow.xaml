@@ -37,6 +37,6 @@
                 <Image Source="img/Icons/logout.png"/>
             </Button>
         </Grid>
-        <Frame Name="MainFrame" NavigationUIVisibility='Hidden' Grid.Row="1" Margin="25, 10"></Frame>
+        <Frame Name="MainFrame" NavigationUIVisibility='Hidden' Grid.Row="1" Margin="10, 5"></Frame>
     </Grid>
 </Window>
