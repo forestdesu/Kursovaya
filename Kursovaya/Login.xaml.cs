@@ -135,5 +135,13 @@ namespace Kursovaya
             Frame frame = LogicalTreeHelper.FindLogicalNode(parentWindow, "MainFrame") as Frame;
             frame.Navigate(new Registration());
         }
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                Button_Click(sender, e);
+            }
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
@@ -148,6 +149,10 @@ namespace Kursovaya
 
         private void LoadSeatLayout()
         {
+            foreach (var item in gridList)
+            {
+                item.Children.Clear();
+            }
             using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {
 
@@ -336,10 +341,11 @@ namespace Kursovaya
                         TotalPrice = totalPrice
                     };
                     context.Tickets.Add(newTicket);
-                
+
                 }
 
                 context.SaveChanges();
+
             }
 
             Window parentWindow = Window.GetWindow(this);

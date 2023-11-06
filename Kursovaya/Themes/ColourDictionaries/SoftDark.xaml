@@ -3,7 +3,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- FF  15 16 1a -->
-
+    <SolidColorBrush x:Key="BlueColor" Color="#1b77d2"/>
+    <SolidColorBrush x:Key="AdditionalColor" Color="#1d1d1e"/>
+    
     <SolidColorBrush x:Key="BackgroundColour" Color="#121212"/>
     <SolidColorBrush x:Key="WindowBorderColour" Color="#FF343434"/>
     <SolidColorBrush x:Key="WindowTitleColour" Color="#FF242424"/>

@@ -90,7 +90,7 @@ namespace Kursovaya
                 imagePaths.AddRange(curPer.Script.Select(p => p.Img));
                 TBDuration.Text = FormatTime(curPer.Duration);
                 TBSeason.Text = curPer.Seasons.Name;
-                TBAge.Text = curPer.Age;
+                TBAge.Text = curPer.Age.Name;
                 TBGenres.Text = string.Join(", ", curPer.Genres.ToList().Select(p => p.Name));
             }
         }

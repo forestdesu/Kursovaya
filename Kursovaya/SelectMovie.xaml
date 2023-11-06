@@ -11,17 +11,19 @@
     <Page.Resources>
         <Style x:Key="{x:Type CheckBox}" TargetType="{x:Type CheckBox}">
             <Setter Property="Background" Value="#2d2d2d"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="0, 5, 15, 5"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type CheckBox}">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" >
-                            <Border x:Name="brd" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" Width="15" Height="15" CornerRadius="2">
+                            <Border x:Name="brd" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" Width="20" Height="20" CornerRadius="3">
                                 <Grid>
                                     <Grid Background="{TemplateBinding Foreground}" Margin="1" Visibility="Collapsed" Name="nullBlock"/>
-                                    <Path Stretch="Uniform" Width="15" Height="10" Fill="white" Name="eliCheck" Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z " Visibility="Collapsed"/>
+                                    <Path Stretch="Uniform" Width="20" Height="15" Fill="white" Name="eliCheck" Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z " Visibility="Collapsed"/>
                                 </Grid>
                             </Border>
-                            <TextBlock Margin="5,0,0,0"  VerticalAlignment="Center" Foreground="White" Text="{TemplateBinding Content}"></TextBlock>
+                            <TextBlock Margin="7,0,0,0"  VerticalAlignment="Center" Foreground="White" Text="{TemplateBinding Content}"></TextBlock>
                         </StackPanel>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -57,12 +59,10 @@
                 <ColumnDefinition Width="70*"/>
                 <ColumnDefinition Width="30*"/>
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" Margin="10" CornerRadius="5">
-                <Grid Margin="15, 10">
+            <Border Grid.Column="0" Margin="10" CornerRadius="5" Background="{StaticResource AdditionalColor}">
+                <Grid Margin="25, 10, 0, 0">
                     <TextBlock HorizontalAlignment="Left" Text="Выбор фильма" VerticalAlignment="Top" FontSize="26"/>
-                    <Border BorderBrush="#dcdcdc" BorderThickness="1" CornerRadius="2" Margin="0, 50, 0, 10" Height="35" VerticalAlignment="Top">
-                        <TextBox Foreground="White" FontSize="18" x:Name="userLogin" Style="{StaticResource PlaceholderTextBox}"  PreviewKeyDown="TextBox_PreviewKeyDown" Background="Transparent" local:TextBoxHelper.Placeholder="Поиск по названию..." VerticalAlignment="Center"></TextBox>
-                    </Border>
+                    <TextBox Margin="0, 50, 15, 10" Height="35" FontSize="18" local:BorderHelper.CornerRadius="2" VerticalAlignment="Top"  x:Name="BoxSearch" Style="{StaticResource PlaceholderTextBox}"  PreviewKeyDown="TextBox_PreviewKeyDown" local:TextBoxHelper.Placeholder="Поиск по названию..." ></TextBox>
                     <ScrollViewer Margin="0, 100, 0, 0">
                         <Grid x:Name="Movies">
                             <Grid.ColumnDefinitions>
@@ -76,15 +76,20 @@
                     
                 </Grid>
             </Border>
-            <Border Grid.Column="1" Margin="10" CornerRadius="5">
-                <Grid Margin="15, 10, 15, 10">
+            <Border Grid.Column="1" Margin="10" CornerRadius="5" Background="{StaticResource AdditionalColor}">
+                <Grid Margin="15">
                     <TextBlock HorizontalAlignment="Left" Text="Фильтры" VerticalAlignment="Top" FontSize="26"/>
                     <StackPanel Name="SP1" Margin="0, 50">
                         <TextBlock Text="Жанры" FontSize="18" Grid.Column="0"></TextBlock>
-                        <StackPanel x:Name="GenresListBox" Grid.Row="1" Margin="0, 10, 0, 0">
+                        <StackPanel x:Name="GenresListBox" Grid.Row="1" Margin="0, 5, 0, 10">
                         </StackPanel>
                         <TextBlock Text="Сезон" FontSize="18" Grid.Column="0"></TextBlock>
-                        <StackPanel x:Name="SeasonListBox" Grid.Row="1" Margin="0, 10, 0, 0">
+                        <StackPanel x:Name="SeasonListBox" Grid.Row="1" Margin="0, 5, 0, 10">
+                            
+                        </StackPanel>
+                        <TextBlock Text="Возраст" FontSize="18" Grid.Column="0"></TextBlock>
+                        <StackPanel x:Name="AgeListBox" Orientation="Horizontal" Grid.Row="1" Margin="0, 5, 0, 10">
+
                         </StackPanel>
                         <Grid MouseLeftButtonUp="SelectGenreButton_Click" VerticalAlignment="Top" Margin="0, 10, 0, 10">
                             <Grid.ColumnDefinitions>
@@ -102,12 +107,9 @@
                             <ColumnDefinition Width="50*"/>
                             <ColumnDefinition Width="50*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Margin="5, 0" CornerRadius="2" Grid.Column="0" Background="#2d2d2d">
-                            <Button FontSize="18" Margin="0, 2" BorderBrush="Transparent" Background="Transparent" Foreground="#babbbd" Content="Сбросить" FontWeight="SemiBold"></Button>
-                        </Border>
-                        <Border Margin="5, 0" CornerRadius="2" Grid.Column="1" Background="#3cce7b">
-                            <Button FontSize="18" Margin="0, 2" BorderBrush="Transparent" Background="Transparent" Foreground="White" Content="Показать" FontWeight="SemiBold" Click="ApplyFilters"></Button>
-                        </Border>
+                        
+                        <Button Style="{StaticResource ClickBackground}" local:BorderHelper.CornerRadius="3" Grid.Column="0" FontSize="18" Margin="2, 5"  Background="#2d2d2d" Content="Сбросить" FontWeight="SemiBold" Click="ApplyFilters"></Button>
+                        <Button Style="{StaticResource ClickBackground}" local:BorderHelper.CornerRadius="3" Grid.Column="1" FontSize="18" Margin="2, 5"  Background="#3cce7b" Content="Показать" FontWeight="SemiBold" Click="ApplyFilters"></Button>
                     </Grid>
                 </Grid>
             </Border>

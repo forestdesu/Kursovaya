@@ -136,10 +136,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Age.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Authorization.xaml.cs">
       <DependentUpon>Authorization.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Carousel.cs" />
+    <Compile Include="BorderHelper.cs" />
     <Compile Include="Genres.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -331,10 +334,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -378,7 +377,6 @@
     <Resource Include="loading.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Img\Icons\tickets.png" />
     <Resource Include="Img\Icons\list.png" />
     <Resource Include="Img\Icons\logout.png" />
     <Resource Include="Img\Icons\profile.png" />
@@ -418,15 +416,7 @@
     <Resource Include="Img\Performance\8.jpg" />
     <Resource Include="Img\Icons\logo.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Resource Include="Img\Personal\nophoto.png" />
-    <Resource Include="Img\Personal\1.png" />
-    <Resource Include="Img\Personal\2.png" />
-    <Resource Include="Img\Personal\3.png" />
-    <Resource Include="Img\Personal\4.png" />
-    <Resource Include="Img\Personal\5.png" />
-    <Resource Include="Img\Personal\6.png" />
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -437,6 +427,17 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\Personal\nophoto.png" />
+    <Resource Include="Img\Personal\1.png" />
+    <Resource Include="Img\Personal\2.png" />
+    <Resource Include="Img\Personal\3.png" />
+    <Resource Include="Img\Personal\4.png" />
+    <Resource Include="Img\Personal\5.png" />
+    <Resource Include="Img\Personal\6.png" />
+    <Resource Include="Img\Icons\back.png" />
+    <Resource Include="Img\Icons\tickets.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.AspNetCore.Components.Analyzers.3.1.32\build\netstandard2.0\Microsoft.AspNetCore.Components.Analyzers.targets" Condition="Exists('..\packages\Microsoft.AspNetCore.Components.Analyzers.3.1.32\build\netstandard2.0\Microsoft.AspNetCore.Components.Analyzers.targets')" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -21,90 +22,69 @@ namespace Kursovaya
     /// </summary>
     public partial class Profile : Page
     {
+        int idUser = MainWindow.sessionUser.ID;
+        Users UserData;
         public Profile()
         {
             InitializeComponent();
-            GenerateMovies();
+            LoadData();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Button btn = (Button)sender;
-            MainWindow.idSelectMovie = Convert.ToInt32(btn.Tag);
-
-            Window parentWindow = Window.GetWindow(this);
-
-            Frame frame = LogicalTreeHelper.FindLogicalNode(parentWindow, "MainFrame") as Frame;
-            frame.Navigate(new MovieDetail());
-        }
-
-        private async Task GenerateMovies()
+        private void LoadData()
         {
             using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {
-                var results = await context.Performance.Select(p => p).ToListAsync();
-
-                foreach (var item in results)
-                {
-                    var curScript = item.Script.FirstOrDefault();
-                    Button button = new Button
-                    {
-                        Background = Brushes.Transparent,
-                        BorderBrush = Brushes.Transparent,
-                        Tag = curScript.ID
-                    };
-                    button.Click += Button_Click;
-
-                    // Создаем StackPanel
-                    StackPanel stackPanel = new StackPanel
-                    {
-                        Width = 150,
-                        Orientation = Orientation.Vertical
-                    };
-
-                    // Создаем изображение
-                    Image image = new Image
-                    {
-                        Source = new System.Windows.Media.Imaging.BitmapImage(new Uri(@"C:\Users\Work\source\repos\Kursovaya\Kursovaya\bin\Debug\logofilm.png")),
-                        Height = 200,
-                        Width = 150
-                    };
-
-                    // Создаем TextBlock для названия
-                    TextBlock titleTextBlock = new TextBlock
-                    {
-                        Text = curScript.Name,
-                        Margin = new Thickness(10, 0, 0, 0),
-                        TextAlignment = TextAlignment.Center
-                    };
-
-                    //var genres3 = context.Genres.Where(p => p.Script.Any(b => b.Sessions.Any(s => s.ID == item.ID))).Select(a => a.Name).ToList();
-                    //foreach (var b in genres3)
-                   // {
-                    //    Console.WriteLine(b);
-                    //};
-
-                    // Создаем TextBlock для описания
-                   // TextBlock descriptionTextBlock = new TextBlock
-                   // {
-                   //     Text = string.Join(", ", genres3),
-                   //     //Text = "123",
-                   //     Margin = new Thickness(10, 5, 0, 0),
-                   //     TextWrapping = TextWrapping.Wrap
-                   // };
-
-                    // Добавляем элементы в StackPanel
-                    stackPanel.Children.Add(image);
-                    stackPanel.Children.Add(titleTextBlock);
-                   // stackPanel.Children.Add(descriptionTextBlock);
-
-                    // Добавляем StackPanel в кнопку
-                    button.Content = stackPanel;
-
-                    // Добавляем кнопку в окно
-                    Movies.Children.Add(button);
-                }
+                UserData = context.Users.Where(p => p.ID == idUser).FirstOrDefault();
+                this.DataContext = UserData;
             }
+        }
+
+        private void BTNSave(object sender, RoutedEventArgs e)
+        {
+            if (userLogin.Text != UserData.Login || userPassword.Text != UserData.Password || userFullName.Text != UserData.Fullname || userPhone.Text != UserData.Phone || userEmail.Text != UserData.Email)
+            {
+                UserData.Login = userLogin.Text;
+                UserData.Password = userPassword.Text;
+                UserData.Fullname = userFullName.Text;
+                UserData.Phone = userPhone.Text;
+                UserData.Email = userEmail.Text;
+
+                using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
+                {
+                    context.Entry(UserData).State = EntityState.Modified;
+                    context.SaveChanges();
+                    MessageBox.Show("Данные успешно обновлены!");
+                }
+            }    
+            else
+            {
+                MessageBox.Show("Измените хотя бы одно поле!");
+            }
+        }
+
+        private void BTNDelete(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить свой аккаунт?", "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
+                {
+                    context.Users.Remove(context.Users.FirstOrDefault(u => u.ID == idUser));
+                    context.SaveChanges();
+                }
+                MainWindow.sessionUser = null;
+                Authorization authorization = new Authorization();
+                authorization.Show();
+
+                Window parentWindow = Window.GetWindow(this);
+
+                if (parentWindow != null)
+                {
+                    // Закрыть родительское окно
+                    parentWindow.Close();
+                }
+            }          
         }
     }
 }

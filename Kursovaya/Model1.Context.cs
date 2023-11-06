@@ -25,6 +25,7 @@ namespace Kursovaya
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Age> Age { get; set; }
         public virtual DbSet<Genres> Genres { get; set; }
         public virtual DbSet<Halls> Halls { get; set; }
         public virtual DbSet<Jobs> Jobs { get; set; }

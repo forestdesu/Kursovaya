@@ -303,8 +303,8 @@ namespace Kursovaya
                             TextBlock numblock = new TextBlock
                             {
                                 Text = Convert.ToString(i + 1),
-                                Width = 25,
-                                Height = 25,
+                                Width = 24,
+                                Height = 24,
                                 TextAlignment= TextAlignment.Center,
                                 FontSize = 18
                             };

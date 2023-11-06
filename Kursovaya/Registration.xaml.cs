@@ -26,9 +26,14 @@ namespace Kursovaya
             InitializeComponent();
         }
 
+        private void GoBack(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.GoBack();
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            List<TextBox> Fields = new List<TextBox> { userFullName, userLogin, userPassword, userEmail, userPhone };
+            List<TextBox> Fields = new List<TextBox> { userFullName, userLogin, userPassword, userPassword2, userEmail, userPhone };
             foreach (TextBox item in Fields) {
                 if (item.Text == null) {
                     WarningText.Text = "Пожалуйста заполните все поля";
@@ -36,9 +41,11 @@ namespace Kursovaya
                 }
             }
 
-            // - privet 
-            // - poka
-
+            if (userPassword.Text != userPassword2.Text)
+            {
+                WarningText.Text = "Пароли должны совпадать!";
+                return;
+            }
 
             using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {

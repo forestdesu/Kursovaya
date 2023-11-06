@@ -27,7 +27,8 @@ namespace Kursovaya
     public partial class SelectMovie : Page
     {
         List<string> ListSelectedGenres = new List<string>();
-        string ListSelectedSeason;
+        List<string> ListSelectedSeason = new List<string>();
+        List<string> ListSelectedAge = new List<string>();
         string TextSearch;
         public SelectMovie()
         {
@@ -85,7 +86,7 @@ namespace Kursovaya
             Window parentWindow = Window.GetWindow(this);
 
             Frame frame = LogicalTreeHelper.FindLogicalNode(parentWindow, "MainFrame") as Frame;
-            frame.Navigate(new MovieDetail());
+            Manager.MainFrame.Navigate(new MovieDetail());
         }
 
         private void SelectGenreButton_Click(object sender, RoutedEventArgs e)
@@ -110,9 +111,13 @@ namespace Kursovaya
                 {
                     query = query.Where(p => p.Genres.Any(g => ListSelectedGenres.Contains(g.Name)));
                 }
-                if (ListSelectedSeason != null)
+                if (ListSelectedSeason != null && ListSelectedSeason.Any())
                 {
-                    query = query.Where(p => p.Seasons.Name == ListSelectedSeason);
+                    query = query.Where(p => ListSelectedSeason.Contains(p.Seasons.Name));
+                }
+                if (ListSelectedAge != null && ListSelectedAge.Any())
+                {
+                    query = query.Where(p => ListSelectedAge.Contains(p.Age.Name));
                 }
                 int minutes = (int)timeSlider.Value;
                 if (minutes != 0)
@@ -236,12 +241,24 @@ namespace Kursovaya
 
         private void SeasonFilter()
         {
-            ListSelectedSeason = null;
+            ListSelectedSeason.Clear();
             foreach (CheckBox checkBox in SeasonListBox.Children)
             {
                 if (checkBox.IsChecked == true)
                 {
-                    ListSelectedSeason = checkBox.Content.ToString();
+                    ListSelectedSeason.Add(checkBox.Content.ToString());
+                }
+            }
+        }
+
+        private void AgeFilter()
+        {
+            ListSelectedAge.Clear();
+            foreach (CheckBox checkBox in AgeListBox.Children)
+            {
+                if (checkBox.IsChecked == true)
+                {
+                    ListSelectedAge.Add(checkBox.Content.ToString());
                 }
             }
         }
@@ -250,6 +267,8 @@ namespace Kursovaya
         {
             GenresFilter();
             SeasonFilter();
+            AgeFilter();
+            TextSearch = BoxSearch.Text;
             await GenerateMovies();
         }
 
@@ -263,8 +282,6 @@ namespace Kursovaya
                     CheckBox genresBox = new CheckBox();
                     genresBox.Content = item.Name;
                     genresBox.Tag = item.ID;
-                    genresBox.FontSize= 16;
-                    genresBox.Margin = new Thickness(10, 5, 10, 5);
                     GenresListBox.Children.Add(genresBox);
                 }
 
@@ -274,9 +291,16 @@ namespace Kursovaya
                     CheckBox seasonBox = new CheckBox();
                     seasonBox.Content = item.Name;
                     seasonBox.Tag = item.ID;
-                    seasonBox.FontSize = 16;
-                    seasonBox.Margin = new Thickness(10, 5, 10, 5);
                     SeasonListBox.Children.Add(seasonBox);
+                }
+
+                var ListOfAge = await context.Age.ToListAsync();
+                foreach (var item in ListOfAge)
+                {
+                    CheckBox ageBox = new CheckBox();
+                    ageBox.Content = item.Name;
+                    ageBox.Tag = item.ID;
+                    AgeListBox.Children.Add(ageBox);
                 }
             }
         }

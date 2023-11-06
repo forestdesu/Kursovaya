@@ -9,39 +9,22 @@
       Title="Registration">
 
     <Grid>
+        <Button Style="{StaticResource ClickBackground}" Background="SlateGray" local:BorderHelper.CornerRadius="20" Height="40" Width="40" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10" Click="GoBack">
+            <Image Source="img/Icons/back.png" Margin="3"/>
+        </Button>
         <StackPanel VerticalAlignment="Center" Margin="10, 0" Grid.Column="1">
             <TextBlock TextAlignment="Center" FontSize="26" Text="Регистрация" Margin="0, 0, 0, 5"></TextBlock>
             <TextBlock TextAlignment="Center" Text="Пожалуйста введите свои данные" Margin="0, 5, 0, 20"></TextBlock>
-            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="10" Margin="0, 0, 0, 10">
-                <TextBox x:Name="userLogin" Style="{StaticResource PlaceholderTextBox}" Background="Transparent" local:TextBoxHelper.Placeholder="Логин" VerticalAlignment="Center"></TextBox>
-            </Border>
-            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="10" Margin="0, 0, 0, 10">
-                <TextBox x:Name="userPassword" Style="{StaticResource PlaceholderTextBox}" Background="Transparent" local:TextBoxHelper.Placeholder="Пароль" VerticalAlignment="Center"></TextBox>
-            </Border>
-            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="10" Margin="0, 0, 0, 10">
-                <TextBox x:Name="userPassword2" Style="{StaticResource PlaceholderTextBox}" Background="Transparent" local:TextBoxHelper.Placeholder="Пароль еще раз" VerticalAlignment="Center"></TextBox>
-            </Border>
-            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="10" Margin="0, 0, 0, 10">
-                <TextBox x:Name="userFullName" Style="{StaticResource PlaceholderTextBox}" Background="Transparent" local:TextBoxHelper.Placeholder="Полное имя" VerticalAlignment="Center"></TextBox>
-            </Border>
-            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="10" Margin="0, 0, 0, 10">
-                <TextBox x:Name="userEmail" Style="{StaticResource PlaceholderTextBox}" Background="Transparent" local:TextBoxHelper.Placeholder="Адрес почты" VerticalAlignment="Center"></TextBox>
-            </Border>
-            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="10" Background="#1d1d1e" Margin="0, 0, 0, 10">
-                <TextBox x:Name="userPhone" Style="{StaticResource PlaceholderTextBox}" local:TextBoxHelper.Placeholder="Номер телефона"></TextBox>
-            </Border>
-            
-            
-            
-            
-            
+            <TextBox x:Name="userLogin" Style="{StaticResource PlaceholderTextBox}" local:TextBoxHelper.Placeholder="Логин" local:BorderHelper.CornerRadius="10" Margin="0, 0, 0, 10"></TextBox>
+            <TextBox x:Name="userPassword" Style="{StaticResource PlaceholderTextBox}" local:TextBoxHelper.Placeholder="Пароль" local:BorderHelper.CornerRadius="10" Margin="0, 0, 0, 10"></TextBox>
+            <TextBox x:Name="userPassword2" Style="{StaticResource PlaceholderTextBox}" local:TextBoxHelper.Placeholder="Пароль еще раз" local:BorderHelper.CornerRadius="10" Margin="0, 0, 0, 10"></TextBox>
+            <TextBox x:Name="userFullName" Style="{StaticResource PlaceholderTextBox}" local:TextBoxHelper.Placeholder="Полное имя" local:BorderHelper.CornerRadius="10" Margin="0, 0, 0, 10"></TextBox>
+            <TextBox x:Name="userEmail" Style="{StaticResource PlaceholderTextBox}" local:TextBoxHelper.Placeholder="Адрес почты" local:BorderHelper.CornerRadius="10" Margin="0, 0, 0, 10"></TextBox>
+            <TextBox x:Name="userPhone" Style="{StaticResource PlaceholderTextBox}" local:TextBoxHelper.Placeholder="Номер телефона" local:BorderHelper.CornerRadius="10" Margin="0, 0, 0, 10"></TextBox>
+
             <TextBlock x:Name="WarningText" Margin="0, 0, 0, 5" Foreground="Red"></TextBlock>
 
-            <Border Background="#1b77d2" CornerRadius="15">
-                <Button Background="Transparent" BorderBrush="Transparent" Height="30" Click="Button_Click">
-                    <TextBlock Foreground="white" Text="Зарегистрироваться"></TextBlock>
-                </Button>
-            </Border>
+            <Button Style="{StaticResource ClickBackground}" Background="#1b77d2" local:BorderHelper.CornerRadius="15" Margin="0, 0, 0, 10" BorderBrush="Transparent" Height="30" Click="Button_Click" Content="Зарегистрироваться"></Button>
         </StackPanel>
     </Grid>
 </Page>

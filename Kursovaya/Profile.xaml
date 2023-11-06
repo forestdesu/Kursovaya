@@ -5,53 +5,43 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Kursovaya"
       mc:Ignorable="d" 
-      d:DesignHeight="515" d:DesignWidth="960"
+      d:DesignHeight="1080" d:DesignWidth="1930"
       Title="Profile">
 
-    <Grid Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40*"></ColumnDefinition>
-            <ColumnDefinition Width="60*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <StackPanel Margin="20,20,20,20" Grid.Column="0" RenderTransformOrigin="0.5,0.5">
-            <StackPanel.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleY="0"/>
-                    <RotateTransform/>
-                    <TranslateTransform Y="0"/>
-                </TransformGroup>
-            </StackPanel.RenderTransform>
-            <!--
-            [Fullname]
-            [Phone]
-            [Email]
-            [Login]
-            [Password]
-            [TypeOfUserID]
-            -->
-            <Image Source="C:\Users\gdugd\source\repos\Kursovaya\Kursovaya\img\Rayan.jpg"  Width="200" Height="200"  />
-            <TextBlock TextWrapping="Wrap" Text="Fullname" Width="200" HorizontalAlignment="Center" Margin="0,20,0,0"/>
-            <TextBox TextWrapping="Wrap" Text="Ni Pl" Width="200" HorizontalAlignment="Center" FontSize="16"/>
-
-            <TextBlock TextWrapping="Wrap" Text="Phone" Width="200" HorizontalAlignment="Center" Margin="0,10,0,0" />
-            <TextBox TextWrapping="Wrap" Text="79141012202" Width="200" HorizontalAlignment="Center" FontSize="16"/>
-
-            <TextBlock TextWrapping="Wrap" Text="Email" Width="200" HorizontalAlignment="Center" Margin="0,10,0,0" />
-            <TextBox TextWrapping="Wrap" Text="gdugdh@gmail.com" Width="200" HorizontalAlignment="Center" FontSize="16"/>
-            <Button Content="Сохранить" Background="#FFC5C5C5" Width="200" FontSize="16" HorizontalAlignment="Center" Margin="0,20,0,0"/>
-        </StackPanel>
-        <ScrollViewer Grid.Column="1">
-            <StackPanel Margin="20,20,20,20">
-                <TextBlock TextWrapping="Wrap" Text="Посещенные представления" HorizontalAlignment="Left" Margin="0,0,0,0" FontSize="16"/>
-
-                <WrapPanel x:Name="Movies">
-
-                </WrapPanel>
+    <Grid>
+        <Border VerticalAlignment="Center" Margin="150, 10" CornerRadius="5" Background="{StaticResource AdditionalColor}">
+            <StackPanel Margin="15, 0, 15, 15">
+                <TextBlock Text="Настройка профиля" Margin="0, 15" FontSize="26"></TextBlock>
+                <TextBlock Text="Логин" FontSize="18"></TextBlock>
+                <Border BorderBrush="#dcdcdc" BorderThickness="1" CornerRadius="2" VerticalAlignment="Top" Margin="0, 5, 0, 15">
+                    <TextBox Text="{Binding Login}" Foreground="White" FontSize="18" x:Name="userLogin" Style="{StaticResource PlaceholderTextBox}" Background="Transparent" VerticalAlignment="Center"></TextBox>
+                </Border>
+                <TextBlock Text="Пароль" FontSize="18"></TextBlock>
+                <Border BorderBrush="#dcdcdc" BorderThickness="1" CornerRadius="2" VerticalAlignment="Top" Margin="0, 5, 0, 15">
+                    <TextBox Text="{Binding Password}" Foreground="White" FontSize="18" x:Name="userPassword" Style="{StaticResource PlaceholderTextBox}" Background="Transparent" VerticalAlignment="Center"></TextBox>
+                </Border>
+                <TextBlock Text="Полное имя" FontSize="18"></TextBlock>
+                <Border BorderBrush="#dcdcdc" BorderThickness="1" CornerRadius="2" VerticalAlignment="Top" Margin="0, 5, 0, 15">
+                    <TextBox Text="{Binding Fullname}" Foreground="White" FontSize="18" x:Name="userFullName" Style="{StaticResource PlaceholderTextBox}" Background="Transparent" VerticalAlignment="Center"></TextBox>
+                </Border>
+                <TextBlock Text="Номер телефона" FontSize="18"></TextBlock>
+                <Border BorderBrush="#dcdcdc" BorderThickness="1" CornerRadius="2" VerticalAlignment="Top" Margin="0, 5, 0, 15">
+                    <TextBox Text="{Binding Phone}" Foreground="White" FontSize="18" x:Name="userPhone" Style="{StaticResource PlaceholderTextBox}" Background="Transparent" VerticalAlignment="Center"></TextBox>
+                </Border>
+                <TextBlock Text="Адрес почты" FontSize="18"></TextBlock>
+                <Border BorderBrush="#dcdcdc" BorderThickness="1" CornerRadius="2" VerticalAlignment="Top" Margin="0, 5, 0, 15">
+                    <TextBox Text="{Binding Email}" Foreground="White" FontSize="18" x:Name="userEmail" Style="{StaticResource PlaceholderTextBox}" Background="Transparent" VerticalAlignment="Center"></TextBox>
+                </Border>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0, 10">
+                    <Border Margin="5, 0" CornerRadius="2" Grid.Column="0" Background="#f53649">
+                        <Button FontSize="18" Margin="10, 2" BorderBrush="Transparent" Background="Transparent" Foreground="#babbbd" Content="Удалить аккаунт" FontWeight="SemiBold" Click="BTNDelete"></Button>
+                    </Border>
+                    <Border Margin="5, 0" CornerRadius="2" Grid.Column="1" Background="#3cce7b">
+                        <Button FontSize="18" Margin="10, 2" BorderBrush="Transparent" Background="Transparent" Foreground="White" Content="Сохранить" FontWeight="SemiBold" Click="BTNSave"></Button>
+                    </Border>
+                </StackPanel>
             </StackPanel>
-        </ScrollViewer>
+        </Border>
+        
     </Grid>
 </Page>

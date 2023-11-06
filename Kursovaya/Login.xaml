@@ -7,26 +7,20 @@
       xmlns:local="clr-namespace:Kursovaya"
       mc:Ignorable="d" 
       Height="550" Width="350"
-      Title="Login">
+      Title="Login" KeyDown="Window_KeyDown">
+
     <Grid>
         <StackPanel VerticalAlignment="Center" Margin="25, 0">
             <Image Source="img/Icons/logo.png" Margin="100, 25"/>
             <TextBlock TextAlignment="Center" FontSize="26" Text="Приветствуем!" Margin="0, 0, 0, 5"></TextBlock>
             <TextBlock TextAlignment="Center" FontSize="12" Text="Пожалуйста введите свой логин и пароль" Margin="0, 0, 0, 30"></TextBlock>
-            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="10" Margin="0, 0, 0, 10">
-                <TextBox x:Name="userLogin" Style="{StaticResource PlaceholderTextBox}" local:TextBoxHelper.Placeholder="Введите логин"></TextBox>
-            </Border>
-            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="10" Margin="0, 0, 0, 10">
-                <PasswordBox x:Name="userPassword" local:TextBoxHelper.Placeholder="Введите пароль"></PasswordBox>
-            </Border>
-            
-            
+            <TextBox x:Name="userLogin" Style="{StaticResource PlaceholderTextBox}" local:BorderHelper.CornerRadius="10" local:TextBoxHelper.Placeholder="Введите логин" Margin="0, 0, 0, 10"></TextBox>
+            <PasswordBox x:Name="userPassword" Style="{StaticResource PasswordBox}" local:BorderHelper.CornerRadius="10" local:TextBoxHelper.Placeholder="Введите пароль"></PasswordBox>
+
+
             <TextBlock x:Name="WarningText" Margin="0, 0, 0, 5" TextAlignment="Center" Foreground="Red"></TextBlock>
-            <Border Background="#1b77d2" CornerRadius="15" Margin="0, 0, 0, 10">
-                <Button Background="Transparent" BorderBrush="Transparent" Height="30" Click="Button_Click">
-                    <TextBlock Foreground="white" Text="Войти"></TextBlock>
-                </Button>
-            </Border>
+
+            <Button Style="{StaticResource ClickBackground}" Background="#1b77d2" local:BorderHelper.CornerRadius="15" Margin="0, 0, 0, 10" BorderBrush="Transparent" Height="30" Click="Button_Click" Content="Войти"></Button>
             <TextBlock Text="Нет учетной записи??" TextAlignment="Center" Margin="0, 20, 0, 0"></TextBlock>
             <Button Background="Transparent" BorderBrush="Transparent" Click="Button_Click_1">
                 <TextBlock Foreground="#1b77d2" Text="Зарегистрироваться"></TextBlock>

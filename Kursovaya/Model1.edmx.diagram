@@ -4,36 +4,38 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bc32ddff29d047d5abe57792b9df20a7" Name="Diagram1">
-        <EntityTypeShape EntityType="DramaTheaterModel.Genres" Width="1.5" PointX="1.5" PointY="9.875" IsExpanded="true" />
+      <Diagram DiagramId="64f79fb7501743ecba0eba42276294cf" Name="Diagram1">
+        <EntityTypeShape EntityType="DramaTheaterModel.Age" Width="1.5" PointX="1.5" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.Genres" Width="1.5" PointX="1.5" PointY="12.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DramaTheaterModel.Halls" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DramaTheaterModel.Jobs" Width="1.5" PointX="1.5" PointY="15.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DramaTheaterModel.Performance" Width="1.5" PointX="3.75" PointY="10.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DramaTheaterModel.Personal" Width="1.5" PointX="3.75" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.Jobs" Width="1.5" PointX="1.5" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.Performance" Width="1.5" PointX="3.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.Personal" Width="1.5" PointX="3.75" PointY="17.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DramaTheaterModel.Place" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DramaTheaterModel.PriceCategory" Width="1.5" PointX="1.5" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DramaTheaterModel.PriceTime" Width="1.5" PointX="3.75" PointY="17.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DramaTheaterModel.Script" Width="1.5" PointX="6" PointY="12.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DramaTheaterModel.Seasons" Width="1.5" PointX="1.5" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.PriceTime" Width="1.5" PointX="3.75" PointY="20.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.Script" Width="1.5" PointX="6" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DramaTheaterModel.Seasons" Width="1.5" PointX="1.5" PointY="15.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DramaTheaterModel.Sectors" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DramaTheaterModel.Sessions" Width="1.5" PointX="6" PointY="3.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DramaTheaterModel.Stat" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DramaTheaterModel.Tickets" Width="1.5" PointX="11.25" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DramaTheaterModel.TypeOfUser" Width="1.5" PointX="6.75" PointY="9.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DramaTheaterModel.Users" Width="1.5" PointX="9" PointY="8.875" IsExpanded="true" />
-        <AssociationConnector Association="DramaTheaterModel.FK__Place__HallsID__6383C8BA" ManuallyRouted="false" />
-        <AssociationConnector Association="DramaTheaterModel.FK__Sessions__HallsI__5535A963" ManuallyRouted="false" />
-        <AssociationConnector Association="DramaTheaterModel.FK__Personal__JobID__45F365D3" ManuallyRouted="false" />
-        <AssociationConnector Association="DramaTheaterModel.FK__Performan__Seaso__5070F446" ManuallyRouted="false" />
-        <AssociationConnector Association="DramaTheaterModel.FK__Sessions__Perfor__534D60F1" ManuallyRouted="false" />
-        <AssociationConnector Association="DramaTheaterModel.FK__Place__SectorID__6477ECF3" ManuallyRouted="false" />
-        <AssociationConnector Association="DramaTheaterModel.FK__Tickets__PlaceID__693CA210" ManuallyRouted="false" />
-        <AssociationConnector Association="DramaTheaterModel.FK__Sectors__PriceCa__412EB0B6" ManuallyRouted="false" />
-        <AssociationConnector Association="DramaTheaterModel.FK__Sessions__PriceT__5441852A" ManuallyRouted="false" />
-        <AssociationConnector Association="DramaTheaterModel.FK__Stat__SessionsID__6C190EBB" ManuallyRouted="false" />
-        <AssociationConnector Association="DramaTheaterModel.FK__Tickets__Session__6754599E" ManuallyRouted="false" />
-        <AssociationConnector Association="DramaTheaterModel.FK__Tickets__UserID__68487DD7" ManuallyRouted="false" />
-        <AssociationConnector Association="DramaTheaterModel.FK__Users__TypeOfUse__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Performan__AgeID__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Place__HallsID__66603565" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Sessions__HallsI__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Personal__JobID__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Performan__Seaso__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Sessions__Perfor__5629CD9C" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Place__SectorID__6754599E" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Tickets__PlaceID__6C190EBB" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Sectors__PriceCa__4316F928" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Sessions__PriceT__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Stat__SessionsID__6EF57B66" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Tickets__Session__6A30C649" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Tickets__UserID__6B24EA82" ManuallyRouted="false" />
+        <AssociationConnector Association="DramaTheaterModel.FK__Users__TypeOfUse__4F7CD00D" ManuallyRouted="false" />
         <AssociationConnector Association="DramaTheaterModel.PerformanceAndGenres" ManuallyRouted="false" />
         <AssociationConnector Association="DramaTheaterModel.PerformanceAndScript" ManuallyRouted="false" />
         <AssociationConnector Association="DramaTheaterModel.SessionsAndPersonal" ManuallyRouted="false" />

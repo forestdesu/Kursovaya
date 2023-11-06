@@ -11,11 +11,12 @@
         >
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Background="#1d1d1e" Grid.Row="0" Panel.ZIndex="-2">
+        <Grid Background="{StaticResource AdditionalColor}" Grid.Row="0" Panel.ZIndex="-2">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="50"/>
@@ -23,17 +24,23 @@
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="10"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Background="Transparent" BorderBrush="Transparent">
+            <Button Style="{StaticResource HoverBackground}" Grid.Column="1"  Click="Profile">
                 <Image Source="img/Icons/profile.png"/>
             </Button>
-            <Button Grid.Column="2" Background="Transparent" BorderBrush="Transparent" Click="Button_Click">
+            <Button Style="{StaticResource HoverBackground}" Grid.Column="3" Click="Movies">
                 <Image Source="img/Icons/list.png"/>
             </Button>
-            <Button Grid.Column="4" Background="Transparent" BorderBrush="Transparent" Click="Button_Click_1">
+            <Button Style="{StaticResource HoverBackground}" Grid.Column="5" Click="Tickets">
                 <Image Source="img/Icons/tickets.png"/>
             </Button>
-            <Button Grid.Column="7" Background="Transparent" BorderBrush="Transparent" Click="Logout">
+            <Button Style="{StaticResource HoverBackground}" Grid.Column="7" Click="GoBack">
+                <Image Source="img/Icons/back.png"/>
+            </Button>
+            <Button Style="{StaticResource HoverBackground}" Grid.Column="9" Click="Logout" >
                 <Image Source="img/Icons/logout.png"/>
             </Button>
         </Grid>

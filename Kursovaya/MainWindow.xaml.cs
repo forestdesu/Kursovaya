@@ -33,12 +33,17 @@ namespace Kursovaya
             InitializeComponent();
             // // Вызываем метод для создания мест в зале
             MainFrame.Navigate(new SelectMovie());
+            Manager.MainFrame = MainFrame;
             idSelectMovie = 2;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Movies(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new SelectMovie());
+            Manager.MainFrame.Navigate(new SelectMovie());
+        }
+        private void Profile(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new Profile());
         }
 
         private void Logout(object sender, RoutedEventArgs e)
@@ -48,9 +53,17 @@ namespace Kursovaya
             this.Close();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void GoBack(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new MyTickets());
+            if (Manager.MainFrame is SelectTicket)
+            {
+                Manager.MainFrame.GoBack();
+            }
+        }
+
+        private void Tickets(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new MyTickets());
         }
     }
 }
