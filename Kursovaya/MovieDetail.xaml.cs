@@ -219,7 +219,12 @@ namespace Kursovaya
         {
             using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {
-                var curPer = context.Performance.Where(p => p.ID == idSelectMovie).FirstOrDefault().Sessions.FirstOrDefault().Personal.Where(p => p.JobID == 1 || p.JobID == 2).OrderBy(p => p.JobID).ToList();
+                var dataa = context.Performance.Where(p => p.ID == idSelectMovie).FirstOrDefault().Sessions.FirstOrDefault();
+                if (dataa == null)
+                {
+                    return;
+                }
+                var curPer = dataa.Personal.Where(p => p.JobID == 1 || p.JobID == 2).OrderBy(p => p.JobID).ToList();
                 string FullPath = AppDomain.CurrentDomain.BaseDirectory;
                 FullPath = FullPath.Substring(0, FullPath.Length - 10);
                 foreach (var actor in curPer)

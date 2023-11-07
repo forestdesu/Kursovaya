@@ -70,6 +70,11 @@ namespace Kursovaya
             {
                 using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
                 {
+                    var userTickets = context.Tickets.Where(p => p.UserID == idUser).ToList();
+                    if (userTickets.Any())
+                    {
+                        context.Tickets.RemoveRange(userTickets);
+                    }
                     context.Users.Remove(context.Users.FirstOrDefault(u => u.ID == idUser));
                     context.SaveChanges();
                 }

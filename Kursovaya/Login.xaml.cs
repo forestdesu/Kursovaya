@@ -25,6 +25,13 @@ namespace Kursovaya
         public Login()
         {
             InitializeComponent();
+            //
+            //
+            //
+            //
+            //
+            //
+            //
             //CreatePlace();
         }
 
