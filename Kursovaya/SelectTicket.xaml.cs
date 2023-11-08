@@ -352,6 +352,7 @@ namespace Kursovaya
 
             Frame frame = LogicalTreeHelper.FindLogicalNode(parentWindow, "MainFrame") as Frame;
             frame.Navigate(new SelectMovie());
+            MainWindow.previusPage = true;
         }
     }
 }

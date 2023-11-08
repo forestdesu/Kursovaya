@@ -121,9 +121,7 @@ namespace Kursovaya
                     calendar.IsEnabled = false;
                     textBlockNoSessions.Visibility = Visibility.Visible;
                 }
-
-            }
-                
+            }               
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -234,7 +232,7 @@ namespace Kursovaya
                 FullPath = FullPath.Substring(0, FullPath.Length - 10);
                 foreach (var actor in actors)
                 {
-
+                    ActorText.Visibility = Visibility.Visible;
                     Border borderActor = new Border();
                     if (actor.JobID == 1)
                     {

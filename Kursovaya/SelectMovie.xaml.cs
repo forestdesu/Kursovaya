@@ -89,13 +89,6 @@ namespace Kursovaya
             Manager.MainFrame.Navigate(new MovieDetail());
         }
 
-        private void SelectGenreButton_Click(object sender, RoutedEventArgs e)
-        {
-            SP1.Visibility = Visibility.Collapsed;
-            SP2.Visibility = Visibility.Visible;
-            genresSelect.Visibility = Visibility.Visible;           
-        }
-
         private async Task GenerateMovies()
         {
             Movies.Children.Clear();
@@ -113,7 +106,10 @@ namespace Kursovaya
                 }
                 if (ListSelectedGenres != null && ListSelectedGenres.Any())
                 {
-                    query = query.Where(p => p.Genres.Any(g => ListSelectedGenres.Contains(g.Name)));
+                    foreach (var selectedGenre in ListSelectedGenres)
+                    {
+                        query = query.Where(p => p.Genres.Any(g => g.Name == selectedGenre));
+                    }
                 }
                 if (ListSelectedSeason != null && ListSelectedSeason.Any())
                 {
@@ -271,6 +267,38 @@ namespace Kursovaya
             SeasonFilter();
             AgeFilter();
             TextSearch = BoxSearch.Text;
+            await GenerateMovies();
+        }
+
+        private async void ResetFilters(object sender, RoutedEventArgs e)
+        {
+            ListSelectedGenres.Clear();
+            ListSelectedSeason.Clear();
+            ListSelectedAge.Clear();
+            foreach (CheckBox checkBox in GenresListBox.Children)
+            {
+                if (checkBox.IsChecked == true)
+                {
+                    checkBox.IsChecked = false;
+                }
+            }
+            foreach (CheckBox checkBox in SeasonListBox.Children)
+            {
+                if (checkBox.IsChecked == true)
+                {
+                    checkBox.IsChecked = false;
+                }
+            }
+            foreach (CheckBox checkBox in AgeListBox.Children)
+            {
+                if (checkBox.IsChecked == true)
+                {
+                    checkBox.IsChecked = false;
+                }
+            }
+            timeSlider.Value = 0;
+            BoxSearch.Text = "";
+            TextSearch = "";
             await GenerateMovies();
         }
 

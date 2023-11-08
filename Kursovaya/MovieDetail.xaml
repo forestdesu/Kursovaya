@@ -76,7 +76,7 @@
                                     <TextBlock FontSize="18" x:Name="TBGenres" Text="Комедия, фентези" TextWrapping="Wrap"></TextBlock>
                                 </StackPanel>
                             </StackPanel>
-                            <TextBlock  Margin="0, 20, 0, 25" FontSize="26" Text="Актеры:" FontWeight="Bold"></TextBlock>
+                            <TextBlock Visibility="Collapsed" x:Name="ActorText" Margin="0, 20, 0, 25" FontSize="26" Text="Актеры:" FontWeight="Bold"></TextBlock>
                             <ScrollViewer VerticalScrollBarVisibility="Auto">
                                 <WrapPanel x:Name="actorWrapPanel" Orientation="Horizontal"/>
                             </ScrollViewer>

@@ -27,10 +27,12 @@ namespace Kursovaya
         public static int idSelectMovie { get; set; }
         public static int idSelectSeans { get; set; }
         public static Users sessionUser { get; set; }
+        public static bool previusPage { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
+            previusPage = false;
             // // Вызываем метод для создания мест в зале
             MainFrame.Navigate(new SelectMovie());
             Manager.MainFrame = MainFrame;
@@ -39,10 +41,12 @@ namespace Kursovaya
 
         private void Movies(object sender, RoutedEventArgs e)
         {
+            
             Manager.MainFrame.Navigate(new SelectMovie());
         }
         private void Profile(object sender, RoutedEventArgs e)
         {
+            previusPage = false;
             Manager.MainFrame.Navigate(new Profile());
         }
 
@@ -55,14 +59,44 @@ namespace Kursovaya
 
         private void GoBack(object sender, RoutedEventArgs e)
         {
-            if (Manager.MainFrame is SelectTicket)
+            //Console.WriteLine($"ВОТ ТУТ: {Manager.MainFrame.Content is SelectTicket} - {Manager.MainFrame.Content.ToString()}");
+
+            if (!previusPage && !(Manager.MainFrame.Content.GetType() == typeof(SelectMovie)))
+            {
+                if (Manager.MainFrame.CanGoBack)
+                {
+                    Manager.MainFrame.GoBack();
+                }                
+            }
+            /*
+            if (Manager.MainFrame.CanGoBack)
             {
                 Manager.MainFrame.GoBack();
+                Console.WriteLine(Manager.MainFrame.Content.GetType());
+                Console.WriteLine(Manager.MainFrame.Content.GetType() == typeof(SelectTicket));
+                if (Manager.MainFrame.Content.GetType() == typeof(SelectTicket))
+                {
+                    Manager.MainFrame.GoBack();
+                }
+            }*/
+            /*
+            if (!(previusPage == false))
+            {
+                previusPage = Manager.MainFrame.CanGoBack;
+                if (Manager.MainFrame.CanGoBack)
+                {
+                    Manager.MainFrame.GoBack();
+                }
             }
+            if (Manager.MainFrame.Content is SelectTicket)
+            {
+                previusPage = false;
+            }*/
         }
 
         private void Tickets(object sender, RoutedEventArgs e)
         {
+            previusPage = false;
             Manager.MainFrame.Navigate(new MyTickets());
         }
     }
