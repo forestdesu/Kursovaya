@@ -79,8 +79,8 @@
             <Border Grid.Column="1" Margin="10" CornerRadius="5" Background="{StaticResource AdditionalColor}">
                 <Grid Margin="15">
                     <TextBlock HorizontalAlignment="Left" Text="Фильтры" VerticalAlignment="Top" FontSize="26"/>
-                    <ScrollViewer>
-                        <StackPanel Name="SP1" Margin="0, 50">
+                    <ScrollViewer  Margin="0, 50">
+                        <StackPanel Name="SP1">
                             <TextBlock Text="Жанры" FontSize="18" Grid.Column="0"></TextBlock>
                             <StackPanel x:Name="GenresListBox" Grid.Row="1" Margin="0, 5, 0, 10">
                             </StackPanel>
@@ -92,7 +92,7 @@
                             <StackPanel x:Name="AgeListBox" Orientation="Horizontal" Grid.Row="1" Margin="0, 5, 0, 10">
 
                             </StackPanel>
-                            <Grid MouseLeftButtonUp="SelectGenreButton_Click" VerticalAlignment="Top" Margin="0, 10, 0, 10">
+                            <Grid VerticalAlignment="Top">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="*"/>
@@ -109,15 +109,12 @@
                             <ColumnDefinition Width="50*"/>
                             <ColumnDefinition Width="50*"/>
                         </Grid.ColumnDefinitions>
-                        
-                        <Button Style="{StaticResource ClickBackground}" local:BorderHelper.CornerRadius="3" Grid.Column="0" FontSize="18" Margin="2, 5"  Background="#2d2d2d" Content="Сбросить" FontWeight="SemiBold" Click="ApplyFilters"></Button>
+
+                        <Button Style="{StaticResource ClickBackground}" local:BorderHelper.CornerRadius="3" Grid.Column="0" FontSize="18" Margin="2, 5"  Background="#2d2d2d" Content="Сбросить" FontWeight="SemiBold" Click="ResetFilters"></Button>
                         <Button Style="{StaticResource ClickBackground}" local:BorderHelper.CornerRadius="3" Grid.Column="1" FontSize="18" Margin="2, 5"  Background="#3cce7b" Content="Показать" FontWeight="SemiBold" Click="ApplyFilters"></Button>
                     </Grid>
                 </Grid>
             </Border>
-            <StackPanel Name="SP2" Visibility="Collapsed" Grid.Column="1" VerticalAlignment="Top" Margin="25,75,25,0">
-                <local:SelectGenres x:Name="genresSelect" Visibility="Collapsed"/>
-            </StackPanel>
         </Grid>
     </Grid>
 </Page>
