@@ -89,7 +89,7 @@
                     <StackPanel Grid.Column="1">
                         <Viewbox>
                             <Grid>
-                                <Calendar x:Name="calendar" SelectionMode="SingleDate" CalendarDayButtonStyle="{StaticResource CustomCalendarDayButtonStyle}" />
+                                <Calendar x:Name="calendar" SelectionMode="SingleDate" CalendarDayButtonStyle="{StaticResource CustomCalendarDayButtonStyle}" SelectedDatesChanged="Calendar_SelectedDatesChanged"/>
                                 <TextBlock x:Name="textBlockNoSessions" Text="Сеансов нет" Foreground="Red" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"></TextBlock>
                             </Grid>
                         </Viewbox>

@@ -92,7 +92,9 @@ namespace Kursovaya
                         System.Windows.Application.Current.Dispatcher.Invoke(() =>
                         {
 
-                            var DataUser = context.Users.Where(p => p.Login == userLogin.Text && p.Password == userPassword.Password).FirstOrDefault();
+                            var DataUser = context.Users
+                            .Where(p => p.Login == userLogin.Text && p.Password == userPassword.Password)
+                            .FirstOrDefault();
 
                             if (DataUser != null)
                             {

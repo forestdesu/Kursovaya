@@ -43,10 +43,7 @@ namespace Kursovaya
             timer.Tick += Timer_Tick;
             timer.Start();
             LoadData();
-            CalendarLoad();
-            LoadSeans(DateTime.Now.Date);
-            LoadImage();
-            LoadActorCard();
+                        
         }
 
         public class Seans
@@ -83,35 +80,41 @@ namespace Kursovaya
         {
             using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {
-                var curPer = context.Performance.Where(p => p.ID == idSelectMovie).FirstOrDefault();
-                MovieTitle.Text = curPer.Name;
-                Desc.Text = curPer.Description;
-                imagePaths.Add(curPer.Img);
-                imagePaths.AddRange(curPer.Script.Select(p => p.Img));
-                TBDuration.Text = FormatTime(curPer.Duration);
-                TBSeason.Text = curPer.Seasons.Name;
-                TBAge.Text = curPer.Age.Name;
-                TBGenres.Text = string.Join(", ", curPer.Genres.ToList().Select(p => p.Name));
+                var curentPerformance = context.Performance
+                    .Where(p => p.ID == idSelectMovie).FirstOrDefault();
+                MovieTitle.Text = curentPerformance.Name;
+                Desc.Text = curentPerformance.Description;
+                imagePaths.Add(curentPerformance.Img);
+                imagePaths.AddRange(curentPerformance.Script.Select(p => p.Img));
+                TBDuration.Text = FormatTime(curentPerformance.Duration);
+                TBSeason.Text = curentPerformance.Seasons.Name;
+                TBAge.Text = curentPerformance.Age.Name;
+                TBGenres.Text = string.Join(", ", curentPerformance.Genres.ToList().Select(p => p.Name));
+                LoadImage();
+                LoadActorCard(curentPerformance);
+                CalendarLoad(curentPerformance);
+                LoadSeans(DateTime.Now.Date);
             }
         }
 
-        private void CalendarLoad()
+        private void CalendarLoad(Performance curentPerformance)
         {
             using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {
-                var curSes = context.Sessions.Where(p => p.PerformanceID == idSelectMovie);
-                if (curSes.Any())
+                var sessions = curentPerformance.Sessions;
+                
+                if (sessions.Any())
                 {
-                    textBlockNoSessions.Visibility = Visibility.Collapsed;
-                    DateTime earliestDate = curSes.Min(session => session.DateBegin);
-                    DateTime latestDate = curSes.Max(session => session.DateBegin);
-                    CalendarDateRange allowedDates = new CalendarDateRange(
-                        earliestDate,
-                        latestDate
-                    );
+                    var sessionDates = sessions.Select(s => s.DateBegin.Date).Distinct().OrderBy(d => d).ToList();
+
+                    foreach (var date in sessionDates)
+                    {
+                        calendar.SelectedDates.Add(date);
+                    }
                     calendar.DisplayDateStart = earliestDate;
                     calendar.DisplayDateEnd = latestDate;
-                    calendar.SelectedDatesChanged += Calendar_SelectedDatesChanged;
+
+                    textBlockNoSessions.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
@@ -215,19 +218,21 @@ namespace Kursovaya
             }
         }
 
-        private void LoadActorCard()
+        private void LoadActorCard(Performance curentPerfomance)
         {
             using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {
-                var dataa = context.Performance.Where(p => p.ID == idSelectMovie).FirstOrDefault().Sessions.FirstOrDefault();
-                if (dataa == null)
-                {
-                    return;
-                }
-                var curPer = dataa.Personal.Where(p => p.JobID == 1 || p.JobID == 2).OrderBy(p => p.JobID).ToList();
+                var sessions = curentPerfomance.Sessions.LastOrDefault();
+                if (sessions == null) return;
+                var actors = sessions.Personal
+                    .Where(p => p.JobID == 1 || p.JobID == 2)
+                    .OrderBy(p => p.JobID)
+                    .ToList();
+
+
                 string FullPath = AppDomain.CurrentDomain.BaseDirectory;
                 FullPath = FullPath.Substring(0, FullPath.Length - 10);
-                foreach (var actor in curPer)
+                foreach (var actor in actors)
                 {
 
                     Border borderActor = new Border();

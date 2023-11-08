@@ -99,8 +99,12 @@ namespace Kursovaya
         private async Task GenerateMovies()
         {
             Movies.Children.Clear();
+            int minutes = (int)timeSlider.Value;
+            TimeSpan time = TimeSpan.Parse($"{minutes / 12:D2}:{minutes * 5 % 60:D2}:00");
+
             using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {
+
                 var query = context.Performance.AsQueryable();
 
                 if (TextSearch != null)
@@ -118,11 +122,9 @@ namespace Kursovaya
                 if (ListSelectedAge != null && ListSelectedAge.Any())
                 {
                     query = query.Where(p => ListSelectedAge.Contains(p.Age.Name));
-                }
-                int minutes = (int)timeSlider.Value;
+                }              
                 if (minutes != 0)
-                {
-                    TimeSpan time = TimeSpan.Parse($"{minutes / 12:D2}:{minutes * 5 % 60:D2}:00");
+                {                   
                     query = query.Where(p => p.Duration <= time);
                 }
 
@@ -277,24 +279,23 @@ namespace Kursovaya
             using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {
                 var ListOfGenres = await context.Genres.ToListAsync();
+                var ListOfSeason = await context.Seasons.ToListAsync();
+                var ListOfAge = await context.Age.ToListAsync();
+
                 foreach (var item in ListOfGenres)
                 {
                     CheckBox genresBox = new CheckBox();
                     genresBox.Content = item.Name;
                     genresBox.Tag = item.ID;
                     GenresListBox.Children.Add(genresBox);
-                }
-
-                var ListOfSeason = await context.Seasons.ToListAsync();
+                }               
                 foreach (var item in ListOfSeason)
                 {
                     CheckBox seasonBox = new CheckBox();
                     seasonBox.Content = item.Name;
                     seasonBox.Tag = item.ID;
                     SeasonListBox.Children.Add(seasonBox);
-                }
-
-                var ListOfAge = await context.Age.ToListAsync();
+                }              
                 foreach (var item in ListOfAge)
                 {
                     CheckBox ageBox = new CheckBox();
