@@ -105,14 +105,14 @@ namespace Kursovaya
                 
                 if (sessions.Any())
                 {
-                    var sessionDates = sessions.Select(s => s.DateBegin.Date).Distinct().OrderBy(d => d).ToList();
+                    var sessionDates = sessions
+                        .Select(s => s.DateBegin.Date)
+                        .Distinct()
+                        .OrderBy(d => d)
+                        .ToList();
 
-                    foreach (var date in sessionDates)
-                    {
-                        calendar.SelectedDates.Add(date);
-                    }
-                    calendar.DisplayDateStart = earliestDate;
-                    calendar.DisplayDateEnd = latestDate;
+                    calendar.DisplayDateStart = sessionDates.First();
+                    calendar.DisplayDateEnd = sessionDates.Last();
 
                     textBlockNoSessions.Visibility = Visibility.Collapsed;
                 }

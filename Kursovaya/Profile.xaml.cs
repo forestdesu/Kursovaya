@@ -41,7 +41,11 @@ namespace Kursovaya
 
         private void BTNSave(object sender, RoutedEventArgs e)
         {
-            if (userLogin.Text != UserData.Login || userPassword.Text != UserData.Password || userFullName.Text != UserData.Fullname || userPhone.Text != UserData.Phone || userEmail.Text != UserData.Email)
+            if (userLogin.Text != UserData.Login ||
+                userPassword.Text != UserData.Password ||
+                userFullName.Text != UserData.Fullname ||
+                userPhone.Text != UserData.Phone ||
+                userEmail.Text != UserData.Email)
             {
                 UserData.Login = userLogin.Text;
                 UserData.Password = userPassword.Text;
