@@ -37,16 +37,24 @@ namespace Kursovaya
 
             idUser = MainWindow.sessionUser.ID;
             GenerateTickets();
-            CreateRowsAndColumns();
 
 
         }
 
         private void GenerateTickets()
         {
+            CreateRowsAndColumns();
             using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {
-                var myTickets = context.Tickets.Where(p => p.UserID == idUser);
+                var myTickets = context.Tickets
+                    .Where(p => p.UserID == idUser);
+                //Для логически правильной работы нужно
+                //было бы использовать этот запрос, но
+                //тогда придется каждый раз обновлять данные
+                //поэтому обойдемся этим
+                //var myTickets = context.Tickets
+                //    .Where(p => p.UserID == idUser &&
+                //    p.Sessions.DateEnd >= DateTime.Now);
 
                 foreach (var item in myTickets)
                 {
@@ -256,7 +264,23 @@ namespace Kursovaya
         }
 
         private void CreateRowsAndColumns()
-        {               
+        {
+            foreach (var grid in gridList)
+            {
+                grid.Children.Clear();
+                grid.ColumnDefinitions.Clear();
+                grid.RowDefinitions.Clear();
+
+            }
+            foreach (var gridList in CountList2)
+            {
+                foreach (var grid in gridList)
+                {
+                    grid.Children.Clear();
+                    grid.ColumnDefinitions.Clear();
+                    grid.RowDefinitions.Clear();
+                }
+            }
             using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {
                 List<Place> SubGroups = context.Place.ToList();
@@ -271,13 +295,16 @@ namespace Kursovaya
                     .ToList();
                 foreach (var item in maxValuesBySubGroup)
                 {
-                    var PriceCat = context.Sectors.ToList();
-                    var result = PriceCat.Where(p => p.ID == item.Subgroup).First();
+                    var PriceCategory = context.Sectors.ToList();
+                    var result = PriceCategory
+                        .Where(p => p.ID == item.Subgroup)
+                        .First();
+
                     for (int row = 0; row < item.MaxRow; row++)
                     {
                         RowDefinition rowDef = new RowDefinition();
                         rowDef.Height = new GridLength(25);
-                        gridList[item.Subgroup - 1].RowDefinitions.Add(rowDef);                       
+                        gridList[item.Subgroup - 1].RowDefinitions.Add(rowDef);
                     }
                     for (int col = 0; col < item.MaxColumn; col++)
                     {
@@ -305,7 +332,7 @@ namespace Kursovaya
                                 Text = Convert.ToString(i + 1),
                                 Width = 24,
                                 Height = 24,
-                                TextAlignment= TextAlignment.Center,
+                                TextAlignment = TextAlignment.Center,
                                 FontSize = 18
                             };
                             item3.Children.Add(numblock);
@@ -317,23 +344,21 @@ namespace Kursovaya
         }
         private void ViewPlace(int SessionID, Place place)
         {
-            idMovie = SessionID;         
+            idMovie = SessionID;
+            CreateRowsAndColumns();
             LoadSeatLayout(idMovie, place);
-            
+
         }
 
         private void LoadSeatLayout(int idMovie, Place place)
         {
-            foreach (var item in gridList)
-            {
-                item.Children.Clear();
-            }
+
             using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {
-                Sessions session = context.Sessions.Where(p => p.ID == idMovie).FirstOrDefault();
-
-                var query = context.Place;
-                var results = query.ToList();
+                Sessions session = context.Sessions
+                    .Where(p => p.ID == idMovie)
+                    .FirstOrDefault();
+                var results = context.Place.ToList();
 
                 List<List<int>> colorPlac = new List<List<int>>
 {
@@ -345,7 +370,7 @@ namespace Kursovaya
                 foreach (var item in results)
                 {
                     Button seatButton = new Button();
-                    seatButton.Style = (Style)FindResource("RoundedButtonStyle");              
+                    seatButton.Style = (Style)FindResource("RoundedButtonStyle");
                     //seatButton.Tag = $"{item.Row};{item.Column};{Convert.ToInt32(item.Sectors.PriceCategory.Price)};{item.SectorID};{item.ID}";
                     if (place.ID == item.ID)
                     {
@@ -374,6 +399,7 @@ namespace Kursovaya
                             break;
                         case 2:
                             int coll2 = (gridList[item.SectorID - 1].ColumnDefinitions.Count - CountRowColumn) + item.Column - 1;
+                            Console.WriteLine($"({gridList[item.SectorID - 1].ColumnDefinitions.Count} - {CountRowColumn}) + {item.Column} - 1)");
                             Grid.SetColumn(seatButton, coll2);
                             break;
                     }
