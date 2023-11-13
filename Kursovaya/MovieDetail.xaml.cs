@@ -82,6 +82,7 @@ namespace Kursovaya
             {
                 var curentPerformance = context.Performance
                     .Where(p => p.ID == idSelectMovie).FirstOrDefault();
+
                 MovieTitle.Text = curentPerformance.Name;
                 Desc.Text = curentPerformance.Description;
                 imagePaths.Add(curentPerformance.Img);
@@ -105,15 +106,14 @@ namespace Kursovaya
                 
                 if (sessions.Any())
                 {
-                    var sessionDates = sessions.Select(s => s.DateBegin.Date).Distinct().OrderBy(d => d).ToList();
+                    var sessionDates = sessions
+                        .Select(s => s.DateBegin.Date)
+                        .Distinct()
+                        .OrderBy(d => d)
+                        .ToList();
 
-                    foreach (var date in sessionDates)
-                    {
-                        calendar.SelectedDates.Add(date);
-                    }
-                    calendar.DisplayDateStart = earliestDate;
-                    calendar.DisplayDateEnd = latestDate;
-
+                    calendar.DisplayDateStart = sessionDates.First();
+                    calendar.DisplayDateEnd = sessionDates.Last();
                     textBlockNoSessions.Visibility = Visibility.Collapsed;
                 }
                 else
@@ -176,12 +176,16 @@ namespace Kursovaya
         {
             using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {
-                var sessionsOnSelectedDate = context.Sessions.Where(session => session.PerformanceID == idSelectMovie && EntityFunctions.TruncateTime(session.DateBegin) == selectedDateWithoutTime).ToList();
+                var sessionsOnSelectedDate = context.Sessions
+                    .Where(session => session.PerformanceID == idSelectMovie && EntityFunctions
+                    .TruncateTime(session.DateBegin) == selectedDateWithoutTime)
+                    .ToList();
+
                 List<Seans> dataForGrid = new List<Seans>();
                 foreach (var item in sessionsOnSelectedDate)
                 {
-
-                    int price = (int)context.Place
+                    string count = $"{item.Halls.Place.Count() - item.Tickets.Count()}/{item.Halls.Place.Count()}";
+                    var price = context.Place
                             .Where(place => !context.Tickets.Any(ticket => ticket.PlaceID == place.ID))
                             .OrderBy(place => place.Sectors.PriceCategory.Price)
                             .Select(place => place.Sectors.PriceCategory.Price)
@@ -190,9 +194,9 @@ namespace Kursovaya
                     {
                         Id = item.ID,
                         Time = item.DateBegin.ToString("t"),
-                        Place = $"{item.Halls.Place.Count() - item.Tickets.Count()}/{item.Halls.Place.Count()}",
+                        Place = count,
                         Hall = item.Halls.Name,
-                        Price = price != null ? Convert.ToString(price) : "-",
+                        Price = price != null ? Convert.ToString((int)price) : "-",
                     });              
                 }
                 SeansGrid.ItemsSource= dataForGrid;    
