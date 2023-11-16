@@ -24,6 +24,7 @@ namespace Kursovaya
     {
         int idUser = MainWindow.sessionUser.ID;
         Users UserData;
+        bool StatusTextChanged = false;
         public Profile()
         {
             InitializeComponent();
@@ -41,11 +42,10 @@ namespace Kursovaya
 
         private void BTNSave(object sender, RoutedEventArgs e)
         {
-            if (userLogin.Text != UserData.Login ||
-                userPassword.Text != UserData.Password ||
-                userFullName.Text != UserData.Fullname ||
-                userPhone.Text != UserData.Phone ||
-                userEmail.Text != UserData.Email)
+            Console.WriteLine(userLogin.Text);
+            Console.WriteLine(UserData.Login);
+            Console.WriteLine(userLogin.Text != UserData.Login);
+            if (StatusTextChanged)
             {
                 UserData.Login = userLogin.Text;
                 UserData.Password = userPassword.Text;
@@ -55,15 +55,22 @@ namespace Kursovaya
 
                 using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
                 {
-                    context.Entry(UserData).State = EntityState.Modified;
-                    context.SaveChanges();
-                    MessageBox.Show("Данные успешно обновлены!");
+                    try
+                    {
+                        context.Entry(UserData).State = EntityState.Modified;
+                        context.SaveChanges();
+                        MessageBox.Show("Данные успешно обновлены!");
+                    } catch
+                    {
+                        MessageBox.Show("Такой логин уже есть!");
+                    }                   
                 }
             }    
             else
             {
                 MessageBox.Show("Измените хотя бы одно поле!");
             }
+            StatusTextChanged = false;
         }
 
         private void BTNDelete(object sender, RoutedEventArgs e)
@@ -94,6 +101,11 @@ namespace Kursovaya
                     parentWindow.Close();
                 }
             }          
+        }
+
+        private void TextChanged(object sender, TextChangedEventArgs e)
+        {
+            StatusTextChanged = true;
         }
     }
 }

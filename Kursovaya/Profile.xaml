@@ -14,7 +14,7 @@
                 <TextBlock Text="Настройка профиля" Margin="0, 15" FontSize="26"></TextBlock>
                 <TextBlock Text="Логин" FontSize="18"></TextBlock>
                 <Border BorderBrush="#dcdcdc" BorderThickness="1" CornerRadius="2" VerticalAlignment="Top" Margin="0, 5, 0, 15">
-                    <TextBox Text="{Binding Login}" Foreground="White" FontSize="18" x:Name="userLogin" Style="{StaticResource PlaceholderTextBox}" Background="Transparent" VerticalAlignment="Center"></TextBox>
+                    <TextBox TextChanged="TextChanged" Text="{Binding Login}" Foreground="White" FontSize="18" x:Name="userLogin" Style="{StaticResource PlaceholderTextBox}" Background="Transparent" VerticalAlignment="Center"></TextBox>
                 </Border>
                 <TextBlock Text="Пароль" FontSize="18"></TextBlock>
                 <Border BorderBrush="#dcdcdc" BorderThickness="1" CornerRadius="2" VerticalAlignment="Top" Margin="0, 5, 0, 15">

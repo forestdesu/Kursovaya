@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 using ZXing;
 
 namespace Kursovaya
@@ -28,17 +30,28 @@ namespace Kursovaya
         private List<Grid> gridList = new List<Grid>();
         private List<Grid> CountList1 = new List<Grid>();
         private List<List<Grid>> CountList2 = new List<List<Grid>>();
+        private bool isDragging = false;
+        private Point offset;
         public MyTickets()
         {
             InitializeComponent();
+
             gridList.AddRange(new List<Grid> { Parter1, Parter3, Amfitheater1, Amfitheater3, Amfitheater5, Mezzaine1, Mezzaine2, Mezzaine4, Mezzaine6, Mezzaine7, Balcony1, Balcony2, Balcony4, Balcony6, Balcony7 });
             CountList1.AddRange(new List<Grid> { Parter1, Amfitheater3, Mezzaine4, Balcony4 });
             CountList2.AddRange(new List<List<Grid>> { new List<Grid> { Parter2 }, new List<Grid> { Amfitheater2, Amfitheater4 }, new List<Grid> { Mezzaine3, Mezzaine5 }, new List<Grid> { Balcony3, Balcony5 } });
 
             idUser = MainWindow.sessionUser.ID;
             GenerateTickets();
+        }
 
+        private void SetCenterCanvasGrid()
+        {
+            
+            double left = (myCanvas.ActualWidth - CanvasGrid.ActualWidth) / 2;
+            Canvas.SetLeft(CanvasGrid, left);
 
+            double top = (myCanvas.ActualHeight - CanvasGrid.ActualHeight) / 2;
+            Canvas.SetTop(CanvasGrid, top);
         }
 
         private void GenerateTickets()
@@ -61,7 +74,6 @@ namespace Kursovaya
                     Grid mainGrid = new Grid
                     {
                         VerticalAlignment = VerticalAlignment.Top,
-                        Height = 195,
                         Margin = new Thickness(20, 15, 20, 15),
                         MaxWidth = 600
                     };
@@ -92,7 +104,8 @@ namespace Kursovaya
                         Foreground = Brushes.White,
                         FontSize = 30,
                         Text = item.Sessions.Performance.Name,
-                        FontWeight = FontWeights.Bold
+                        FontWeight = FontWeights.Bold,
+                        TextWrapping= TextWrapping.Wrap,
                     };
                     textStackPanel.Children.Add(titleText);
 
@@ -192,48 +205,8 @@ namespace Kursovaya
                     mainGrid.Children.Add(contentGrid);
                     // Создаем круги и прямоугольники
                     SolidColorBrush mainColor = (SolidColorBrush)FindResource("BackgroundColour");
-                    for (int i = 0; i < 6; i++)
-                    {
-                        Ellipse ellipseLeft = new Ellipse
-                        {
-                            Width = 20,
-                            Height = 20,
-                            Fill = mainColor,
-                            Margin = new Thickness(0, i * 35, 0, 0),
-                            HorizontalAlignment = HorizontalAlignment.Left,
-                            VerticalAlignment = VerticalAlignment.Top
-                        };
+                    
 
-                        Ellipse ellipseRight = new Ellipse
-                        {
-                            Width = 20,
-                            Height = 20,
-                            Fill = mainColor,
-                            Margin = new Thickness(0, i * 35, 0, 0),
-                            HorizontalAlignment = HorizontalAlignment.Right,
-                            VerticalAlignment = VerticalAlignment.Top
-                        };
-
-                        mainGrid.Children.Add(ellipseLeft);
-                        mainGrid.Children.Add(ellipseRight);
-                    }
-
-                    for (int i = 0; i < 13; i++)
-                    {
-                        Rectangle rectangle = new Rectangle
-                        {
-                            Width = 3,
-                            Height = 8,
-                            Fill = mainColor,
-                            Margin = new Thickness(0, 0, 134, 33 + i * 10),
-                            HorizontalAlignment = HorizontalAlignment.Right,
-                            VerticalAlignment = VerticalAlignment.Bottom
-                        };
-
-                        Grid.SetColumn(rectangle, 3);
-
-                        mainGrid.Children.Add(rectangle);
-                    }
                     Ellipse BigEl1 = new Ellipse
                     {
                         Width = 50,
@@ -257,6 +230,56 @@ namespace Kursovaya
                     mainGrid.Children.Add(BigEl1);
                     mainGrid.Children.Add(BigEl2);
                     mainGrid.MouseLeftButtonUp += (sender, e) => ViewPlace(item.SessionsID, item.Place);
+
+                    mainGrid.Loaded += (sender, e) =>
+                    {
+                        double marginCircle = mainGrid.ActualHeight / 5 - 4.2;
+                        for (int i = 0; i < 6; i++)
+                        {
+                            Ellipse ellipseLeft = new Ellipse
+                            {
+                                Width = 20,
+                                Height = 20,
+                                Fill = mainColor,
+                                Margin = new Thickness(0, i * marginCircle, 0, 0),
+                                HorizontalAlignment = HorizontalAlignment.Left,
+                                VerticalAlignment = VerticalAlignment.Top
+                            };
+
+                            Ellipse ellipseRight = new Ellipse
+                            {
+                                Width = 20,
+                                Height = 20,
+                                Fill = mainColor,
+                                Margin = new Thickness(0, i * marginCircle, 0, 0),
+                                HorizontalAlignment = HorizontalAlignment.Right,
+                                VerticalAlignment = VerticalAlignment.Top
+                            };
+
+                            mainGrid.Children.Add(ellipseLeft);
+                            mainGrid.Children.Add(ellipseRight);
+                        }
+
+                        for (int i = 0; i < ((mainGrid.ActualHeight - 50) / 15 + 1); i++)
+                        {
+                            Rectangle rectangle = new Rectangle
+                            {
+                                Width = 5,
+                                Height = 10,
+                                Fill = mainColor,
+                                Margin = new Thickness(0, 0, 134, 35 + i * 15),
+                                HorizontalAlignment = HorizontalAlignment.Right,
+                                VerticalAlignment = VerticalAlignment.Bottom
+                            };
+
+                            Grid.SetColumn(rectangle, 3);
+
+                            mainGrid.Children.Add(rectangle);
+                        }
+                    };
+                    
+                    
+                    
                     Tickets.Children.Add(mainGrid);
 
                 }
@@ -347,7 +370,7 @@ namespace Kursovaya
             idMovie = SessionID;
             CreateRowsAndColumns();
             LoadSeatLayout(idMovie, place);
-            
+            SetCenterCanvasGrid();
         }
 
         private void LoadSeatLayout(int idMovie, Place place)
@@ -370,7 +393,8 @@ namespace Kursovaya
                 foreach (var item in results)
                 {
                     Button seatButton = new Button();
-                    seatButton.Style = (Style)FindResource("RoundedButtonStyle");              
+                    seatButton.Style = (Style)FindResource("RoundedButtonStyle");      
+                    seatButton.IsEnabled= false ;
                     //seatButton.Tag = $"{item.Row};{item.Column};{Convert.ToInt32(item.Sectors.PriceCategory.Price)};{item.SectorID};{item.ID}";
                     if (place.ID == item.ID)
                     {
@@ -384,7 +408,7 @@ namespace Kursovaya
                         seatButton.Content = $"{item.Column}";
                         seatButton.Background = new SolidColorBrush(Color.FromRgb((byte)colorPlac[item.Sectors.PriceCategoryID - 1][0], (byte)colorPlac[item.Sectors.PriceCategoryID - 1][1], (byte)colorPlac[item.Sectors.PriceCategoryID - 1][2]));
                     }
-
+                    
                     gridList[item.SectorID - 1].Children.Add(seatButton);
 
                     var CountRowColumn = context.Place.Where(p => p.SectorID == item.SectorID).Where(p => p.Row == item.Row).Count();
@@ -453,6 +477,50 @@ namespace Kursovaya
                 MessageBox.Show("Ошибка при создании штрих-кода: " + ex.Message);
                 return null;
             }
+        }
+
+        private void ZoomIn_Click(object sender, RoutedEventArgs e)
+        {
+            // Увеличение масштаба Canvas
+            myCanvas.LayoutTransform = new ScaleTransform(myCanvas.LayoutTransform.Value.M11 * 1.1, myCanvas.LayoutTransform.Value.M22 * 1.1);
+        }
+
+        private void ZoomOut_Click(object sender, RoutedEventArgs e)
+        {
+            // Уменьшение масштаба Canvas
+            myCanvas.LayoutTransform = new ScaleTransform(myCanvas.LayoutTransform.Value.M11 / 1.1, myCanvas.LayoutTransform.Value.M22 / 1.1);
+
+        }
+        private void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            // Начало перетаскивания
+            isDragging = true;
+
+            // Сохранение смещения относительно курсора
+            offset = e.GetPosition(CanvasGrid);
+        }
+
+        private void Rectangle_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            // Окончание перетаскивания
+            isDragging = false;
+        }
+
+        private void Rectangle_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                // Перемещение элемента в соответствии с движением курсора
+                Point currentPosition = e.GetPosition(myCanvas);
+                Canvas.SetLeft(CanvasGrid, currentPosition.X - offset.X);
+                Canvas.SetTop(CanvasGrid, currentPosition.Y - offset.Y);
+            }
+        }
+
+        private void Canvas_MouseLeave(object sender, MouseEventArgs e)
+        {
+            // Курсор покинул область Canvas, прекратить перемещение
+            isDragging = false;
         }
     }
 }
