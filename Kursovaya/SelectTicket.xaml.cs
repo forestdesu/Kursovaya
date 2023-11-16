@@ -92,7 +92,7 @@ namespace Kursovaya
         {
             using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {
-                List<Place> SubGroups = context.Place.ToList();
+                List<Place> SubGroups = context.Place.ToList();               
                 var maxValuesBySubGroup = SubGroups
                     .GroupBy(s => s.SectorID)
                     .Select(g => new
@@ -103,9 +103,7 @@ namespace Kursovaya
                     })
                     .ToList();
                 foreach (var item in maxValuesBySubGroup)
-                {
-                    var PriceCat = context.Sectors.ToList();
-                    var result = PriceCat.Where(p => p.ID == item.Subgroup).First();
+                {                   
                     for (int row = 0; row < item.MaxRow; row++)
                     {
                         RowDefinition rowDef = new RowDefinition();
@@ -122,7 +120,6 @@ namespace Kursovaya
 
                 for (int j = 0; j < CountList1.Count; j++)
                 {
-
                     foreach (var item3 in CountList2[j])
                     {
                         //Console.WriteLine(CountList1[j].RowDefinitions.Count);
@@ -155,15 +152,17 @@ namespace Kursovaya
             }
             using (DramaTheaterTestEntities context = new DramaTheaterTestEntities())
             {
-
-                List<Sessions> sessions = context.Sessions.ToList();
-                Sessions session = sessions.Where(p => p.ID == idSession).FirstOrDefault();
-                TitleMovie.Text = Convert.ToString(session.Performance.Name);
-
-                var query = context.Place.Where(p => p.HallsID == session.HallsID);
-                var results = query.ToList();
-                var reservedSeats = context.Tickets.Where(p => p.SessionsID == idSession).Select(p => p.Place.ID).ToList();
-                //var results = CreatePlace();
+                Sessions session = context.Sessions
+                    .ToList()
+                    .Where(p => p.ID == idSession)
+                    .FirstOrDefault();                
+                var results = context.Place
+                    .Where(p => p.HallsID == session.HallsID)
+                    .ToList();
+                var reservedSeats = context.Tickets
+                    .Where(p => p.SessionsID == idSession)
+                    .Select(p => p.Place.ID)
+                    .ToList();
 
                 List<List<int>> colorPlac = new List<List<int>>
 {
@@ -172,7 +171,7 @@ namespace Kursovaya
                     new List<int> {255, 89, 89},
                     new List<int> {255, 170, 0}
                 };
-
+                TitleMovie.Text = Convert.ToString(session.Performance.Name);
                 foreach (var item in results)
                 {
                     Button seatButton = new Button();
@@ -329,8 +328,19 @@ namespace Kursovaya
             {
                 foreach (var id_rp in idReservedPlaces)
                 {
-                    Sessions curSes = context.Sessions.Where(p => p.ID == idSession).FirstOrDefault();
-                    int totalPrice = Convert.ToInt32(curSes.PriceTime.Price + curSes.Performance.Price + context.Place.Where(p => p.ID == id_rp).FirstOrDefault().Sectors.PriceCategory.Price);
+                    Sessions curSes = context.Sessions
+                        .Where(p => p.ID == idSession)
+                        .FirstOrDefault();
+                    int totalPrice = Convert.ToInt32(
+                        curSes.PriceTime.Price
+                        + curSes.Performance.Price
+                        + context.Place
+                        .Where(p => p.ID == id_rp)
+                        .FirstOrDefault()
+                        .Sectors
+                        .PriceCategory
+                        .Price
+                     );
 
                     Tickets newTicket = new Tickets
                     {
